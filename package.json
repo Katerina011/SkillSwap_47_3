@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
     "test": "jest --passWithNoTests",
     "format": "prettier . --write",
-    "format:check": "prettier . --check .",
+    "format:check": "prettier . --check",
     "lint:css": "stylelint \"src/**/*.{css,scss}\""
   },
   "repository": {
