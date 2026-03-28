@@ -7,7 +7,10 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint:css": "stylelint \"src/**/*.{css,scss}\""
   },
   "repository": {
     "type": "git",

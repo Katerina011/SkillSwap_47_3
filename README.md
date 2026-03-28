@@ -48,3 +48,15 @@ Git не хранит пустые каталоги. Файлы `.gitkeep` — �
 - Prettier
 - Stylelint
 - Jest + React Testing Library
+
+## Проверка кода перед PR
+
+Перед отправкой Pull Request рекомендуется запустить:
+
+- `npm run lint` — проверка TS/TSX через ESLint
+- `npm run lint:css` — проверка стилей через Stylelint
+- `npm run format:check` — проверка форматирования через Prettier
+
+Для автоматического форматирования можно использовать:
+
+- `npm run format`
