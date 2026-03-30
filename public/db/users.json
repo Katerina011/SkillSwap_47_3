@@ -4,41 +4,59 @@
     "name": "Анна Смирнова",
     "email": "anna@example.com",
     "password": "hash123",
-    "avatar": "/avatars/1.jpg",
+    "avatar": "1.jpg",
     "city": "Москва",
     "age": 23,
     "gender": "женский",
     "createdAt": "2024-01-15T09:00:00Z",
-    "favorites": ["skill_001", "skill_005"],
-    "requests": ["req_001", "req_002"],
-    "skills": ["skill_001", "skill_003"]
+    "favorites": ["user_003", "user_007"],
+    "liked_me": ["user_002", "user_004", "user_010"],
+    "skillCanTeach": {
+      "id": "skill_041",
+      "name": "Физическая культура",
+      "description": "Провожу силовые тренировки, кардио, функциональный тренинг, растяжка"
+    },
+    "images": ["fk1.jpg", "fk3.jpg", "fk5.jpg"],
+    "skills": ["skill_001", "skill_017"]
   },
   {
     "id": "user_002",
     "name": "Иван Петров",
     "email": "ivan@example.com",
     "password": "pass456",
-    "avatar": "/avatars/2.jpg",
+    "avatar": "2.jpg",
     "city": "Санкт-Петербург",
     "age": 21,
     "gender": "мужской",
-    "createdAt": "2024-02-20T14:30:00Z",
-    "favorites": ["skill_002", "skill_004"],
-    "requests": ["req_003"],
-    "skills": ["skill_002"]
+    "createdAt": "2025-02-20T14:30:00Z",
+    "favorites": ["user_001", "user_006", "user_009"],
+    "liked_me": ["user_008"],
+    "skillCanTeach": {
+      "id": "skill_012",
+      "name": "Игра на фортепиано",
+      "description": "Научу играть на фортепиано популярные саундтреки на ваш вкус"
+    },
+    "images": ["2piano.jpg", "4piano.jpg", "piano.jpg"],
+    "skills": ["skill_013", "skill_041"]
   },
   {
     "id": "user_003",
     "name": "Мария Козлова",
     "email": "maria@example.com",
     "password": "mypass789",
-    "avatar": "/avatars/3.jpg",
+    "avatar": "3.jpg",
     "city": "Екатеринбург",
     "age": 25,
     "gender": "женский",
-    "createdAt": "2024-03-10T11:15:00Z",
-    "favorites": ["skill_003", "skill_006"],
-    "requests": ["req_004", "req_005"],
+    "createdAt": "2026-03-10T11:15:00Z",
+    "favorites": ["user_002"],
+    "liked_me": ["user_001", "user_004", "user_007", "user_008", "user_010"],
+    "skillCanTeach": {
+      "id": "skill_009",
+      "name": "Рисование",
+      "description": "Академический рисунок, digital art, иллюстрация, скетчинг"
+    },
+    "images": ["drawing.jpg", "drawing1.jpg", "drawing2.jpg"],
     "skills": ["skill_003", "skill_007"]
   },
   {
@@ -46,41 +64,59 @@
     "name": "Алексей Волков",
     "email": "alexey@example.com",
     "password": "secure123",
-    "avatar": "/avatars/4.jpg",
+    "avatar": "4.jpg",
     "city": "Новосибирск",
     "age": 35,
     "gender": "мужской",
     "createdAt": "2024-04-05T16:45:00Z",
-    "favorites": ["skill_001", "skill_008"],
-    "requests": ["req_006"],
-    "skills": ["skill_004"]
+    "favorites": ["user_005", "user_009"],
+    "liked_me": ["user_001", "user_002", "user_006"],
+    "skillCanTeach": {
+      "id": "skill_010",
+      "name": "Фотография",
+      "description": "Портретная, предметная, пейзажная съемка, обработка фото"
+    },
+    "images": ["photo.jpg", "2piano.jpg", "drawing1.jpg"],
+    "skills": ["skill_005"]
   },
   {
     "id": "user_005",
     "name": "Елена Новикова",
     "email": "elena@example.com",
     "password": "testpass567",
-    "avatar": "/avatars/5.jpg",
+    "avatar": "5.jpg",
     "city": "Казань",
     "age": 29,
     "gender": "женский",
     "createdAt": "2024-05-12T08:20:00Z",
-    "favorites": ["skill_005", "skill_010"],
-    "requests": ["req_007", "req_008"],
-    "skills": ["skill_005"]
+    "favorites": ["user_001"],
+    "liked_me": ["user_003", "user_004", "user_008"],
+    "skillCanTeach": {
+      "id": "skill_036",
+      "name": "Хранение вещей",
+      "description": "Организация хранения, системы хранения, сортировка вещей"
+    },
+    "images": ["photo.jpg", "polka.jpg"],
+    "skills": ["skill_005", "skill_034"]
   },
   {
     "id": "user_006",
     "name": "Дмитрий Морозов",
     "email": "dmitry@example.com",
     "password": "strongpass888",
-    "avatar": "/avatars/6.jpg",
+    "avatar": "6.jpg",
     "city": "Нижний Новгород",
     "age": 53,
     "gender": "мужской",
     "createdAt": "2024-06-01T13:10:00Z",
-    "favorites": ["skill_002", "skill_009"],
-    "requests": ["req_009"],
+    "favorites": ["user_002", "user_005"],
+    "liked_me": ["user_004", "user_009"],
+    "skillCanTeach": {
+      "id": "skill_019",
+      "name": "Испанский язык",
+      "description": "Испанский язык: разговорный, деловой, латиноамериканский"
+    },
+    "images": ["lang.jpg", "lang1.jpg"],
     "skills": ["skill_006"]
   },
   {
@@ -88,13 +124,19 @@
     "name": "Ольга Иванова",
     "email": "olga@example.com",
     "password": "letmein456",
-    "avatar": "/avatars/7.jpg",
+    "avatar": "7.jpg",
     "city": "Челябинск",
     "age": 32,
     "gender": "женский",
     "createdAt": "2024-07-18T09:55:00Z",
-    "favorites": ["skill_004", "skill_007"],
-    "requests": ["req_010", "req_011"],
+    "favorites": ["user_001", "user_003", "user_006", "user_010"],
+    "liked_me": ["user_004"],
+    "skillCanTeach": {
+      "id": "skill_006",
+      "name": "Тайм менеджмент",
+      "description": "Планирование времени, приоритизация задач, продуктивность"
+    },
+    "images": ["1office.jpg", "kouch.jpg"],
     "skills": ["skill_007"]
   },
   {
@@ -102,97 +144,139 @@
     "name": "Сергей Васильев",
     "email": "sergey@example.com",
     "password": "secure789",
-    "avatar": "/avatars/8.jpg",
+    "avatar": "8.jpg",
     "city": "Самара",
     "age": 33,
     "gender": "мужской",
-    "createdAt": "2024-08-03T15:30:00Z",
-    "favorites": ["skill_001", "skill_006"],
-    "requests": ["req_012"],
-    "skills": ["skill_008"]
+    "createdAt": "2026-08-03T15:30:00Z",
+    "favorites": ["user_003"],
+    "liked_me": ["user_002", "user_005", "user_006", "user_009", "user_010"],
+    "skillCanTeach": {
+      "id": "skill_005",
+      "name": "Составление резюме",
+      "description": "Составление резюме, подготовка к собеседованиям, прохождение HR-этапов"
+    },
+    "images": ["1office.jpg", "2office.jpg"],
+    "skills": ["skill_025", "skill_035"]
   },
   {
     "id": "user_009",
     "name": "Наталья Федорова",
     "email": "natalia@example.com",
     "password": "mypassword999",
-    "avatar": "/avatars/9.jpg",
+    "avatar": "9.jpg",
     "city": "Омск",
     "age": 26,
     "gender": "женский",
     "createdAt": "2024-09-10T12:40:00Z",
-    "favorites": ["skill_003", "skill_009"],
-    "requests": ["req_013", "req_014"],
-    "skills": ["skill_009"]
+    "favorites": ["user_002", "user_004", "user_007"],
+    "liked_me": ["user_006", "user_008", "user_010"],
+    "skillCanTeach": {
+      "id": "skill_022",
+      "name": "Японский язык",
+      "description": "Японский язык: азбуки, иероглифы, разговорный"
+    },
+    "images": ["lang.jpg", "lang1.jpg", "brand.jpg"],
+    "skills": ["skill_009", "skill_037"]
   },
   {
     "id": "user_010",
     "name": "Андрей Павлов",
     "email": "andrey@example.com",
     "password": "testpass2024",
-    "avatar": "/avatars/10.jpg",
+    "avatar": "10.jpg",
     "city": "Ростов-на-Дону",
     "age": 30,
     "gender": "мужской",
-    "createdAt": "2024-10-15T10:25:00Z",
-    "favorites": ["skill_005", "skill_010"],
-    "requests": ["req_015"],
-    "skills": ["skill_010"]
+    "createdAt": "2023-10-15T10:25:00Z",
+    "favorites": ["user_005", "user_007"],
+    "liked_me": ["user_001", "user_003", "user_008", "user_009"],
+    "skillCanTeach": {
+      "id": "skill_017",
+      "name": "Английский язык",
+      "description": "Английский язык: разговорный, деловой, академический"
+    },
+    "images": ["lang.jpg", "lang1.jpg", "brand.jpg"],
+    "skills": ["skill_010", "skill_042"]
   },
   {
     "id": "user_011",
     "name": "Евгения Попова",
     "email": "evgg@example.com",
     "password": "testpass2025",
-    "avatar": "/avatars/11.jpg",
+    "avatar": "11.jpg",
     "city": "Хабаровск",
     "age": 19,
     "gender": "женский",
     "createdAt": "2025-10-15T10:25:00Z",
-    "favorites": ["skill_007", "skill_018"],
-    "requests": ["req_012"],
-    "skills": ["skill_011"]
+    "favorites": ["user_012", "user_015"],
+    "liked_me": ["user_014"],
+    "skillCanTeach": {
+      "id": "skill_037",
+      "name": "Йога в гамаках",
+      "description": "Провожу уникальные тренировки по йоге в гамаках для растяжки, баланса и поддержания тонуса"
+    },
+    "images": ["fk1.jpg", "fk5.jpg"],
+    "skills": ["skill_036"]
   },
   {
     "id": "user_012",
     "name": "Никита Белкин",
     "email": "belki@example.com",
     "password": "puma2024",
-    "avatar": "/avatars/12.jpg",
+    "avatar": "12.jpg",
     "city": "Ржев",
     "age": 27,
     "gender": "мужской",
     "createdAt": "2024-10-15T10:25:00Z",
-    "favorites": ["skill_011", "skill_001"],
-    "requests": ["req_017"],
+    "favorites": ["user_013", "user_018"],
+    "liked_me": ["user_011", "user_019"],
+    "skillCanTeach": {
+      "id": "skill_035",
+      "name": "Ремонт",
+      "description": "Мелкий ремонт, сантехника, электрика, работа с инструментами"
+    },
+    "images": ["remont.jpg", "polka.jpg"],
     "skills": ["skill_019"]
   },
-   {
+  {
     "id": "user_013",
     "name": "Татьяна Волкова",
     "email": "tatyana@example.com",
     "password": "sunshine2024",
-    "avatar": "/avatars/13.jpg",
+    "avatar": "13.jpg",
     "city": "Владивосток",
     "age": 23,
     "gender": "женский",
     "createdAt": "2024-11-03T08:45:00Z",
-    "favorites": ["skill_002", "skill_014"],
-    "requests": ["req_018", "req_019"],
-    "skills": ["skill_013"]
+    "favorites": ["user_016"],
+    "liked_me": ["user_012", "user_016"],
+    "skillCanTeach": {
+      "id": "skill_012",
+      "name": "Игра на гитаре",
+      "description": "Имею музыкальное образование, играю на гитаре с 9 лет. С удовольствием разучу с вами как простые так и одни из самых сложных композиций"
+    },
+    "images": ["1music.jpg", "music.jpg"],
+    "skills": ["skill_022"]
   },
   {
     "id": "user_014",
     "name": "Павел Никитин",
     "email": "pavel@example.com",
     "password": "winter2024",
-    "avatar": "/avatars/14.jpg",
+    "avatar": "14.jpg",
     "city": "Калининград",
     "age": 60,
     "gender": "мужской",
     "createdAt": "2024-11-12T14:20:00Z",
-    "favorites": ["skill_005", "skill_016"],
-    "requests": ["req_020"],
+    "favorites": ["user_011", "user_019"],
+    "liked_me": ["user_015", "user_017"],
+    "skillCanTeach": {
+      "id": "skill_042",
+      "name": "Практика хорошего сна",
+      "description": "Гигиена сна, восстановление организма, режим дня"
+    },
+    "images": ["photo.jpg", "fk3.jpg"],
     "skills": ["skill_014", "skill_017"]
   },
   {
@@ -200,142 +284,202 @@
     "name": "Светлана Орлова",
     "email": "svetlana@example.com",
     "password": "spring2024",
-    "avatar": "/avatars/15.jpg",
+    "avatar": "15.jpg",
     "city": "Краснодар",
     "age": 28,
     "gender": "женский",
     "createdAt": "2024-12-01T11:30:00Z",
-    "favorites": ["skill_008", "skill_011"],
-    "requests": ["req_010", "req_022"],
-    "skills": ["skill_015"]
+    "favorites": ["user_014"],
+    "liked_me": ["user_011"],
+    "skillCanTeach": {
+      "id": "skill_015",
+      "name": "арт-терапия",
+      "description": "Использование творчества для психологической помощи и самопознания"
+    },
+    "images": ["drawing2.jpg", "drawing1.jpg"],
+    "skills": ["skill_034"]
   },
   {
     "id": "user_016",
     "name": "Михаил Семёнов",
     "email": "mikhail@example.com",
     "password": "autumn2024",
-    "avatar": "/avatars/16.jpg",
+    "avatar": "16.jpg",
     "city": "Воронеж",
     "age": 41,
     "gender": "мужской",
     "createdAt": "2024-12-15T16:10:00Z",
-    "favorites": ["skill_003", "skill_019"],
-    "requests": ["req_013"],
-    "skills": ["skill_016", "skill_020"]
+    "favorites": ["user_013", "user_021"],
+    "liked_me": ["user_013", "user_020"],
+    "skillCanTeach": {
+      "id": "skill_033",
+      "name": "приготовление еды",
+      "description": "Кулинария, рецепты, правильное питание, сервировка"
+    },
+    "images": ["eda.jpg", "eda2.jpg", "eda3.jpg"],
+    "skills": ["skill_016", "skill_025"]
   },
   {
     "id": "user_017",
     "name": "Екатерина Зайцева",
     "email": "ekaterina@example.com",
     "password": "summer2024",
-    "avatar": "/avatars/17.jpg",
+    "avatar": "17.jpg",
     "city": "Тюмень",
     "age": 36,
     "gender": "женский",
     "createdAt": "2025-01-10T09:50:00Z",
-    "favorites": ["skill_006", "skill_012"],
-    "requests": ["req_014", "req_025"],
-    "skills": ["skill_017"]
+    "favorites": ["user_014"],
+    "liked_me": ["user_018"],
+    "skillCanTeach": {
+      "id": "skill_025",
+      "name": "Тренинг личностного роста",
+      "description": "Саморазвитие, работа над собой, постановка целей, рефлексия"
+    },
+    "images": ["photo.jpg", "lang.jpg"],
+    "skills": ["skill_003", "skill_008"]
   },
   {
     "id": "user_018",
     "name": "Андрей Григорьев",
     "email": "andrey.g@example.com",
     "password": "mountain2024",
-    "avatar": "/avatars/18.jpg",
+    "avatar": "18.jpg",
     "city": "Иркутск",
     "age": 34,
     "gender": "мужской",
     "createdAt": "2025-01-25T13:40:00Z",
-    "favorites": ["skill_009", "skill_015"],
-    "requests": ["req_016"],
-    "skills": ["skill_018"]
+    "favorites": ["user_017"],
+    "liked_me": ["user_012"],
+    "skillCanTeach": {
+      "id": "skill_012",
+      "name": "Вокал",
+      "description": "Постановка дыхания и интонации, базовые вокальные техники, сложные вокальные приёмы (вибрато, мелизмы, субтон)"
+    },
+    "images": ["1music.jpg", "piano.jpg"],
+    "skills": ["skill_031", "skill_033"]
   },
   {
     "id": "user_019",
     "name": "Юлия Соколова",
     "email": "yulia@example.com",
     "password": "ocean2024",
-    "avatar": "/avatars/19.jpg",
+    "avatar": "19.jpg",
     "city": "Сочи",
     "age": 29,
     "gender": "женский",
     "createdAt": "2025-02-05T10:15:00Z",
-    "favorites": ["skill_001", "skill_017"],
-    "requests": ["req_007", "req_018"],
-    "skills": ["skill_019"]
+    "favorites": ["user_012"],
+    "liked_me": ["user_014"],
+    "skillCanTeach": {
+      "id": "skill_031",
+      "name": "Уборка",
+      "description": "Системы организации пространства, уборка, наведение порядка"
+    },
+    "images": ["polka.jpg", "photo.jpg"],
+    "skills": ["skill_019", "skill_026"]
   },
   {
     "id": "user_020",
     "name": "Дмитрий Павлов",
     "email": "dmitry.p@example.com",
     "password": "forest2024",
-    "avatar": "/avatars/20.jpg",
+    "avatar": "20.jpg",
     "city": "Пермь",
     "age": 33,
     "gender": "мужской",
     "createdAt": "2025-02-20T15:25:00Z",
-    "favorites": ["skill_004", "skill_020"],
-    "requests": ["req_009"],
-    "skills": ["skill_020", "skill_013"]
+    "favorites": ["user_016", "user_023"],
+    "liked_me": [],
+    "skillCanTeach": {
+      "id": "skill_012",
+      "name": "Настрой музыкальных инструментов",
+      "description": "Помогу в настройке музыкальных инструментов, таких как фортепиано, гитара и скрипка"
+    },
+    "images": ["music.jpg", "4piano.jpg"],
+    "skills": ["skill_020", "skill_027"]
   },
   {
     "id": "user_021",
     "name": "Анна Лебедева",
     "email": "anna.l@example.com",
     "password": "river2024",
-    "avatar": "/avatars/21.jpg",
+    "avatar": "21.jpg",
     "city": "Ярославль",
     "age": 37,
     "gender": "женский",
     "createdAt": "2025-03-10T12:35:00Z",
-    "favorites": ["skill_007", "skill_018"],
-    "requests": ["req_010", "req_021"],
-    "skills": ["skill_001"]
+    "favorites": ["user_024", "user_025"],
+    "liked_me": ["user_016", "user_022"],
+    "skillCanTeach": {
+      "id": "skill_038",
+      "name": "Здоровый образ жизни",
+      "description": "Помогу разобраться и составить индивидуальный план питания и тренировок в зависимости от вашей цели и особенностей организма"
+    },
+    "images": ["eda.jpg", "fk5.jpg"],
+    "skills": ["skill_002", "skill_014", "skill_034"]
   },
   {
     "id": "user_022",
     "name": "Сергей Морозов",
     "email": "sergey.m@example.com",
     "password": "lake2024",
-    "avatar": "/avatars/22.jpg",
+    "avatar": "22.jpg",
     "city": "Тула",
     "age": 29,
     "gender": "мужской",
     "createdAt": "2025-03-25T08:55:00Z",
-    "favorites": ["skill_010", "skill_016"],
-    "requests": ["req_002"],
-    "skills": ["skill_004"]
+    "favorites": ["user_021"],
+    "liked_me": ["user_023"],
+    "skillCanTeach": {
+      "id": "skill_026",
+      "name": "Обучение",
+      "description": "Методики эффективного обучения, конспектирование, запоминание"
+    },
+    "images": ["kouch.jpg", "lang1.jpg"],
+    "skills": ["skill_037"]
   },
   {
     "id": "user_023",
     "name": "Ольга Новикова",
     "email": "olga.n@example.com",
     "password": "star2024",
-    "avatar": "/avatars/23.jpg",
+    "avatar": "23.jpg",
     "city": "Рязань",
     "age": 31,
     "gender": "женский",
     "createdAt": "2025-04-05T14:10:00Z",
-    "favorites": ["skill_013", "skill_019"],
-    "requests": ["req_013", "req_024"],
-    "skills": ["skill_007"]
+    "favorites": ["user_022"],
+    "liked_me": ["user_020", "user_024"],
+    "skillCanTeach": {
+      "id": "skill_039",
+      "name": "ментальное здоровье",
+      "description": "Психологическое благополучие, стрессоустойчивость, эмоциональный интеллект"
+    },
+    "images": ["lang.jpg", "photo.jpg"],
+    "skills": ["skill_021", "skill_031"]
   },
   {
     "id": "user_024",
     "name": "Алексей Волков",
     "email": "alexey.v@example.com",
     "password": "moon2024",
-    "avatar": "/avatars/24.jpg",
+    "avatar": "24.jpg",
     "city": "Липецк",
     "age": 36,
     "gender": "мужской",
     "createdAt": "2025-04-20T09:30:00Z",
-    "favorites": ["skill_016", "skill_020"],
-    "requests": ["req_005"],
-    "skills": ["skill_010"]
+    "favorites": ["user_023"],
+    "liked_me": ["user_021", "user_025"],
+    "skillCanTeach": {
+      "id": "skill_027",
+      "name": "Тренировки для мозга",
+      "description": "Развитие памяти, внимания, мышления, нейропластичность"
+    },
+    "images": ["brand.jpg", "lang1.jpg", "polka.jpg"],
+    "skills": ["skill_012", "skill_041"]
   },
-   {
+  {
     "id": "user_025",
     "name": "Мария Иванова",
     "email": "maria.i@example.com",
@@ -345,22 +489,34 @@
     "age": 67,
     "gender": "женский",
     "createdAt": "2025-05-10T11:20:00Z",
-    "favorites": ["skill_002", "skill_011"],
-    "requests": ["req_006", "req_017"],
-    "skills": ["skill_012"]
+    "favorites": ["user_024"],
+    "liked_me": ["user_021"],
+    "skillCanTeach": {
+      "id": "skill_034",
+      "name": "домашние растения",
+      "description": "Уход за комнатными растениями, фитодизайн, размножение"
+    },
+    "images": ["flowers.jpg", "flowers1.jpg"],
+    "skills": ["skill_027", "skill_040"]
   },
   {
     "id": "user_026",
     "name": "Владимир Фёдоров",
     "email": "vladimir@example.com",
     "password": "wind2024",
-    "avatar": "/avatars/26.jpg",
+    "avatar": "26.jpg",
     "city": "Ульяновск",
     "age": 38,
     "gender": "мужской",
     "createdAt": "2025-05-25T16:40:00Z",
-    "favorites": ["skill_006", "skill_014"],
-    "requests": ["req_004"],
+    "favorites": ["user_027", "user_031", "user_035"],
+    "liked_me": ["user_027", "user_030"],
+    "skillCanTeach": {
+      "id": "skill_008",
+      "name": "Предпринимательство",
+      "description": "Создание бизнеса, бизнес-планирование, управление стартапами"
+    },
+    "images": ["kouch.jpg", "2office.jpg", "brand.jpg"],
     "skills": ["skill_015", "skill_018"]
   },
   {
@@ -368,153 +524,219 @@
     "name": "Анастасия Козлова",
     "email": "anastasia@example.com",
     "password": "rain2024",
-    "avatar": "/avatars/27.jpg",
+    "avatar": "27.jpg",
     "city": "Волгоград",
     "age": 81,
     "gender": "женский",
-    "createdAt": "2025-06-15T09:15:00Z",
-    "favorites": ["skill_009", "skill_017"],
-    "requests": ["req_009", "req_010"],
-    "skills": ["skill_019"]
+    "createdAt": "2026-03-28T09:15:00Z",
+    "favorites": ["user_026", "user_028", "user_032"],
+    "liked_me": ["user_026", "user_031"],
+    "skillCanTeach": {
+      "id": "skill_013",
+      "name": "Актерское искусство",
+      "description": "Сценическая речь, импровизация, работа с эмоциями, публичные выступления"
+    },
+    "images": ["teatro.jpg"],
+    "skills": ["skill_023", "skill_037"]
   },
   {
     "id": "user_028",
     "name": "Артём Новиков",
     "email": "artem@example.com",
     "password": "storm2024",
-    "avatar": "/avatars/28.jpg",
+    "avatar": "28.jpg",
     "city": "Оренбург",
     "age": 33,
     "gender": "мужской",
     "createdAt": "2025-07-01T13:30:00Z",
-    "favorites": ["skill_003", "skill_020"],
-    "requests": ["req_021"],
-    "skills": ["skill_016"]
+    "favorites": ["user_029", "user_033", "user_037"],
+    "liked_me": ["user_029", "user_034"],
+    "skillCanTeach": {
+      "id": "skill_028",
+      "name": "Скорочтение",
+      "description": "Техники быстрого чтения, понимание текста, работа с информацией"
+    },
+    "images": ["polka.jpg", "flowers1.jpg"],
+    "skills": ["skill_021", "skill_032"]
   },
   {
     "id": "user_029",
     "name": "Виктория Смирнова",
     "email": "victoria@example.com",
     "password": "sun2024",
-    "avatar": "/avatars/29.jpg",
+    "avatar": "29.jpg",
     "city": "Брянск",
     "age": 36,
     "gender": "женский",
     "createdAt": "2025-07-20T10:45:00Z",
-    "favorites": ["skill_005", "skill_013"],
-    "requests": ["req_002", "req_023"],
-    "skills": ["skill_008"]
+    "favorites": ["user_028", "user_034"],
+    "liked_me": ["user_028", "user_032", "user_036"],
+    "skillCanTeach": {
+      "id": "skill_004",
+      "name": "Личный бренд",
+      "description": "Создание и развитие личного бренда, позиционирование, самопрезентация"
+    },
+    "images": ["brand.jpg", "1office.jpg", "kouch.jpg"],
+    "skills": ["skill_011", "skill_016", "skill_030", "skill_033"]
   },
   {
     "id": "user_030",
     "name": "Денис Павлов",
     "email": "denis@example.com",
     "password": "snow2024",
-    "avatar": "/avatars/30.jpg",
+    "avatar": "30.jpg",
     "city": "Смоленск",
     "age": 29,
     "gender": "мужской",
     "createdAt": "2025-08-05T15:10:00Z",
-    "favorites": ["skill_007", "skill_015"],
-    "requests": ["req_014"],
-    "skills": ["skill_011", "skill_014"]
+    "favorites": ["user_026", "user_035", "user_039"],
+    "liked_me": ["user_026", "user_037"],
+    "skillCanTeach": {
+      "id": "skill_012",
+      "name": "Сольфеджио",
+      "description": "Провожу индивидуальные и групповые занятия для развития музыкального слуха и музыкальной памяти, обучаю чтнению нот"
+    },
+    "images": ["piano.jpg", "2piano.jpg", "4piano.jpg"],
+    "skills": ["skill_006", "skill_043"]
   },
   {
     "id": "user_031",
     "name": "Елена Морозова",
     "email": "elena.m@example.com",
     "password": "wave2024",
-    "avatar": "/avatars/31.jpg",
+    "avatar": "31.jpg",
     "city": "Тамбов",
     "age": 32,
     "gender": "женский",
-    "createdAt": "2025-08-25T08:35:00Z",
-    "favorites": ["skill_010", "skill_018"],
-    "requests": ["req_005", "req_016"],
-    "skills": ["skill_017"]
+    "createdAt": "2026-02-25T08:35:00Z",
+    "favorites": ["user_027", "user_035", "user_038"],
+    "liked_me": ["user_027", "user_035"],
+    "skillCanTeach": {
+      "id": "skill_033",
+      "name": "Кулинарное искусство",
+      "description": "Научу готовить невероятно вкусные и достаточно простые блюда русской и европейской кухни"
+    },
+    "images": ["eda.jpg", "eda1.jpg", "eda2.jpg", "eda3.jpg"],
+    "skills": ["skill_030", "skill_040"]
   },
   {
     "id": "user_032",
     "name": "Игорь Васильев",
     "email": "igor@example.com",
     "password": "fire2024",
-    "avatar": "/avatars/32.jpg",
+    "avatar": "32.jpg",
     "city": "Курск",
     "age": 35,
     "gender": "мужской",
     "createdAt": "2025-09-10T12:50:00Z",
-    "favorites": ["skill_012", "skill_019"],
-    "requests": ["req_007"],
-    "skills": ["skill_020", "skill_003"]
+    "favorites": ["user_027", "user_039", "user_040"],
+    "liked_me": ["user_029", "user_039"],
+    "skillCanTeach": {
+      "id": "skill_043",
+      "name": "Внутренний баланс",
+      "description": "Управление энергией, избегание выгорания, гармония в жизни"
+    },
+    "images": ["flowers1.jpg", "fk5.jpg", "photo.jpg"],
+    "skills": ["skill_015", "skill_036"]
   },
   {
     "id": "user_033",
     "name": "Наталья Соколова",
     "email": "natalia.s@example.com",
     "password": "earth2024",
-    "avatar": "/avatars/33.jpg",
+    "avatar": "33.jpg",
     "city": "Калуга",
     "age": 43,
     "gender": "женский",
     "createdAt": "2025-09-25T14:20:00Z",
-    "favorites": ["skill_001", "skill_016"],
-    "requests": ["req_008", "req_009"],
-    "skills": ["skill_005"]
+    "favorites": ["user_028", "user_036", "user_038"],
+    "liked_me": ["user_028", "user_034"],
+    "skillCanTeach": {
+      "id": "skill_023",
+      "name": "Экзамен IELTS",
+      "description": "Подготовка к международному экзамену IELTS Academic/General"
+    },
+    "images": ["lang.jpg", "lang1.jpg"],
+    "skills": ["skill_013", "skill_038"]
   },
   {
     "id": "user_034",
     "name": "Роман Григорьев",
     "email": "roman@example.com",
     "password": "light2024",
-    "avatar": "/avatars/34.jpg",
+    "avatar": "34.jpg",
     "city": "Иваново",
     "age": 39,
     "gender": "мужской",
     "createdAt": "2025-10-10T09:40:00Z",
-    "favorites": ["skill_004", "skill_011"],
-    "requests": ["req_001"],
-    "skills": ["skill_009", "skill_013"]
+    "favorites": ["user_029", "user_033", "user_037"],
+    "liked_me": ["user_028", "user_033"],
+    "skillCanTeach": {
+      "id": "skill_029",
+      "name": "Преподавание",
+      "description": "Педагогика, методика преподавания, работа с аудиторией"
+    },
+    "images": ["kouch.jpg", "2office.jpg"],
+    "skills": ["skill_009", "skill_043"]
   },
   {
     "id": "user_035",
     "name": "Юлия Волкова",
     "email": "julia.v@example.com",
     "password": "dream2024",
-    "avatar": "/avatars/35.jpg",
+    "avatar": "35.jpg",
     "city": "Владимир",
     "age": 26,
     "gender": "женский",
     "createdAt": "2025-10-25T11:30:00Z",
-    "favorites": ["skill_008", "skill_014"],
-    "requests": ["req_011"],
-    "skills": ["skill_018"]
+    "favorites": ["user_026", "user_031", "user_038"],
+    "liked_me": ["user_030", "user_031"],
+    "skillCanTeach": {
+      "id": "skill_037",
+      "name": "Медитация",
+      "description": "Динамические медитации Кали, Ошо, Кундалини и Цигун. Практики сочетают движение, дыхание и осознанность"
+    },
+    "images": ["fk1.jpg", "flowers.jpg"],
+    "skills": ["skill_026", "skill_033"]
   },
   {
     "id": "user_036",
     "name": "Антон Павлов",
     "email": "anton@example.com",
     "password": "magic2024",
-    "avatar": "/avatars/36.jpg",
+    "avatar": "36.jpg",
     "city": "Белгород",
     "age": 34,
     "gender": "мужской",
     "createdAt": "2025-11-10T16:15:00Z",
-    "favorites": ["skill_002", "skill_017"],
-    "requests": ["req_003"],
-    "skills": ["skill_012", "skill_015"]
+    "favorites": ["user_033", "user_039", "user_040"],
+    "liked_me": ["user_029", "user_039"],
+    "skillCanTeach": {
+      "id": "skill_040",
+      "name": "Осознанность",
+      "description": "Практики осознанности, здесь и сейчас, работа с вниманием"
+    },
+    "images": ["kouch.jpg", "flowers1.jpg"],
+    "skills": ["skill_006", "skill_035"]
   },
-   {
+  {
     "id": "user_037",
     "name": "Екатерина Новикова",
     "email": "ekaterina.n@example.com",
     "password": "ocean2025",
-    "avatar": "/avatars/37.jpg",
+    "avatar": "37.jpg",
     "city": "Астрахань",
     "age": 22,
     "gender": "женский",
     "createdAt": "2025-11-25T13:25:00Z",
-    "favorites": ["skill_006", "skill_019"],
-    "requests": ["req_011", "req_015"],
+    "favorites": ["user_028", "user_034", "user_040"],
+    "liked_me": ["user_030", "user_034"],
+    "skillCanTeach": {
+      "id": "skill_018",
+      "name": "Французский язык",
+      "description": "Французский язык: основы, разговорный, деловой"
+    },
+    "images": ["lang1.jpg", "1office.jpg"],
     "skills": ["skill_016"]
   },
   {
@@ -522,41 +744,59 @@
     "name": "Максим Андреев",
     "email": "maxim@example.com",
     "password": "storm2025",
-    "avatar": "/avatars/38.jpg",
+    "avatar": "38.jpg",
     "city": "Вологда",
     "age": 24,
     "gender": "мужской",
     "createdAt": "2025-12-10T08:45:00Z",
-    "favorites": ["skill_001", "skill_014"],
-    "requests": ["req_006"],
-    "skills": ["skill_020", "skill_004"]
+    "favorites": ["user_031", "user_035", "user_037"],
+    "liked_me": ["user_031", "user_035"],
+    "skillCanTeach": {
+      "id": "skill_016",
+      "name": "Декор",
+      "description": "Создание интерьерного декора, hand-made, рукоделие"
+    },
+    "images": ["dec.jpg", "flowers.jpg", "flowers1.jpg", "photo.jpg"],
+    "skills": ["skill_018", "skill_034"]
   },
   {
     "id": "user_039",
     "name": "Дарья Волкова",
     "email": "darya@example.com",
     "password": "spring2025",
-    "avatar": "/avatars/39.jpg",
+    "avatar": "39.jpg",
     "city": "Псков",
     "age": 28,
     "gender": "женский",
     "createdAt": "2025-12-25T12:10:00Z",
-    "favorites": ["skill_008", "skill_017"],
-    "requests": ["req_007", "req_014"],
-    "skills": ["skill_013"]
+    "favorites": ["user_030", "user_032", "user_036"],
+    "liked_me": ["user_032", "user_036"],
+    "skillCanTeach": {
+      "id": "skill_007",
+      "name": "Project менеджмент",
+      "description": "Методологии Agile, Scrum, Kanban, управление проектами"
+    },
+    "images": ["1office.jpg", "flowers.jpg", "lang.jpg"],
+    "skills": ["skill_030", "skill_036", "skill_041"]
   },
   {
     "id": "user_040",
     "name": "Тимофей Зайцев",
     "email": "timofey@example.com",
     "password": "winter2025",
-    "avatar": "/avatars/40.jpg",
+    "avatar": "40.jpg",
     "city": "Орёл",
     "age": 21,
     "gender": "мужской",
     "createdAt": "2026-01-15T15:30:00Z",
-    "favorites": ["skill_005", "skill_012"],
-    "requests": ["req_019"],
-    "skills": ["skill_018", "skill_007"]
+    "favorites": ["user_032", "user_036", "user_037"],
+    "liked_me": ["user_032", "user_036"],
+    "skillCanTeach": {
+      "id": "skill_038",
+      "name": "Диетолог",
+      "description": "составление индивидуального плана питания, разбор пищевых привычек;"
+    },
+    "images": ["eda.jpg", "fk3.jpg"],
+    "skills": ["skill_011", "skill_040"]
   }
 ]
