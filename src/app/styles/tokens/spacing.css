@@ -1,3 +1,25 @@
+/* задача 1a-5: spacing */
 :root {
-    /* задача 1a-5: spacing */
+ /* Радиусы (от меньшего к большему) */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 60px;
+  --radius-full: 100px;
+
+  /* Отступы (от меньшего к большему) */
+  --spacing-4px: 4px;
+  --spacing-8px: 8px;
+  --spacing-10px: 10px;
+  --spacing-12px: 12px;
+  --spacing-16px: 16px;
+  --spacing-20px: 20px;
+  --spacing-24px: 24px;
+  --spacing-28px: 28px;
+  --spacing-32px: 32px;
+  --spacing-36px: 36px;
+  --spacing-40px: 40px;
+  --spacing-44px: 44px;
+  --spacing-52px: 52px;
+  --spacing-60px: 60px;
+  --spacing-80px: 80px;
 }
