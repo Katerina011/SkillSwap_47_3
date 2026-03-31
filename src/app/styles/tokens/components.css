@@ -20,7 +20,7 @@
     /* Каретка */
     --field-caret-color: var(--color-accent-pressed);
 
-    /* Паддинги контейнера поля (из 46_5 index.css) */
+    /* Паддинги контейнера поля */
     --field-padding-block: 11px;
     --field-padding-inline: 19px;
 
