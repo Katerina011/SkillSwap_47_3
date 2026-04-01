@@ -1,0 +1,91 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: var(--transition-default);
+}
+
+/* Размеры кнопок */
+.size-md {
+  padding: var(--control-button-padding-y-md) var(--control-button-padding-x-md);
+  font-size: var(--font-size-body);
+  border-radius: var(--radius-sm);
+}
+
+.size-lg {
+  padding: var(--control-button-padding-y-lg) var(--control-button-padding-x-lg);
+  font-size: var(--font-size-h4);
+  border-radius: var(--radius-md);
+}
+
+/* Primary variant - используем акцентные цвета */
+.primary {
+  color: var(--color-text);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary:focus-visible:not(:disabled) {
+  outline: 2px solid var(--color-accent-pressed);
+  outline-offset: var(--spacing-4px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Secondary variant - используем семантические цвета */
+.secondary {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-bg);
+  border-color: var(--color-text-caption);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary:focus-visible:not(:disabled) {
+  outline: 2px solid var(--color-accent-pressed);
+  outline-offset: var(--spacing-4px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Disabled state */
+.disabled,
+.button:disabled {
+  color: var(--color-text-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: var(--color-disabled);
+  border-color: var(--color-disabled);
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+/* Дополнительный класс для кнопок с полным радиусом (круглые кнопки) */
+.rounded-full {
+  border-radius: var(--radius-full);
+}
+
+/* Дополнительный класс для кнопок с большим радиусом */
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+/* Дополнительный класс для кнопок с тенью при наведении (если нужно отключить) */
+.no-shadow:hover {
+  box-shadow: none;
+}
