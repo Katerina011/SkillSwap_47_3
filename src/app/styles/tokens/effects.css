@@ -1,9 +1,9 @@
 /* задача 1a-3: effect */
 :root {
-    /* Transitions */
+  /* Transitions */
   --transition-default: 0.2s ease-in-out;
 
-    /* Shadows */
+  /* Shadows */
   --shadow-sm: 0 2px 4px rgb(0 0 0 / 8%);
   --shadow-md: 0 4px 6px rgb(0 0 0 / 10%);
 }
