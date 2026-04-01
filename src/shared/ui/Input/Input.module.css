@@ -1,0 +1,67 @@
+.input {
+    width: 100%;
+    max-width: var(--control-input-max-width, 648px);
+    padding-block: var(--control-input-padding-y, 12px);
+    padding-inline: var(--control-input-padding-x, 12px);
+    font-family: var(--field-font-family, var(--font-family-body));
+    font-size: var(--field-font-size, var(--font-size-body));
+    font-weight: var(--field-font-weight, var(--font-weight-regular));
+    line-height: var(--field-line-height, 1.5);
+    color: var(--field-text-color, var(--color-text));
+    caret-color: var(--field-caret-color, var(--color-accent-pressed));
+    outline: none;
+    background-color: var(--field-bg, var(--color-surface));
+    border: 1px solid var(--field-border-color, var(--color-border));
+    border-radius: var(--radius-sm, 12px);
+    transition: var(--interactive-transition-duration, 0.2s) var(--interactive-transition-timing, ease-in-out);
+}
+
+/* Hover состояние */
+.input:hover:not(:disabled) {
+    background-color: var(--color-surface);
+    border-color: var(--color-accent);
+}
+
+/* Focus состояние */
+.input:focus:not(:disabled) {
+    outline: none;
+    border-color: var(--color-accent-pressed);
+    box-shadow: 0 0 0 var(--interactive-focus-ring-width, 2px) var(--interactive-focus-ring-color, var(--color-accent-pressed));
+}
+
+/* Disabled состояние */
+.input.disabled,
+.input:disabled {
+    color: var(--color-text-disabled, #9ca197);
+    cursor: not-allowed;
+    background-color: var(--color-disabled, #e4e8df);
+    border-color: var(--color-border, #69735d);
+    opacity: 0.7;
+}
+
+/* Error состояние */
+.input.error {
+    border-color: var(--field-border-error-color, var(--color-error));
+}
+
+.input.error:focus:not(:disabled) {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 var(--interactive-focus-ring-width, 2px) var(--color-error);
+}
+
+/* Placeholder стили */
+.input::placeholder {
+    color: var(--field-placeholder-color, var(--color-text-caption));
+    opacity: 1;
+}
+
+/* Убираем стандартные стили для number input */
+.input[type="number"] {
+    appearance: textfield;
+}
+
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+}
