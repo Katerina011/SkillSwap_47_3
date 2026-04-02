@@ -5,15 +5,28 @@ import styles from './likeButton.module.css';
 interface LikeButtonUIProps {
   isLiked: boolean;
   onLikeToggle: () => void;
+  canLike: boolean;
 }
 
-const LikeButtonUI: FC<LikeButtonUIProps> = ({ isLiked, onLikeToggle }) => {
+const LikeButtonUI: FC<LikeButtonUIProps> = ({
+  isLiked,
+  onLikeToggle,
+  canLike,
+}) => {
   return (
     <button
       type="button"
       onClick={onLikeToggle}
+      disabled={!canLike}
       className={cn(styles.likeButton, isLiked && styles.likeActive)}
-      aria-label="Лайк карточке пользователя"
+      title={
+        canLike
+          ? isLiked
+            ? 'Убрать лайк'
+            : 'Поставить лайк'
+          : 'Войдите, чтобы ставить лайк'
+      }
+      aria-label={isLiked ? 'Убрать лайк' : 'Поставить лайк'}
     >
       <svg
         width="24"
