@@ -14,8 +14,9 @@
     --icon-size-md: 24px;
 
     /* Аватар */
-    --avatar-size-md: 48px;
-    --avatar-size-lg: 100px;
+    --avatar-size-sm: 48px;
+    --avatar-size-md: 100px;
+    --avatar-size-lg: 244px;
 
     /* Каретка */
     --field-caret-color: var(--color-accent-pressed);
