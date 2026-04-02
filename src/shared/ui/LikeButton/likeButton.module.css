@@ -24,7 +24,7 @@
 }
 
 .like-active {
-  color: var(--accent-color, #abd27a);
+  color: var(--color-accent, #abd27a);
   animation: like-pulse 0.3s ease-in-out;
 }
 
