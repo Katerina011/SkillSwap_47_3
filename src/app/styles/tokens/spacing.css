@@ -1,9 +1,10 @@
-/* задача 1a-5: spacing */
+/* задача */
 :root {
- /* Радиусы (от меньшего к большему) */
+  /* Радиусы (от меньшего к большему) */
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 60px;
+  /* круглые элементы */
   --radius-full: 1000px;
 
   /* Отступы (от меньшего к большему) */
@@ -22,4 +23,10 @@
   --spacing-52px: 52px;
   --spacing-60px: 60px;
   --spacing-80px: 80px;
+
+  /* Отступы секций и контейнера */
+  --section-padding-mobile: var(--spacing-24px);
+  --section-padding-desktop: var(--spacing-48px);
+  --container-padding: var(--spacing-16px);
+  --container-max-width: 1200px;
 }
