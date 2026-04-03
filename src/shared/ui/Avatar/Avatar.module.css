@@ -1,38 +1,41 @@
 .avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: var(--radius-full);
-    background: var(--color-disabled);
-    color: var(--color-text);
-    font-family: var(--font-family-body);
-    font-weight: var(--font-weight-medium);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-disabled);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-medium);
 }
+
 .sm {
-    width: var(--avatar-size-sm);
-    height: var(--avatar-size-sm);
-    font-size: var(--font-size-h3);
+  width: var(--avatar-size-sm);
+  height: var(--avatar-size-sm);
+  font-size: var(--font-size-h3);
 }
+
 .md {
-    width: var(--avatar-size-md);
-    height: var(--avatar-size-md);
-    font-size: var(--font-size-h2);
+  width: var(--avatar-size-md);
+  height: var(--avatar-size-md);
+  font-size: var(--font-size-h2);
 }
+
 .lg {
-    width: var(--avatar-size-lg);
-    height: var(--avatar-size-lg);
-    font-size: var(--font-size-h1);
+  width: var(--avatar-size-lg);
+  height: var(--avatar-size-lg);
+  font-size: var(--font-size-h1);
 }
 
 .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .fallback {
-    text-transform: uppercase;
-    line-height: 1;
+  text-transform: uppercase;
+  line-height: 1;
 }
