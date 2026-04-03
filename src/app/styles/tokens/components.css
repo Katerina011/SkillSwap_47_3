@@ -13,10 +13,6 @@
   /* Иконка рядом с полем ввода */
   --icon-size-md: 24px;
 
-  /* Аватар */
-  --avatar-size-md: 48px;
-  --avatar-size-lg: 100px;
-
   /* Каретка */
   --field-caret-color: var(--color-accent-pressed);
 
