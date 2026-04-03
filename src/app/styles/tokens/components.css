@@ -13,11 +13,6 @@
   /* Иконка рядом с полем ввода */
   --icon-size-md: 24px;
 
-  /* Аватар (три размера — для Avatar sm / md / lg) */
-  --avatar-size-sm: 48px;
-  --avatar-size-md: 100px;
-  --avatar-size-lg: 244px;
-
   /* Каретка */
   --field-caret-color: var(--color-accent-pressed);
 
