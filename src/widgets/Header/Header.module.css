@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  background-color: var(--color-bg);
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.nav__menu {
+  display: inherit;
+  flex-direction: row;
+  gap: var(--spacing-32px);
+  align-items: center;
+  max-width: 1440px;
+  max-height: 104px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: inherit;
+  flex-direction: row;
+  gap: var(--spacing-12px);
+  align-items: center;
+  max-width: 159px;
+  max-height: 40px;
+}
+
