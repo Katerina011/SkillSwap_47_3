@@ -29,7 +29,10 @@ body {
   font-family: inherit;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
@@ -60,6 +63,13 @@ h4 {
 }
 
 /* Для всех остальных элементов */
-p, span, div, button, input, textarea, select, a {
+p,
+span,
+div,
+button,
+input,
+textarea,
+select,
+a {
   font-family: inherit;
 }
