@@ -1,0 +1,39 @@
+.tag {
+  display: inline-block;
+  inline-size: max-content;
+  min-block-size: 32px;
+  padding: 8px 12px;
+  font-size: var(--font-size-caption, 12px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-caption, 16px);
+  white-space: nowrap;
+  border-radius: var(--radius-md, 20px);
+}
+
+.business {
+  background: var(--color-tag-business, #eee7f7);
+}
+
+.creative {
+  background: var(--color-tag-creative, #f7e7f2);
+}
+
+.languages {
+  background: var(--color-tag-languages, #ebe5c5);
+}
+
+.home {
+  background: var(--color-tag-home, #f7ebe5);
+}
+
+.education {
+  background: var(--color-tag-education, #e7f2f6);
+}
+
+.health {
+  background: var(--color-tag-health, #e9f7e7);
+}
+
+.other {
+  background: var(--color-tag-other, #e8ecf7);
+}
