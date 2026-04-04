@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
 
 // Компонент Header
 function Header() {
@@ -287,23 +287,21 @@ function NotFoundPage() {
 
 export function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<CatalogPage />} />
-          <Route path="catalog" element={<CatalogPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="skill/:id" element={<SkillPage />} />
-          <Route path="create" element={<CreateSkillPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<CatalogPage />} />
+        <Route path="catalog" element={<CatalogPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="favorites" element={<FavoritesPage />} />
+        <Route path="skill/:id" element={<SkillPage />} />
+        <Route path="create" element={<CreateSkillPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="terms" element={<TermsPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
