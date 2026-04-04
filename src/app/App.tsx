@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
 
 // Компонент Header
@@ -287,8 +288,9 @@ function NotFoundPage() {
 
 export function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
         <Route index element={<CatalogPage />} />
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="profile" element={<ProfilePage />} />
@@ -302,6 +304,7 @@ export function App() {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 }
