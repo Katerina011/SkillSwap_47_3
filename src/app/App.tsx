@@ -291,19 +291,19 @@ export function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Layout />}>
-        <Route index element={<CatalogPage />} />
-        <Route path="catalog" element={<CatalogPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="favorites" element={<FavoritesPage />} />
-        <Route path="skill/:id" element={<SkillPage />} />
-        <Route path="create" element={<CreateSkillPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="terms" element={<TermsPage />} />
-        <Route path="privacy" element={<PrivacyPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
+          <Route index element={<CatalogPage />} />
+          <Route path="catalog" element={<CatalogPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="favorites" element={<FavoritesPage />} />
+          <Route path="skill/:id" element={<SkillPage />} />
+          <Route path="create" element={<CreateSkillPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="terms" element={<TermsPage />} />
+          <Route path="privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Routes>
     </Suspense>
   );
