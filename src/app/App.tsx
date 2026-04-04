@@ -1,4 +1,11 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Link } from 'react-router-dom';
+
+
+/**
+ *  lazy - импорты
+ */
+const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Header
 function Header() {
@@ -182,15 +189,14 @@ function Layout() {
   );
 }
 
-// Временные компоненты страниц
-function CatalogPage() {
-  return (
-    <div className="container">
-      <h1>Каталог навыков</h1>
-      <p>Здесь будет отображаться список всех навыков</p>
-    </div>
-  );
-}
+/**
+ *  CatalogPage
+ */
+<Suspense fallback={<div>Loading...</div>}>
+  <Routes>
+    <Route path="/catalog" element={<CatalogPage />} />
+  </Routes>
+</Suspense>
 
 function ProfilePage() {
   return (
