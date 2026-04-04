@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route, Link, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
