@@ -56,16 +56,15 @@ function HeaderGuestUI({
 }
 
 export function HeaderGuest({
-                              onLoginClick = () => {},
-                              onRegisterClick = () => {},
-                              onSearch = () => {},
-                            }: HeaderGuestProps) {
+  onLoginClick = () => {},
+  onRegisterClick = () => {},
+  onSearch = () => {},
+}: HeaderGuestProps) {
   return (
-      <HeaderGuestUI
-          onLoginClick={onLoginClick}
-          onRegisterClick={onRegisterClick}
-          onSearch={onSearch}
-      />
+    <HeaderGuestUI
+      onLoginClick={onLoginClick}
+      onRegisterClick={onRegisterClick}
+      onSearch={onSearch}
+    />
   );
 }
-

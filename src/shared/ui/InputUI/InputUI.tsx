@@ -33,4 +33,3 @@ export const InputUI = React.forwardRef<HTMLInputElement, InputUIProps>(
 );
 
 InputUI.displayName = 'InputUI';
-
