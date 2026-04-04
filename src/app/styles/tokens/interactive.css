@@ -1,0 +1,11 @@
+/* задача 1a-4: interactive */
+:root {
+  /* Переход кнопок/полей: 0.2s ease-in-out — как --transition-default в effects.css (1a-4) */
+  --interactive-transition-duration: 0.2s;
+  --interactive-transition-timing: ease-in-out;
+
+  /* Focus ring  */
+  --interactive-focus-ring-width: 2px;
+  --interactive-focus-ring-color: var(--color-accent-pressed);
+  --interactive-focus-ring-offset: 2px;
+}

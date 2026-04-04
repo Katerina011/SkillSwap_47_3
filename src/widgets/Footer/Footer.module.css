@@ -1,0 +1,98 @@
+.footer {
+  background-color: var(--color-surface);
+}
+
+.h2 {
+  line-height: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-40px);
+  padding: var(--spacing-32px) var(--spacing-36px);
+  margin: 0 auto;
+}
+
+/* Первая колонка */
+.column-first {
+  display: flex;
+  flex-direction: column;
+  grid-column: span 3;
+  gap: var(--spacing-20px);
+  justify-content: flex-start;
+}
+
+/* Остальные колонки */
+.column {
+  display: flex;
+  flex-direction: column;
+  grid-column: span 3;
+  gap: var(--spacing-20px);
+  justify-content: flex-start;
+  padding: var(--spacing-60px) 0 var(--spacing-36px);
+}
+
+/* Обертка для ссылок, чтобы занять всю высоту колонки */
+.links-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.link-item-dot {
+  position: relative;
+  padding-left: var(--spacing-16px); /* Отступ для точки */
+  margin: 0 var(--spacing-10px);
+}
+
+/* Кастомная точка */
+.link-item-dot::before {
+  position: absolute;
+  top: var(--spacing-10px);
+  left: 0;
+  width: var(--spacing-4px);
+  height: var(--spacing-4px);
+  content: '';
+  background-color: var(--color-text);
+  border-radius: var(--radius-sm);
+}
+
+.link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.logo {
+  display: flex;
+  gap: var(--spacing-10px);
+  align-items: center;
+}
+
+.logo h3 {
+  margin: 0;
+}
+
+.copyright {
+  margin-top: auto; /* Прижимает копирайт к низу */
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-caption);
+}
+
+.links-list,
+.links-list-dot {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.link-item,
+.link-item-dot {
+  margin-bottom: var(--spacing-12px);
+}
+
+.link {
+  color: var(--color-text);
+  text-decoration: none;
+}

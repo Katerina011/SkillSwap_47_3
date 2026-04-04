@@ -1,0 +1,36 @@
+:root {
+  /* Фон и поверхности */
+  --color-bg: #f9faf7;
+  --color-surface: #fff;
+  --color-disabled: #e4e8df;
+
+  /* Текст и ссылки */
+  --color-text: #253017;
+  --color-text-caption: #69735d;
+  --color-text-disabled: #9ca197;
+  --color-text-toggle: #b2b9a9;
+  --color-text-link: var(--color-accent-pressed);
+
+  /* Акцентная группа (кнопки, выделения) */
+  --color-accent: #abd27a;
+  --color-accent-hover: #deebc5;
+  --color-accent-pressed: #508826;
+
+  /* Ошибки и предупреждения */
+  --color-alarm: #e0796e;
+  --color-error: #bf3920;
+
+  /* Доп. семантика (оверлей, рамки, второстепенный текст в подвале) */
+  --color-overlay: rgb(142 142 142 / 60%);
+  --color-border: #69735d;
+  --color-copyright: #69735d;
+
+  /* Теги категорий (указаны в поле color объекта категорий) */
+  --color-tag-business: #eee7f7;
+  --color-tag-creative: #f7e7f2;
+  --color-tag-education: #e7f2f6;
+  --color-tag-health: #e9f7e7;
+  --color-tag-home: #f7ebe5;
+  --color-tag-languages: #ebe5c5;
+  --color-tag-other: #e8ecf7;
+}

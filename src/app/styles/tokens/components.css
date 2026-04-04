@@ -1,0 +1,37 @@
+:root {
+  /* Кнопка: паддинги по размерам */
+  --control-button-padding-y-md: 8px;
+  --control-button-padding-x-md: 12px;
+  --control-button-padding-y-lg: 12px;
+  --control-button-padding-x-lg: 24px;
+
+  /* Input: внутренние отступы контейнера */
+  --control-input-padding-y: 12px;
+  --control-input-padding-x: 12px;
+  --control-input-max-width: 648px;
+
+  /* Иконка рядом с полем ввода */
+  --icon-size-md: 24px;
+
+  /* Каретка */
+  --field-caret-color: var(--color-accent-pressed);
+
+  /* Паддинги контейнера поля */
+  --field-padding-block: 11px;
+  --field-padding-inline: 19px;
+
+  /* Текст поля — ссылки на типографику 1a-2 */
+  --field-text-color: var(--color-text);
+  --field-font-family: var(--font-family-body);
+  --field-font-size: var(--font-size-body);
+  --field-line-height: 1.5;
+  --field-font-weight: var(--font-weight-regular);
+
+  /* Placeholder и фон */
+  --field-placeholder-color: var(--color-text-caption);
+  --field-bg: var(--color-surface);
+
+  /* Рамка и состояние ошибки */
+  --field-border-color: var(--color-text-caption);
+  --field-border-error-color: var(--color-error);
+}
