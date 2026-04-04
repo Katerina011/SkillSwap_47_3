@@ -81,12 +81,12 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #0C0C0C;
+  color: #0c0c0c;
   text-align: center;
   letter-spacing: 2%;
   text-decoration: none;
   cursor: pointer;
-  background-color: #ABD27A;
+  background-color: #abd27a;
   border: none;
   border-radius: 12px;
   transition: opacity 0.2s ease;
@@ -109,17 +109,17 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #0C0C0C;
+  color: #0c0c0c;
   text-align: center;
   letter-spacing: 2%;
   cursor: pointer;
-  background-color: #FFF;
-  border: 1px solid #ABD27A;
+  background-color: #fff;
+  border: 1px solid #abd27a;
   border-radius: 12px;
   transition: all 0.2s ease;
 }
 
 .button-secondary:hover {
-  color: #0C0C0C;
-  background-color: #ABD27A;
+  color: #0c0c0c;
+  background-color: #abd27a;
 }

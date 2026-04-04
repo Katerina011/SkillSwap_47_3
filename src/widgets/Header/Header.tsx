@@ -10,10 +10,10 @@ interface HeaderGuestUIProps {
   onSearch?: (query: string) => void;
 }
 
-function HeaderGuestUI({ 
-  onLoginClick = () => {}, 
-  onRegisterClick = () => {}, 
-  onSearch = () => {} 
+function HeaderGuestUI({
+  onLoginClick = () => {},
+  onRegisterClick = () => {},
+  onSearch = () => {},
 }: HeaderGuestUIProps) {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
@@ -25,11 +25,15 @@ function HeaderGuestUI({
         <nav className={styles['nav-menu']}>
           <div className={styles.logo}>
             <Link to="/" className={styles['logo-link']}>
-              <img src={logoIcon} alt="логотип SkillSwap" className={styles['logo-icon']} />
+              <img
+                src={logoIcon}
+                alt="логотип SkillSwap"
+                className={styles['logo-icon']}
+              />
               <h1 className={styles.h1}>SkillSwap</h1>
             </Link>
           </div>
-          
+
           <div className={styles['nav-links']}>
             <ul className={styles['nav-list']}>
               <li>
@@ -44,7 +48,7 @@ function HeaderGuestUI({
               </li>
             </ul>
           </div>
-          
+
           <div className={styles['search-wrapper']}>
             <input
               type="text"
@@ -53,9 +57,13 @@ function HeaderGuestUI({
               onChange={handleSearch}
             />
           </div>
-          
+
           <div className={styles['theme-toggle']}>
-            <button type="button" className={styles['theme-button']} aria-label="Переключить тему">
+            <button
+              type="button"
+              className={styles['theme-button']}
+              aria-label="Переключить тему"
+            >
               <svg
                 width="20"
                 height="20"
@@ -70,17 +78,17 @@ function HeaderGuestUI({
               </svg>
             </button>
           </div>
-          
+
           <div className={styles['auth-buttons']}>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={`${styles.button} ${styles['button-outline']}`}
               onClick={onLoginClick}
             >
               Войти
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={`${styles.button} ${styles['button-primary']}`}
               onClick={onRegisterClick}
             >
