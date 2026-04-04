@@ -1,6 +1,9 @@
-import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import { Routes, Route, Link, Outlet } from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
+
+const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Layout
 function Layout() {
@@ -11,16 +14,6 @@ function Layout() {
         <Outlet />
       </main>
       <Footer />
-    </div>
-  );
-}
-
-// Временные компоненты страниц
-function CatalogPage() {
-  return (
-    <div className="container">
-      <h1>Каталог навыков</h1>
-      <p>Здесь будет отображаться список всех навыков</p>
     </div>
   );
 }
@@ -138,7 +131,7 @@ function NotFoundPage() {
 
 export function App() {
   return (
-    <BrowserRouter>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
@@ -157,6 +150,6 @@ export function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Suspense>
   );
 }

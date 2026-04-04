@@ -60,3 +60,4 @@ Git не хранит пустые каталоги. Файлы `.gitkeep` — �
 Для автоматического форматирования можно использовать:
 
 - `npm run format`
+- На pull request в `develop` и `main` запускаются проверки: `npm ci`, `npm run lint`, `npm run format:check`, `npm run lint:css`, `npm run build`, `npm test`.
