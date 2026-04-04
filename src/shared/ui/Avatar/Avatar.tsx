@@ -25,13 +25,13 @@ export function Avatar({
   src,
   name,
   alt,
-  size = 'md',
+  size,
 }: AvatarProps) {
   const [hasError, setHasError] = useState(false);
 
   const initials = getInitials(name);
   const showImage = Boolean(src) && !hasError;
-  const sizeClass = styles[size];
+  const sizeClass = styles[size ?? 'md'];
 
   return (
     <div
@@ -51,3 +51,10 @@ export function Avatar({
     </div>
   );
 }
+
+Avatar.defaultProps = {
+  src: undefined,
+  name: undefined,
+  alt: undefined,
+  size: 'md' as AvatarSize,
+};

@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import type { ReactNode } from 'react';
 import cn from 'clsx';
 import styles from './tag.module.css';
 
@@ -12,17 +12,21 @@ export type TSkillVariant =
   | 'other';
 
 export interface ITagUIProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant: TSkillVariant;
   className?: string;
 }
 
-const TagUI: FC<ITagUIProps> = ({ children, variant, className }) => {
+function TagUI({ children, variant, className }: ITagUIProps) {
   return (
     <span className={cn(styles.tag, variant && styles[variant], className)}>
       {children}
     </span>
   );
+}
+
+TagUI.defaultProps = {
+  className: undefined,
 };
 
 export default TagUI;
