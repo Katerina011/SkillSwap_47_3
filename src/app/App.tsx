@@ -1,4 +1,11 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Link } from 'react-router-dom';
+
+
+/**
+ *  lazy - импорты
+ */
+const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Header
 function Header() {
@@ -182,16 +189,6 @@ function Layout() {
   );
 }
 
-// Временные компоненты страниц
-function CatalogPage() {
-  return (
-    <div className="container">
-      <h1>Каталог навыков</h1>
-      <p>Здесь будет отображаться список всех навыков</p>
-    </div>
-  );
-}
-
 function ProfilePage() {
   return (
     <div className="container">
@@ -288,22 +285,24 @@ function NotFoundPage() {
 export function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<CatalogPage />} />
-          <Route path="catalog" element={<CatalogPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="skill/:id" element={<SkillPage />} />
-          <Route path="create" element={<CreateSkillPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<CatalogPage />} />
+            <Route path="catalog" element={<CatalogPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="favorites" element={<FavoritesPage />} />
+            <Route path="skill/:id" element={<SkillPage />} />
+            <Route path="create" element={<CreateSkillPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="terms" element={<TermsPage />} />
+            <Route path="privacy" element={<PrivacyPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
