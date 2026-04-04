@@ -53,11 +53,3 @@ export const ButtonUI = forwardRef<HTMLButtonElement, ButtonUIProps>(
 );
 
 ButtonUI.displayName = 'ButtonUI';
-
-ButtonUI.defaultProps = {
-  variant: 'primary',
-  size: 'md',
-  radius: 'sm',
-  className: '',
-  disabled: false,
-};
