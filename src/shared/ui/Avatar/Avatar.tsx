@@ -22,9 +22,9 @@ function getInitials(name?: string): string {
 }
 
 export function Avatar({
-  src,
-  name,
-  alt,
+  src = '',
+  name = '',
+  alt = 'Avatar',
   size = 'md',
 }: AvatarProps) {
   const [hasError, setHasError] = useState(false);
@@ -34,15 +34,12 @@ export function Avatar({
   const sizeClass = styles[size];
 
   return (
-    <div
-      className={`${styles.avatar} ${sizeClass}`}
-      aria-label={name || alt || 'Avatar'}
-    >
+    <div className={`${styles.avatar} ${sizeClass}`} aria-label={name || alt}>
       {showImage ? (
         <img
           className={styles.image}
           src={src}
-          alt={alt || name || 'Avatar'}
+          alt={alt || name}
           onError={() => setHasError(true)}
         />
       ) : (
@@ -51,3 +48,10 @@ export function Avatar({
     </div>
   );
 }
+
+Avatar.defaultProps = {
+  src: '',
+  name: '',
+  alt: 'Avatar',
+  size: 'md',
+};

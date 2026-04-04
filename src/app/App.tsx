@@ -43,7 +43,7 @@ function Header() {
                   Избранное
                 </Link>
 							 TODO: по макету не поняла где будут находится избранные карточки
-              </li> */} 
+              </li> */}
             </ul>
           </nav>
 
@@ -56,7 +56,11 @@ function Header() {
           </div>
 
           <div className="app-header-actions">
-            <button type="button" className="app-header-theme-toggle" aria-label="Переключить тему">
+            <button
+              type="button"
+              className="app-header-theme-toggle"
+              aria-label="Переключить тему"
+            >
               <svg
                 width="20"
                 height="20"
@@ -70,10 +74,16 @@ function Header() {
                 />
               </svg>
             </button>
-            <button type="button" className="app-header-button app-header-button-outline">
+            <button
+              type="button"
+              className="app-header-button app-header-button-outline"
+            >
               Войти
             </button>
-            <button type="button" className="app-header-button app-header-button-primary">
+            <button
+              type="button"
+              className="app-header-button app-header-button-primary"
+            >
               Зарегистрироваться
             </button>
           </div>

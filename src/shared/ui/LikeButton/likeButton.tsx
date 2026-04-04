@@ -1,4 +1,3 @@
-import { type FC } from 'react';
 import cn from 'clsx';
 import styles from './likeButton.module.css';
 
@@ -8,24 +7,20 @@ interface LikeButtonUIProps {
   canLike: boolean;
 }
 
-const LikeButtonUI: FC<LikeButtonUIProps> = ({
-  isLiked,
-  onLikeToggle,
-  canLike,
-}) => {
+function LikeButtonUI({ isLiked, onLikeToggle, canLike }: LikeButtonUIProps) {
+  let title = 'Войдите, чтобы ставить лайк';
+
+  if (canLike) {
+    title = isLiked ? 'Убрать лайк' : 'Поставить лайк';
+  }
+
   return (
     <button
       type="button"
       onClick={onLikeToggle}
       disabled={!canLike}
       className={cn(styles.likeButton, isLiked && styles.likeActive)}
-      title={
-        canLike
-          ? isLiked
-            ? 'Убрать лайк'
-            : 'Поставить лайк'
-          : 'Войдите, чтобы ставить лайк'
-      }
+      title={title}
       aria-label={isLiked ? 'Убрать лайк' : 'Поставить лайк'}
     >
       <svg
@@ -44,6 +39,6 @@ const LikeButtonUI: FC<LikeButtonUIProps> = ({
       </svg>
     </button>
   );
-};
+}
 
 export default LikeButtonUI;

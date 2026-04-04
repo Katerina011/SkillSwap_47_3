@@ -1,4 +1,3 @@
-import { type FC } from 'react';
 import cn from 'clsx';
 import styles from './tag.module.css';
 
@@ -17,12 +16,16 @@ export interface ITagUIProps {
   className?: string;
 }
 
-const TagUI: FC<ITagUIProps> = ({ children, variant, className }) => {
+function TagUI({ children, variant, className = '' }: ITagUIProps) {
   return (
-    <span className={cn(styles.tag, variant && styles[variant], className)}>
+    <span className={cn(styles.tag, styles[variant], className)}>
       {children}
     </span>
   );
+}
+
+TagUI.defaultProps = {
+  className: '',
 };
 
 export default TagUI;
