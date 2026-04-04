@@ -1,0 +1,126 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 460px;
+  height: 504px;
+  margin-top: 100px;
+  margin-bottom: 84px;  /* ← добавлен отступ снизу */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Картинка */
+.imageWrapper {
+  width: 460px;
+  height: 304px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Текстовый блок */
+.textBlock {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subtitle {
+  width: 460px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -1.1%;
+  text-align: center;
+  color: #253017;
+  margin: 0;
+}
+
+.description {
+  width: 460px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2%;
+  text-align: center;
+  color: #253017;
+  margin: 0;
+}
+
+/* Кнопки */
+.buttons {
+  width: 460px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.buttonPrimary {
+  width: 218px;
+  height: 48px;
+  padding: 12px 24px;
+  background-color: #ABD27A;
+  color: #0C0C0C;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 2%;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.buttonPrimary:hover {
+  opacity: 0.9;
+}
+
+.buttonSecondary {
+  width: 218px;
+  height: 48px;
+  padding: 12px 24px;
+  background-color: #FFFFFF;
+  color: #0C0C0C;
+  text-align: center;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 2%;
+  border: 1px solid #ABD27A;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.buttonSecondary:hover {
+  background-color: #ABD27A;
+  color: #0C0C0C;
+}

@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Routes, Route, Link, Outlet } from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -113,18 +114,6 @@ function PrivacyPage() {
     <div className="container">
       <h1>Политика конфиденциальности</h1>
       <p>Политика конфиденциальности сервиса SkillSwap</p>
-    </div>
-  );
-}
-
-function NotFoundPage() {
-  return (
-    <div className="container">
-      <h1>404 - Страница не найдена</h1>
-      <p>Запрашиваемая страница не существует</p>
-      <Link to="/" className="button button-primary">
-        Вернуться на главную
-      </Link>
     </div>
   );
 }
