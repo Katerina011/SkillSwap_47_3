@@ -32,7 +32,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #ABD27A;
+  background-color: #abd27a;
   border-radius: 60px;
 }
 
@@ -47,7 +47,7 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 32px;
-  color: #0C0C0C;
+  color: #0c0c0c;
   letter-spacing: -1.1%;
 }
 
@@ -61,7 +61,7 @@
   height: 48px;
   padding: 12px 24px;
   text-decoration: none;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 12px;
   transition: background-color 0.2s;
 }
