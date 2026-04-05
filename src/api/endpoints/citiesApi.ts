@@ -7,7 +7,7 @@ type UsersResponse = {
 
 export const fetchCities = async (): Promise<string[]> => {
   const data = await loadJson<UsersResponse>('/db/users.json');
-  const {users} = data;
+  const { users } = data;
 
   const uniqueCities = new Set<string>();
   users.forEach((user) => {
