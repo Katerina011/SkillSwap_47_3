@@ -1,14 +1,4 @@
-export type Subcategory = {
-  id: string;
-  categoryId: string;
-  name: string;
-};
-export type SkillTeach = {
-  id: string; // id субкатегории / навыка
-  categoryId: string;
-  name: string;
-  description?: string;
-};
+import { SkillTeach } from '../../skill/model/types';
 
 export interface User {
   id: string;
