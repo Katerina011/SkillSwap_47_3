@@ -23,8 +23,7 @@ function LoginPage() {
       return;
     }
     setError('');
-    // eslint-disable-next-line no-console
-    console.log('Вход:', { email, password });
+    // TODO: подключить вход (useAuth / loginWithUsersJson) и редирект
   };
 
   return (
