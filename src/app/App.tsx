@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -51,15 +52,6 @@ function CreateSkillPage() {
     <div className="container">
       <h1>Создание навыка</h1>
       <p>Здесь будет форма создания нового навыка</p>
-    </div>
-  );
-}
-
-function LoginPage() {
-  return (
-    <div className="container">
-      <h1>Вход</h1>
-      <p>Здесь будет форма входа</p>
     </div>
   );
 }
@@ -122,6 +114,7 @@ export function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
+        {/* Страницы с обычным хедером и футером */}
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
           <Route path="catalog" element={<CatalogPage />} />
@@ -129,15 +122,17 @@ export function App() {
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
           <Route path="create" element={<CreateSkillPage />} />
-          <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="blog" element={<BlogPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
+
+        {/* Страницы без хедера и футера (свой дизайн) */}
+        <Route path="login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   );
