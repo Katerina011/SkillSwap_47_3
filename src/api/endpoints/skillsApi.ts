@@ -13,9 +13,7 @@ type PlainCategory = {
 };
 
 // получение всего skills.json, все категории и их субкатегории
-export const getAllSkills = async (): Promise<SkillsResponse> => {
-  return loadJson<SkillsResponse>('/db/skills.json');
-};
+export const getAllSkills = async (): Promise<SkillsResponse> => loadJson<SkillsResponse>('/db/skills.json');
 // получение списка категорий без субкатегорий, (для выпадающего списка)
 export const fetchCategories = async (): Promise<PlainCategory[]> => {
   const data = await loadJson<SkillsResponse>('/db/skills.json');
