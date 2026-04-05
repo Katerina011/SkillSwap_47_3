@@ -5,6 +5,7 @@ import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
+import Step3Form from '../pages/RegisterPage3/Step3Form';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -134,6 +135,7 @@ export function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="register/step2" element={<Step2Form />} />
+        <Route path="register/step3" element={<Step3Form />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
