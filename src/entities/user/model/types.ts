@@ -1,3 +1,5 @@
+import type { SkillTeach } from '../../skill/model/types';
+
 export interface User {
   id: string;
   name: string;
