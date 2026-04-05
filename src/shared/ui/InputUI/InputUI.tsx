@@ -26,10 +26,10 @@ export const InputUI = React.forwardRef<HTMLInputElement, InputUIProps>(
         className={inputClasses}
         disabled={disabled}
         aria-invalid={error}
-        {...rest}  // пробрасываем все остальные пропсы (value, onChange, placeholder и т.д.)
+        {...rest} // пробрасываем все остальные пропсы (value, onChange, placeholder и т.д.)
       />
     );
-  }
+  },
 );
 
 InputUI.displayName = 'InputUI';

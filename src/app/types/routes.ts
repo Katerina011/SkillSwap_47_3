@@ -64,12 +64,10 @@ export const CREATE_ROUTE = '/create' as const;
  */
 export const ABOUT_ROUTE = '/about' as const;
 
-
 /**
  * Политика конфиденциальности
  */
 export const PRIVACY_ROUTE = '/privacy' as const;
-
 
 /**
  * Пользовательское соглашение
@@ -105,9 +103,7 @@ export const DEFAULT_REDIRECT_AFTER_LOGOUT = HOME_ROUTE;
 /**
  * Маршруты, доступные только неавторизованным пользователям
  */
-export const PUBLIC_ONLY_ROUTES = [
-  LOGIN_ROUTE,
-] as const;
+export const PUBLIC_ONLY_ROUTES = [LOGIN_ROUTE] as const;
 
 /**
  * Маршруты, требующие авторизации
@@ -124,51 +120,56 @@ export const PROTECTED_ROUTES = [
 /**
  * Все статические маршруты
  */
-export const STATIC_ROUTES = [
-  ABOUT_ROUTE,
-  PRIVACY_ROUTE,
-] as const;
+export const STATIC_ROUTES = [ABOUT_ROUTE, PRIVACY_ROUTE] as const;
 
 /**
  * Маршруты с динамическими параметрами (требуют специальной проверки)
  */
-export const DYNAMIC_ROUTES = [
-  SKILL_BASE_ROUTE,
-] as const;
+export const DYNAMIC_ROUTES = [SKILL_BASE_ROUTE] as const;
 
 // ============ ТИПЫ ДЛЯ ТИПИЗАЦИИ ============
 
 /**
  * Тип для всех публичных маршрутов
  */
-export type PublicRoute = typeof HOME_ROUTE | typeof LOGIN_ROUTE | typeof STATIC_ROUTES[number];
+export type PublicRoute =
+  | typeof HOME_ROUTE
+  | typeof LOGIN_ROUTE
+  | (typeof STATIC_ROUTES)[number];
 
 /**
  * Тип для всех защищенных маршрутов
  */
-export type ProtectedRoute = typeof PROTECTED_ROUTES[number];
+export type ProtectedRoute = (typeof PROTECTED_ROUTES)[number];
 
 /**
  * Тип для всех маршрутов приложения
  */
-export type AppRoute = PublicRoute | ProtectedRoute | typeof NOT_FOUND_ROUTE | typeof SERVER_ERROR_ROUTE;
+export type AppRoute =
+  | PublicRoute
+  | ProtectedRoute
+  | typeof NOT_FOUND_ROUTE
+  | typeof SERVER_ERROR_ROUTE;
 
 // ============ ФУНКЦИИ-ПРОВЕРКИ ============
 
 /**
  * Проверяет, является ли маршрут динамическим (содержит параметры)
  */
-export const isDynamicRoute = (path: string): boolean => DYNAMIC_ROUTES.some(route => path.startsWith(route));
+export const isDynamicRoute = (path: string): boolean =>
+  DYNAMIC_ROUTES.some((route) => path.startsWith(route));
 
 /**
  * Проверяет, требует ли маршрут авторизации
  */
-export const isProtectedRoute = (path: string): boolean => PROTECTED_ROUTES.some(route => path === route || path.startsWith(route));
+export const isProtectedRoute = (path: string): boolean =>
+  PROTECTED_ROUTES.some((route) => path === route || path.startsWith(route));
 
 /**
  * Проверяет, доступен ли маршрут только неавторизованным
  */
-export const isPublicOnlyRoute = (path: string): boolean => PUBLIC_ONLY_ROUTES.includes(path as typeof PUBLIC_ONLY_ROUTES[number]);
+export const isPublicOnlyRoute = (path: string): boolean =>
+  PUBLIC_ONLY_ROUTES.includes(path as (typeof PUBLIC_ONLY_ROUTES)[number]);
 
 // ============ ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ============
 
@@ -176,8 +177,9 @@ export const isPublicOnlyRoute = (path: string): boolean => PUBLIC_ONLY_ROUTES.i
  * Формирует путь к профилю с возможным вложенным сегментом
  * @param segment - опциональный вложенный путь (edit, settings, security, notifications)
  */
-export const getProfileRoute = (segment?: 'edit' | 'settings' | 'security' | 'notifications'): string => {
+export const getProfileRoute = (
+  segment?: 'edit' | 'settings' | 'security' | 'notifications',
+): string => {
   if (!segment) return PROFILE_ROUTE;
   return `/profile/${segment}`;
 };
-
