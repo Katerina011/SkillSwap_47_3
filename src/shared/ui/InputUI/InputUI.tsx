@@ -33,9 +33,3 @@ export const InputUI = React.forwardRef<HTMLInputElement, InputUIProps>(
 );
 
 InputUI.displayName = 'InputUI';
-
-InputUI.defaultProps = {
-  error: false,
-  className: '',
-  disabled: false,
-};
