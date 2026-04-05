@@ -21,12 +21,7 @@ function getInitials(name?: string): string {
   return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
 }
 
-export function Avatar({
-  src,
-  name,
-  alt,
-  size,
-}: AvatarProps) {
+export function Avatar({ src, name, alt, size }: AvatarProps) {
   const [hasError, setHasError] = useState(false);
 
   const initials = getInitials(name);

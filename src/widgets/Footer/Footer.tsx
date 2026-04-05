@@ -9,7 +9,7 @@ interface FooterLink {
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   const sections: FooterLink[][] = [
     [
       { label: 'О проекте', href: '/about' },
@@ -32,7 +32,11 @@ export function Footer() {
         <div className={styles['column-first']}>
           <div className={styles.logo}>
             <Link to="/" className={styles['logo-link']}>
-              <img src={logo} alt="SkillSwap Logo" className={styles['logo-icon']} />
+              <img
+                src={logo}
+                alt="SkillSwap Logo"
+                className={styles['logo-icon']}
+              />
               <h2 className={styles.h2}>SkillSwap</h2>
             </Link>
           </div>
@@ -44,7 +48,9 @@ export function Footer() {
         {/* Колонка 2 */}
         <div className={styles.column}>
           <div className={styles['links-wrapper']}>
-            <ul className={`${styles['links-list']} ${styles['links-list-with-disc']}`}>
+            <ul
+              className={`${styles['links-list']} ${styles['links-list-with-disc']}`}
+            >
               {sections[0].map((link) => (
                 <li key={link.label} className={styles['link-item']}>
                   <Link to={link.href} className={styles.link}>

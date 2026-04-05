@@ -3,11 +3,11 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: var(--radius-full);
-  background: var(--color-disabled);
-  color: var(--color-text);
   font-family: var(--font-family-body);
   font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  background: var(--color-disabled);
+  border-radius: var(--radius-full);
 }
 
 .sm {
@@ -29,13 +29,13 @@
 }
 
 .image {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .fallback {
-  text-transform: uppercase;
   line-height: 1;
+  text-transform: uppercase;
 }
