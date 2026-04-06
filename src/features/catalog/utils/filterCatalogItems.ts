@@ -20,7 +20,7 @@ export interface FilterOptions {
 
 export const filterCatalogItems = (
   items: CatalogItem[],
-  filters: FilterOptions
+  filters: FilterOptions,
 ): CatalogItem[] => {
   const { search, categoryId, mode } = filters;
   const searchTerm = search.trim().toLowerCase();
@@ -34,8 +34,8 @@ export const filterCatalogItems = (
     if (searchTerm !== '') {
       const { name: skillName, description = '' } = teachSkill;
       const { name: userName } = user;
-      
-      matchesSearch = 
+
+      matchesSearch =
         skillName.toLowerCase().includes(searchTerm) ||
         userName.toLowerCase().includes(searchTerm) ||
         description.toLowerCase().includes(searchTerm);
