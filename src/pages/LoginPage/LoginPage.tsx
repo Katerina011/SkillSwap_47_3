@@ -1,6 +1,6 @@
 // src/pages/LoginPage/LoginPage.tsx
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from './LoginHeader';
 import styles from './LoginPage.module.css';
 import lightBulbImage from './light-bulb.png';
@@ -8,15 +8,21 @@ import googleIcon from './Google.png';
 import appleIcon from './Apple.png';
 import eyeIcon from './eye.png';
 import { useAuth } from '../../shared/hooks/useAuth';
+import { DEFAULT_REDIRECT_AFTER_LOGIN } from '../../app/types/routes';
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
+  const from =
+    (location.state as { from?: { pathname: string } } | null)?.from
+      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN;
 
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -37,7 +43,7 @@ function LoginPage() {
     try {
       const ok = await login(email, password);
       if (ok) {
-        navigate('/', { replace: true });
+        navigate(from, { replace: true });
       } else {
         setError('Email или пароль введён неверно');
       }
