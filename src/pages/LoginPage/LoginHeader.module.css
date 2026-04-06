@@ -1,8 +1,9 @@
+/* src/pages/LoginPage/LoginHeader.module.css */
 .header {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #f9faf7;
+  background-color: var(--color-bg);
 }
 
 .header-content {
@@ -13,13 +14,13 @@
   width: 100%;
   max-width: 1440px;
   height: 84px;
-  padding: 36px 36px 0;
+  padding: var(--spacing-36px) var(--spacing-36px) 0 var(--spacing-36px);
   margin: 0 auto;
 }
 
 .logo {
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-12px);
   align-items: center;
   width: 159px;
   height: 40px;
@@ -32,38 +33,38 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #abd27a;
-  border-radius: 60px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
 }
 
 .star-icon {
-  width: 20px;
-  height: 20px;
+  width: var(--spacing-20px);
+  height: var(--spacing-20px);
   object-fit: contain;
 }
 
 .logo-text {
-  font-family: Jost, sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 32px;
-  color: #0c0c0c;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  color: var(--color-text);
   letter-spacing: -1.1%;
 }
 
 .close-button {
   box-sizing: border-box;
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-8px);
   align-items: center;
   justify-content: center;
   width: 147px;
   height: 48px;
-  padding: 12px 24px;
+  padding: var(--spacing-12px) var(--spacing-24px);
   text-decoration: none;
-  background-color: #fff;
-  border-radius: 12px;
-  transition: background-color 0.2s;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-default);
 }
 
 .close-button:hover {
@@ -73,11 +74,11 @@
 .close-text {
   padding: 0;
   margin: 0;
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #253017;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
   letter-spacing: 2%;
 }
 
@@ -86,12 +87,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: var(--spacing-24px);
+  height: var(--spacing-24px);
 }
 
 .close-icon {
-  width: 24px;
-  height: 24px;
-  color: #253017;
+  width: var(--spacing-16px);
+  height: var(--spacing-16px);
+  color: var(--color-text);
 }
