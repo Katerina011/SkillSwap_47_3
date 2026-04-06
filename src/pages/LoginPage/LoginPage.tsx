@@ -42,6 +42,7 @@ function LoginPage() {
         setError('Email или пароль введён неверно');
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Login error:', err);
       setError('Ошибка входа. Попробуйте ещё раз.');
     }

@@ -48,6 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       writeStoredAuthUser(next);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error('Login failed:', e);
       return false;
     }
