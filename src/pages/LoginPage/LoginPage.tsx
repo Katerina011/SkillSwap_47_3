@@ -1,29 +1,50 @@
 // src/pages/LoginPage/LoginPage.tsx
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginHeader } from './LoginHeader';
 import styles from './LoginPage.module.css';
 import lightBulbImage from './light-bulb.png';
 import googleIcon from './Google.png';
 import appleIcon from './Apple.png';
 import eyeIcon from './eye.png';
+import { useAuth } from '../../shared/hooks/useAuth';
 
 function LoginPage() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (email !== 'test@example.com' || password !== '123456') {
+  //     setError(
+  //       'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
+  //     );
+  //     return;
+  //   }
+  //   setError('');
+  //   // TODO: подключить вход (useAuth / loginWithUsersJson) и редирект
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email !== 'test@example.com' || password !== '123456') {
-      setError(
-        'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
-      );
-      return;
-    }
     setError('');
-    // TODO: подключить вход (useAuth / loginWithUsersJson) и редирект
+
+    try {
+      const ok = await login(email, password);
+      if (ok) {
+        navigate('/', { replace: true });
+      } else {
+        setError('Email или пароль введён неверно');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Ошибка входа. Попробуйте ещё раз.');
+    }
   };
 
   return (
