@@ -4,7 +4,11 @@ import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
+<<<<<<< feat/layout-register-step2
+import Step2Form from '../pages/RegisterPage2/Step2Form';
+=======
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+>>>>>>> develop
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -124,6 +128,10 @@ export function App() {
         {/* Страницы со своим хедером (без общего Layout) */}
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+<<<<<<< feat/layout-register-step2
+        <Route path="register/step2" element={<Step2Form />} />
+=======
+>>>>>>> develop
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
