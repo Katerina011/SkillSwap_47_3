@@ -7,7 +7,8 @@ export const catalogItemFixtures: CatalogItem[] = [
     categoryId: '6',
     subcategoryId: 'skill_041',
     title: 'Физическая культура',
-    description: 'Провожу силовые тренировки, кардио, функциональный тренинг, растяжка',
+    description:
+      'Провожу силовые тренировки, кардио, функциональный тренинг, растяжка',
     authorName: 'Анна Смирнова',
     authorId: 'user_001',
     avatar: '1.jpg',
