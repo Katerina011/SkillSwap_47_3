@@ -29,6 +29,7 @@ export function useCatalogSources(): UseCatalogSourcesResult {
         setUsers(usersData);
         setSkills(skillsData);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error('Failed to fetch catalog sources:', err);
         setError(true);
       } finally {
