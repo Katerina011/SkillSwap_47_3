@@ -53,14 +53,28 @@
   justify-content: center;
   max-width: 187px;
   max-height: 48px;
+  padding: var(--spacing-12px) var(--spacing-24px);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-h3);
   color: var(--color-text);
   letter-spacing: 2%;
-  background: transparent;
+  cursor: pointer;
+  background: var(--color-surface);
+  border: none;
   border-radius: var(--radius-sm);
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.viewAllButton:hover {
+  color: var(--color-text-caption);
+  border: 1px var(--color-accent-hover) solid;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.viewAllButton:active {
+  border: 1px var(--color-accent-pressed) solid;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
