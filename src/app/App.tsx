@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
+import { CatalogSearchProvider } from '../features/catalog/CatalogSearchContext';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -110,8 +111,22 @@ export function App() {
       <Routes>
         {/* Страницы с общим хедером и футером */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<CatalogPage />} />
-          <Route path="catalog" element={<CatalogPage />} />
+          <Route
+            index
+            element={
+              <CatalogSearchProvider>
+                <CatalogPage />
+              </CatalogSearchProvider>
+            }
+          />
+          <Route
+            path="catalog"
+            element={
+              <CatalogSearchProvider>
+                <CatalogPage />
+              </CatalogSearchProvider>
+            }
+          />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />

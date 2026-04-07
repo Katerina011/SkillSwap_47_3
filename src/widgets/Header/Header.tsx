@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import logoIcon from '../../assets/images/logo.svg';
+import { useCatalogSearch } from '../../features/catalog/CatalogSearchContext';
 
 interface HeaderGuestUIProps {
   onLoginClick?: () => void;
@@ -15,7 +16,12 @@ function HeaderGuestUI({
   onRegisterClick = () => {},
   onSearch = () => {},
 }: HeaderGuestUIProps) {
+  const { searchQuery, setSearchQuery } = useCatalogSearch();
+  // перенести в CatalogPage, когда он будет готов:
+  // const { searchQuery } = useCatalogSearch();
+  // const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
     onSearch(e.target.value);
   };
 
@@ -54,6 +60,7 @@ function HeaderGuestUI({
               type="text"
               placeholder="Искать навык"
               className={styles['search-input']}
+              value={searchQuery}
               onChange={handleSearch}
             />
           </div>
