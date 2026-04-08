@@ -1,12 +1,21 @@
 import type { User } from '../../../entities/user/model/types';
+import type { SkillTeach } from '../../../entities/skill/model/types';
 import {
   appendUserToMockDb,
+  getAllUsers,
   normalizeEmail,
 } from '../../../api/endpoints/usersApi';
 
 type RegisterMockUserInput = {
   email: string;
   password: string;
+  name?: string;
+  birthDate?: string;
+  gender?: User['gender'];
+  city?: string;
+  skillToLearnId?: string;
+  skillCanTeach?: SkillTeach;
+  about?: string;
 };
 
 type RegisterMockUserResult =
@@ -19,13 +28,54 @@ type RegisterMockUserResult =
       error: 'EMAIL_TAKEN';
     };
 
-function createMockUser({ email, password }: RegisterMockUserInput): User {
+function calculateAge(birthDate?: string): number {
+  if (!birthDate) {
+    return 18;
+  }
+
+  const date = new Date(birthDate);
+  if (Number.isNaN(date.getTime())) {
+    return 18;
+  }
+
+  const now = new Date();
+  let age = now.getFullYear() - date.getFullYear();
+  const monthDiff = now.getMonth() - date.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < date.getDate())) {
+    age -= 1;
+  }
+
+  return age;
+}
+
+export async function isRegistrationEmailTaken(
+  email: string,
+): Promise<boolean> {
+  const normalizedEmail = normalizeEmail(email);
+  const users = await getAllUsers();
+
+  return users.some((user) => normalizeEmail(user.email) === normalizedEmail);
+}
+
+function createMockUser({
+  email,
+  password,
+  name,
+  birthDate,
+  gender,
+  city,
+  skillToLearnId,
+  skillCanTeach,
+  about,
+}: RegisterMockUserInput): User {
   const now = new Date();
   const normalizedEmail = email.trim().toLowerCase();
   const emailName = normalizedEmail.split('@')[0] || 'user';
   const displayName =
+    name?.trim() ||
     emailName.charAt(0).toUpperCase() +
-    emailName.slice(1).replace(/[._-]+/g, ' ');
+      emailName.slice(1).replace(/[._-]+/g, ' ');
 
   return {
     id: `user_mock_${crypto.randomUUID()}`,
@@ -33,21 +83,22 @@ function createMockUser({ email, password }: RegisterMockUserInput): User {
     email: normalizedEmail,
     password,
     avatar: '1.jpg',
-    birthDate: '2000-01-01',
-    age: now.getFullYear() - 2000,
-    gender: 'женский',
+    city,
+    birthDate: birthDate || '2000-01-01',
+    age: calculateAge(birthDate),
+    gender: gender || 'женский',
     createdAt: now.toISOString(),
     favorites: [],
     liked_me: [],
-    skillCanTeach: {
+    skillCanTeach: skillCanTeach || {
       id: 'skill_mock_001',
       categoryId: '0',
       name: 'Новый навык',
       description: 'Пока не заполнено',
     },
     images: [],
-    skills: [],
-    about: '',
+    skills: skillToLearnId ? [skillToLearnId] : [],
+    about: about || '',
   };
 }
 

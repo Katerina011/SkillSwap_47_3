@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './RegisterPage.module.css';
@@ -7,11 +7,15 @@ import googleIcon from '../LoginPage/Google.png';
 import appleIcon from '../LoginPage/Apple.png';
 import eyeIcon from '../LoginPage/eye.png';
 import { useAuth } from '../../shared/hooks/useAuth';
-import { DEFAULT_REDIRECT_AFTER_LOGIN } from '../../app/types/routes';
-import { registerMockUser } from '../../features/auth/api/registerMockUser';
+import {
+  DEFAULT_REDIRECT_AFTER_LOGIN,
+  resolvePostAuthRedirect,
+} from '../../app/types/routes';
+import { isRegistrationEmailTaken } from '../../features/auth/api/registerMockUser';
+import { writeRegisterDraft } from '../../features/auth/lib/registerDraft';
 
 function RegisterPage() {
-  const { login } = useAuth();
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,9 +27,10 @@ function RegisterPage() {
   const [passwordStrength, setPasswordStrength] = useState('');
   const [showHint, setShowHint] = useState(true);
 
-  const from =
+  const from = resolvePostAuthRedirect(
     (location.state as { from?: { pathname: string } } | null)?.from
-      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN;
+      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN,
+  );
 
   const checkPasswordStrength = (pwd: string) => {
     if (pwd.length >= 8) {
@@ -36,6 +41,12 @@ function RegisterPage() {
       setShowHint(true);
     }
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuth, navigate, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,31 +59,30 @@ function RegisterPage() {
     }
 
     try {
-      const result = await registerMockUser({
+      const emailTaken = await isRegistrationEmailTaken(email);
+      if (emailTaken) {
+        setEmailError('Email уже используется');
+        return;
+      }
+
+      writeRegisterDraft({
         email,
         password,
       });
 
-      if (!result.ok) {
-        if (result.error === 'EMAIL_TAKEN') {
-          setEmailError('Email уже используется');
-        }
-        return;
-      }
-
-      const isLoggedIn = await login(email, password);
-      if (!isLoggedIn) {
-        setSubmitError('Не удалось выполнить автологин после регистрации');
-        return;
-      }
-
-      navigate(from, { replace: true });
+      navigate('/register/step2', {
+        state: location.state,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Registration error:', error);
       setSubmitError('Ошибка регистрации. Попробуйте ещё раз.');
     }
   };
+
+  if (isAuth) {
+    return null;
+  }
 
   return (
     <>
