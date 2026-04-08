@@ -30,7 +30,9 @@ export function SkillsList({ canTeach, wantsToLearn }: SkillsListProps) {
             </span>
           ))}
           {hasMore && (
-            <span className={styles.skillTagMore}>+{wantsToLearn.length - 3}</span>
+            <span className={styles.skillTagMore}>
+              +{wantsToLearn.length - 3}
+            </span>
           )}
         </div>
       </div>

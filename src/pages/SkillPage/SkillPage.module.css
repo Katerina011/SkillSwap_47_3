@@ -108,14 +108,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md, 16px);
-	align-items: center;
-	justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .skill-page-skill-text {
-	display: flex;
-	flex-direction: column;
-	gap: var(--spacing-4px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4px);
 }
 
 .skill-page-skill-name {
@@ -206,8 +206,9 @@
   cursor: pointer;
   object-fit: cover;
   border-radius: var(--radius-md, 12px);
-  transition: transform var(--transition-default, 0.2s ease),
-              opacity var(--transition-default);
+  transition:
+    transform var(--transition-default, 0.2s ease),
+    opacity var(--transition-default);
 }
 
 .skill-page-carousel-item:hover {
@@ -276,8 +277,8 @@
 @media (width <= 900px) {
   .skill-page-right {
     grid-template-areas:
-      "description description"
-      "main-photo vertical-carousel";
+      'description description'
+      'main-photo vertical-carousel';
     grid-template-columns: 1fr 1fr;
   }
 
@@ -328,9 +329,9 @@
 
   .skill-page-right {
     grid-template-areas:
-      "description"
-      "main-photo"
-      "vertical-carousel";
+      'description'
+      'main-photo'
+      'vertical-carousel';
     grid-template-columns: 1fr;
   }
 

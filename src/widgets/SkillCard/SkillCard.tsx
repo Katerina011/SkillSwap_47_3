@@ -11,7 +11,8 @@ interface SkillCardProps {
 
 function getAgeSuffix(age: number): string {
   if (age % 10 === 1 && age % 100 !== 11) return 'год';
-  if ([2, 3, 4].includes(age % 10) && ![12, 13, 14].includes(age % 100)) return 'года';
+  if ([2, 3, 4].includes(age % 10) && ![12, 13, 14].includes(age % 100))
+    return 'года';
   return 'лет';
 }
 
@@ -22,11 +23,7 @@ export function SkillCard({ user }: SkillCardProps) {
   return (
     <div className={styles['skill-card']}>
       <div className={styles['skill-card-header']}>
-        <Avatar
-          src={`/avatars/${user.avatar}`}
-          name={user.name}
-          size="lg"
-        />
+        <Avatar src={`/avatars/${user.avatar}`} name={user.name} size="lg" />
         <div className={styles['skill-card-info']}>
           <h3 className={styles['skill-card-name']}>{user.name}</h3>
           <p className={styles['skill-card-location']}>
@@ -63,7 +60,11 @@ export function SkillCard({ user }: SkillCardProps) {
       </div>
 
       <Link to={`/skill/${user.skillCanTeach?.id}`}>
-        <Button variant="secondary" size="md" className={styles['skill-card-button']}>
+        <Button
+          variant="secondary"
+          size="md"
+          className={styles['skill-card-button']}
+        >
           Смотреть
         </Button>
       </Link>

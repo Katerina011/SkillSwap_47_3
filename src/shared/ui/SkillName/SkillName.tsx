@@ -7,10 +7,10 @@ interface SkillNameProps {
 
 export function SkillName({ skillId }: SkillNameProps) {
   const { skillName, loading } = useSkillName(skillId);
-  
+
   if (loading) {
     return <span>...</span>;
   }
-  
+
   return <span>{skillName}</span>;
 }
