@@ -1,80 +1,60 @@
-/* eslint-disable react/button-has-type */
-import React from 'react';
 import styles from './CatalogPage.module.css';
+import chevronRight from '../../assets/images/chevron-right.svg';
 
-// eslint-disable-next-line react/function-component-definition
-const ChevronRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    focusable="false"
-    {...props}
-  >
-    <path
-      d="M8.68983 20C8.51449 20 8.33915 19.9354 8.20072 19.797C7.93309 19.5293 
-      7.93309 19.0864 8.20072 18.8187L14.2177 12.8017C14.6607 12.3588 14.6607 11.6389 
-      14.2177 11.196L8.20072 5.17895C7.93309 4.91132 7.93309 4.46835 8.20072 4.20072C8.46835 
-      3.93309 8.91132 3.93309 9.17895 4.20072L15.196 10.2177C15.6666 10.6884 15.9342 11.3252 
-      15.9342 11.9988C15.9342 12.6725 15.6758 13.3093 15.196 13.78L9.17895 19.797C9.04052 19.9262 
-      8.86518 20 8.68983 20Z"
-      fill="currentColor"
-    />
-  </svg>
-);
+const sections = ['Популярное', 'Новое', 'Рекомендуем'];
+const cards = [1, 2, 3];
 
 export default function CatalogPage() {
   return (
-    <div className={styles.catalogPage}>
-      {/* Зона фильтров */}
-      <div className={styles.filtersZone}>{/* Добавить FiltersBar */}</div>
+    <div className={styles.catalogPage} aria-label="Страница каталога">
+      <aside className={styles.filtersZone} aria-label="Фильтры каталога">
+        <h1 className={styles.pageTitle}>Каталог навыков</h1>
+        <div className={styles.filtersCard}>
+          <p className={styles.filtersTitle}>Фильтры</p>
+          <div className={styles.filterRow}>
+            <span>Категория</span>
+            <span className={styles.filterPlaceholder}>Все</span>
+          </div>
+          <div className={styles.filterRow}>
+            <span>Режим</span>
+            <span className={styles.filterPlaceholder}>Все</span>
+          </div>
+          <div className={styles.filterRow}>
+            <span>Поиск</span>
+            <span className={styles.filterPlaceholder}>Искать навык</span>
+          </div>
+        </div>
+      </aside>
 
-      {/* Зона контента */}
       <div className={styles.contentZone}>
-        {/* Секция - Популярное */}
-        <section className={styles.catalogSection}>
-          <div className={styles.sectionHeader}>
-            <h1 className={styles.sectionTitle}>Популярное</h1>
-            <button className={styles.viewAllButton} type="button">
-              Смотреть все
-              <ChevronRightIcon />
-            </button>
-          </div>
-          <div className={styles.horizontalScroll}>
-            <div className={styles.cardsContainer}>{/* Карточки */}</div>
-          </div>
-        </section>
-
-        {/* Секция - Новое */}
-        <section className={styles.catalogSection}>
-          <div className={styles.sectionHeader}>
-            <h1 className={styles.sectionTitle}>Новое</h1>
-            <button className={styles.viewAllButton} type="button">
-              Смотреть все
-              <ChevronRightIcon />
-            </button>
-          </div>
-          <div className={styles.horizontalScroll}>
-            <div className={styles.cardsContainer}>{/* Карточки */}</div>
-          </div>
-        </section>
-
-        {/* Секция - Рекомендуем */}
-        <section className={styles.catalogSection}>
-          <div className={styles.sectionHeader}>
-            <h1 className={styles.sectionTitle}>Рекомендуем</h1>
-            <button className={styles.viewAllButton} type="button">
-              Смотреть все
-              <ChevronRightIcon />
-            </button>
-          </div>
-          <div className={styles.horizontalScroll}>
-            <div className={styles.cardsContainer}>{/* Карточки */}</div>
-          </div>
-        </section>
+        {sections.map((section) => (
+          <section key={section} className={styles.catalogSection}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>{section}</h2>
+              <button className={styles.viewAllButton} type="button">
+                Смотреть все
+                <img
+                  src={chevronRight}
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+            <div className={styles.horizontalScroll}>
+              <div className={styles.cardsContainer}>
+                {cards.map((card) => (
+                  <article key={`${section}-${card}`} className={styles.mockCard}>
+                    <div className={styles.mockImage} />
+                    <h3 className={styles.mockTitle}>Карточка навыка</h3>
+                    <p className={styles.mockText}>
+                      Временный контент для вёрстки V-01
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   );
