@@ -5,17 +5,12 @@ import styles from '../SkillPage.module.css';
 
 interface RelatedOffersProps {
   users: User[];
-  currentSkillId: string;
 }
 
-export function RelatedOffers({ users, currentSkillId }: RelatedOffersProps) {
+export function RelatedOffers({ users }: RelatedOffersProps) {
   if (users.length === 0) {
     return null;
   }
-
-  // Можно использовать currentSkillId для аналитики или фильтрации
-  // Например, для отслеживания показов похожих предложений
-  console.log(`Showing related offers for skill: ${currentSkillId}`);
 
   return (
     <div className={styles['skill-page__related-section']}>
