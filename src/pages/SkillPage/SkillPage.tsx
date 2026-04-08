@@ -53,51 +53,45 @@ export function SkillPage() {
   const skillsToLearn = user.skills?.slice(0, 3) || [];
   const remainingCount = (user.skills?.length || 0) - 3;
 
-  return (
-    <div className={styles['skill-page']}>
-      <div className={styles['skill-page-container']}>
-        {/* Профиль пользователя */}
-        <div className={styles['skill-page-profile']}>
-          <div className={styles['skill-page-profile-header']}>
-            <Avatar
-              src={`/avatars/${user.avatar}`}
-              name={user.name}
-              size="lg"
-            />
-            <div className={styles['skill-page-profile-info']}>
-              <h1 className={styles['skill-page-name']}>{user.name}</h1>
-              <p className={styles['skill-page-location']}>
-                {user.city}, {user.age} {getAgeSuffix(user.age)}
-              </p>
+return (
+  <div className={styles['skill-page']}>
+    <div className={styles['skill-page-container']}>
+      
+      {/* ОСНОВНАЯ СЕТКА (2 колонки) */}
+      <div className={styles['skill-page-main-grid']}>
+        
+        {/* ЛЕВАЯ КОЛОНКА (320px) */}
+        <div className={styles['skill-page-left']}>
+          
+          {/* Профиль */}
+          <div className={styles['skill-page-profile']}>
+            <div className={styles['skill-page-avatar-wrapper']}>
+              <Avatar src={`/avatars/${user.avatar}`} name={user.name} size="lg" />
             </div>
+            <h1 className={styles['skill-page-name']}>{user.name}</h1>
+            <p className={styles['skill-page-location']}>
+              {user.city}, {user.age} {getAgeSuffix(user.age)}
+            </p>
+            {user.about && (
+              <p className={styles['skill-page-bio']}>{user.about}</p>
+            )}
           </div>
 
-          {user.about && (
-            <p className={styles['skill-page-bio']}>{user.about}</p>
-          )}
-        </div>
-
-        {/* Навыки пользователя */}
-        <div className={styles['skill-page-skills-section']}>
+          {/* Может научить */}
           <div className={styles['skill-page-skills-block']}>
-            <h2 className={styles['skill-page-section-title']}>
-              Может научить
-            </h2>
+            <h2 className={styles['skill-page-section-title']}>Может научить</h2>
             <div className={styles['skill-page-skills-list']}>
               {user.skillCanTeach && (
-                <TagUI
-                  variant={getCategoryVariant(user.skillCanTeach.categoryId)}
-                >
+                <TagUI variant={getCategoryVariant(user.skillCanTeach.categoryId)}>
                   {user.skillCanTeach.name}
                 </TagUI>
               )}
             </div>
           </div>
 
+          {/* Хочет научиться */}
           <div className={styles['skill-page-skills-block']}>
-            <h2 className={styles['skill-page-section-title']}>
-              Хочет научиться
-            </h2>
+            <h2 className={styles['skill-page-section-title']}>Хочет научиться</h2>
             <div className={styles['skill-page-skills-list']}>
               {skillsToLearn.map((skillId) => (
                 <TagUI key={skillId} variant="other">
@@ -113,63 +107,70 @@ export function SkillPage() {
           </div>
         </div>
 
-        {/* Детали навыка */}
-        <div className={styles['skill-page-skill-detail']}>
-          <h2 className={styles['skill-page-skill-name']}>
-            {user.skillCanTeach?.name}
-          </h2>
+        {/* ПРАВАЯ КОЛОНКА (внутренний грид 3 колонки) */}
+        <div className={styles['skill-page-right']}>
           
-          {/* Добавляем категорию как в макете */}
-          <div className={styles['skill-page-skill-category']}>
-            {/* TODO: добавить название категории */}
+          {/* Колонка 2A — Описание */}
+          <div className={styles['skill-page-description-block']}>
+						<div className={styles['skill-page-skill-text']}>
+            <h2 className={styles['skill-page-skill-name']}>
+              {user.skillCanTeach?.name}
+            </h2>
+            <span className={styles['skill-page-skill-category']}>
+              {/* TODO: добавить категорию из skills.json */}
+              Творчество и искусство / Музыка и звук
+            </span>
+            <p className={styles['skill-page-skill-description']}>
+              {user.skillCanTeach?.description || 'Описание отсутствует'}
+            </p>
+						</div>
+            <div className={styles['skill-page-exchange-button']}>
+              <Button variant="primary" size="lg" onClick={() => alert('Модалка')}>
+                Предложить обмен
+              </Button>
+            </div>
           </div>
 
-          <p className={styles['skill-page-skill-description']}>
-            {user.skillCanTeach?.description || 'Описание отсутствует'}
-          </p>
+          {/* Колонка 2B — Главное фото */}
+          <div className={styles['skill-page-main-photo']}>
+            <img
+              src={user.images?.[0] ? `/photos/${user.images[0]}` : '/placeholder.jpg'}
+              alt={user.skillCanTeach?.name}
+              className={styles['skill-page-main-photo-image']}
+            />
+          </div>
 
-          {/* Галерея фото */}
-          {user.images && user.images.length > 0 && (
-            <div className={styles['skill-page-gallery']}>
-              {user.images.map((image) => (
-                <img
-                  key={image}
-                  src={`/photos/${image}`}
-                  alt={`${user.skillCanTeach?.name}`}
-                  className={styles['skill-page-gallery-image']}
-                />
-              ))}
+          {/* Колонка 2C — Вертикальная карусель */}
+          {user.images && user.images.length > 1 && (
+            <div className={styles['skill-page-vertical-carousel']}>
+              <div className={styles['skill-page-carousel-container']}>
+                {user.images.slice(1).map((image, idx) => (
+                  <img
+                    key={image}
+                    src={`/photos/${image}`}
+                    alt={`${user.skillCanTeach?.name} - фото ${idx + 2}`}
+                    className={styles['skill-page-carousel-item']}
+                  />
+                ))}
+              </div>
             </div>
           )}
+        </div>
+      </div>
 
-          {/* Кнопка предложения обмена */}
-          <div className={styles['skill-page-exchange-button']}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => {
-                alert('Модалка будет здесь (пока заглушка)');
-              }}
-            >
-              Предложить обмен
-            </Button>
+      {/* Похожие предложения */}
+      {relatedUsers.length > 0 && (
+        <div className={styles['skill-page-related-section']}>
+          <h2 className={styles['skill-page-section-title']}>Похожие предложения</h2>
+          <div className={styles['skill-page-related-grid']}>
+            {relatedUsers.map((relatedUser) => (
+              <SkillCard key={relatedUser.id} user={relatedUser} />
+            ))}
           </div>
         </div>
-
-        {/* Похожие предложения */}
-        {relatedUsers.length > 0 && (
-          <div className={styles['skill-page-related-section']}>
-            <h2 className={styles['skill-page-section-title']}>
-              Похожие предложения
-            </h2>
-            <div className={styles['skill-page-related-grid']}>
-              {relatedUsers.map((relatedUser) => (
-                <SkillCard key={relatedUser.id} user={relatedUser} />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      )}
+      
     </div>
-  );
+  </div>
+);
 }
