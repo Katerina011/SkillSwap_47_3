@@ -1,64 +1,55 @@
-// src/pages/LoginPage/LoginPage.tsx
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LoginHeader } from './LoginHeader';
-import styles from './LoginPage.module.css';
-import lightBulbImage from './light-bulb.png';
-import googleIcon from './Google.png';
-import appleIcon from './Apple.png';
-import eyeIcon from './eye.png';
-import { useAuth } from '../../shared/hooks/useAuth';
-import { DEFAULT_REDIRECT_AFTER_LOGIN } from '../../app/types/routes';
+import { LoginHeader } from '../LoginPage/LoginHeader';
+import styles from './RegisterPage.module.css';
+import lightBulbImage from '../LoginPage/light-bulb.png';
+import googleIcon from '../LoginPage/Google.png';
+import appleIcon from '../LoginPage/Apple.png';
+import eyeIcon from '../LoginPage/eye.png';
 
-function LoginPage() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
+function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [showHint, setShowHint] = useState(true);
 
-  const from =
-    (location.state as { from?: { pathname: string } } | null)?.from
-      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN;
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (email !== 'test@example.com' || password !== '123456') {
-  //     setError(
-  //       'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
-  //     );
-  //     return;
-  //   }
-  //   setError('');
-  //   // TODO: подключить вход (useAuth / loginWithUsersJson) и редирект
-  // };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const ok = await login(email, password);
-      if (ok) {
-        navigate(from, { replace: true });
-      } else {
-        setError('Email или пароль введён неверно');
-      }
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Login error:', err);
-      setError('Ошибка входа. Попробуйте ещё раз.');
+  const checkPasswordStrength = (pwd: string) => {
+    if (pwd.length >= 8) {
+      setPasswordStrength('Надёжный');
+      setShowHint(false);
+    } else {
+      setPasswordStrength('');
+      setShowHint(true);
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (email === 'test@example.com') {
+      setEmailError('Email уже используется');
+      return;
+    }
+
+    setEmailError('');
+    // eslint-disable-next-line no-console
+    console.log('Регистрация:', { email, password });
   };
 
   return (
     <>
       <LoginHeader />
       <div className={styles.container}>
-        <h1 className={styles['page-title']}>Вход</h1>
+        <div className={styles['steps-indicator']}>
+          <div className={styles['steps-text']}>Шаг 1 из 3</div>
+          <div className={styles['steps-bar']}>
+            <span className={`${styles['step-dot']} ${styles.active}`} />
+            <span className={styles['step-dot']} />
+            <span className={styles['step-dot']} />
+          </div>
+        </div>
+
         <div className={styles.content}>
           <div className={styles['form-column']}>
             <div className={styles.block1}>
@@ -99,13 +90,17 @@ function LoginPage() {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setError('');
+                      setEmailError('');
                     }}
-                    className={`${styles.input} ${error ? styles['input-error'] : ''}`}
+                    className={`${styles.input} ${emailError ? styles['input-error'] : ''}`}
                     placeholder="Введите email"
                     required
                   />
+                  {emailError && (
+                    <div className={styles['error-message']}>{emailError}</div>
+                  )}
                 </div>
+
                 <div className={styles.field}>
                   <div className={styles.label}>Пароль</div>
                   <div className={styles['password-wrapper']}>
@@ -114,10 +109,10 @@ function LoginPage() {
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
-                        setError('');
+                        checkPasswordStrength(e.target.value);
                       }}
-                      className={`${styles['password-input']} ${error ? styles['input-error'] : ''}`}
-                      placeholder="Введите ваш пароль"
+                      className={styles['password-input']}
+                      placeholder="Придумайте надёжный пароль"
                       required
                     />
                     <button
@@ -133,10 +128,17 @@ function LoginPage() {
                       />
                     </button>
                   </div>
+                  {passwordStrength && (
+                    <div className={styles['hint-success']}>
+                      {passwordStrength}
+                    </div>
+                  )}
+                  {showHint && (
+                    <div className={styles['hint-text']}>
+                      Пароль должен содержать не менее 8 знаков
+                    </div>
+                  )}
                 </div>
-                {error && (
-                  <div className={styles['error-message']}>{error}</div>
-                )}
               </form>
             </div>
 
@@ -146,11 +148,8 @@ function LoginPage() {
                 className={styles.button}
                 onClick={handleSubmit}
               >
-                Войти
+                Далее
               </button>
-              <p className={styles.register}>
-                <Link to="/register">Зарегистрироваться</Link>
-              </p>
             </div>
           </div>
 
@@ -158,10 +157,11 @@ function LoginPage() {
             <img src={lightBulbImage} alt="Лампочка" className={styles.image} />
             <div className={styles['text-block']}>
               <h2 className={styles['welcome-title']}>
-                С возвращением в SkillSwap!
+                Добро пожаловать в SkillSwap!
               </h2>
               <p className={styles['welcome-text']}>
-                Обменивайтесь знаниями и навыками с другими людьми
+                Присоединяйтесь к сообществу и обменивайтесь знаниями и навыками
+                с другими людьми
               </p>
             </div>
           </div>
@@ -171,4 +171,4 @@ function LoginPage() {
   );
 }
 
-export { LoginPage };
+export { RegisterPage };

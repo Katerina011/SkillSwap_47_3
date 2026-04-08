@@ -5,6 +5,9 @@ import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
+import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+import Step2Form from '../pages/RegisterPage2/Step2Form';
+import Step3Form from '../pages/RegisterPage3/Step3Form';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -53,15 +56,6 @@ function CreateSkillPage() {
     <div className="container">
       <h1>Создание навыка</h1>
       <p>Здесь будет форма создания нового навыка</p>
-    </div>
-  );
-}
-
-function RegisterPage() {
-  return (
-    <div className="container">
-      <h1>Регистрация</h1>
-      <p>Здесь будет форма регистрации</p>
     </div>
   );
 }
@@ -115,7 +109,7 @@ export function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {/* Страницы с обычным хедером и футером */}
+        {/* Страницы с общим хедером и футером */}
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
           <Route path="catalog" element={<CatalogPage />} />
@@ -123,7 +117,6 @@ export function App() {
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
           <Route path="create" element={<CreateSkillPage />} />
-          <Route path="register" element={<RegisterPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="blog" element={<BlogPage />} />
@@ -131,8 +124,11 @@ export function App() {
           <Route path="privacy" element={<PrivacyPage />} />
         </Route>
 
-        {/* Страницы без хедера и футера (свой дизайн) */}
+        {/* Страницы со своим хедером (без общего Layout) */}
         <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="register/step2" element={<Step2Form />} />
+        <Route path="register/step3" element={<Step3Form />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
