@@ -13,8 +13,8 @@ export function useSkillName(skillId: string) {
         if (skill) {
           setSkillName(skill.name);
         }
-      } catch (error) {
-        console.error('Error loading skill name:', error);
+      } catch {
+        setSkillName(skillId);
       } finally {
         setLoading(false);
       }
