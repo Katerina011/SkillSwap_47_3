@@ -1,6 +1,3 @@
-// Получает skillId из URL (useParams)
-// Загружает пользователя по ID навыка
-// Загружает похожие предложения (другие пользователи с таким же skillCanTeach.id)
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
@@ -34,12 +31,11 @@ export function useSkillPage() {
 
         setUser(foundUser);
         
-        // Загружаем похожие предложения
+        // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
         setRelatedUsers(related);
-      } catch (err) {
+      } catch {
         setError('Ошибка загрузки данных');
-        console.error(err);
       } finally {
         setLoading(false);
       }
