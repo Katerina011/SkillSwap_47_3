@@ -33,17 +33,16 @@ export default function CatalogPage() {
               <h2 className={styles.sectionTitle}>{section}</h2>
               <button className={styles.viewAllButton} type="button">
                 Смотреть все
-                <img
-                  src={chevronRight}
-                  alt=""
-                  aria-hidden="true"
-                />
+                <img src={chevronRight} alt="" aria-hidden="true" />
               </button>
             </div>
             <div className={styles.horizontalScroll}>
               <div className={styles.cardsContainer}>
                 {cards.map((card) => (
-                  <article key={`${section}-${card}`} className={styles.mockCard}>
+                  <article
+                    key={`${section}-${card}`}
+                    className={styles.mockCard}
+                  >
                     <div className={styles.mockImage} />
                     <h3 className={styles.mockTitle}>Карточка навыка</h3>
                     <p className={styles.mockText}>
