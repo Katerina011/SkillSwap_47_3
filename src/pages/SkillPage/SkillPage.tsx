@@ -125,7 +125,7 @@ return (
             </p>
 						</div>
             <div className={styles['skill-page-exchange-button']}>
-              <Button variant="primary" size="lg" onClick={() => alert('Модалка')}>
+              <Button variant="primary" size="lg">
                 Предложить обмен
               </Button>
             </div>
