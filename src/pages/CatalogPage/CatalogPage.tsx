@@ -8,7 +8,7 @@ export default function CatalogPage() {
   return (
     <div className={styles.catalogPage} aria-label="Страница каталога">
       <aside className={styles.filtersZone} aria-label="Фильтры каталога">
-        <h1 className={styles.pageTitle}>Каталог навыков</h1>
+        <h1 className={styles.pageTitle}>Каркас</h1>
         <div className={styles.filtersCard}>
           <p className={styles.filtersTitle}>Фильтры</p>
           <div className={styles.filterRow}>
