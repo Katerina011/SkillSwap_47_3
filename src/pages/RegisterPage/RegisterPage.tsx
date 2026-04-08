@@ -1,18 +1,31 @@
 import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './RegisterPage.module.css';
 import lightBulbImage from '../LoginPage/light-bulb.png';
 import googleIcon from '../LoginPage/Google.png';
 import appleIcon from '../LoginPage/Apple.png';
 import eyeIcon from '../LoginPage/eye.png';
+import { useAuth } from '../../shared/hooks/useAuth';
+import { DEFAULT_REDIRECT_AFTER_LOGIN } from '../../app/types/routes';
+import { registerMockUser } from '../../features/auth/api/registerMockUser';
 
 function RegisterPage() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [submitError, setSubmitError] = useState('');
   const [passwordStrength, setPasswordStrength] = useState('');
   const [showHint, setShowHint] = useState(true);
+
+  const from =
+    (location.state as { from?: { pathname: string } } | null)?.from
+      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN;
 
   const checkPasswordStrength = (pwd: string) => {
     if (pwd.length >= 8) {
@@ -24,17 +37,41 @@ function RegisterPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError('');
+    setSubmitError('');
 
-    if (email === 'test@example.com') {
-      setEmailError('Email уже используется');
+    if (password.length < 8) {
+      setSubmitError('Пароль должен содержать не менее 8 знаков');
       return;
     }
 
-    setEmailError('');
-    // eslint-disable-next-line no-console
-    console.log('Регистрация:', { email, password });
+    try {
+      const result = await registerMockUser({
+        email,
+        password,
+      });
+
+      if (!result.ok) {
+        if (result.error === 'EMAIL_TAKEN') {
+          setEmailError('Email уже используется');
+        }
+        return;
+      }
+
+      const isLoggedIn = await login(email, password);
+      if (!isLoggedIn) {
+        setSubmitError('Не удалось выполнить автологин после регистрации');
+        return;
+      }
+
+      navigate(from, { replace: true });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Registration error:', error);
+      setSubmitError('Ошибка регистрации. Попробуйте ещё раз.');
+    }
   };
 
   return (
@@ -82,7 +119,11 @@ function RegisterPage() {
                 <span className={styles['divider-line']} />
               </div>
 
-              <form onSubmit={handleSubmit} className={styles.form}>
+              <form
+                id="register-form"
+                onSubmit={handleSubmit}
+                className={styles.form}
+              >
                 <div className={styles.field}>
                   <div className={styles.label}>Email</div>
                   <input
@@ -91,6 +132,7 @@ function RegisterPage() {
                     onChange={(e) => {
                       setEmail(e.target.value);
                       setEmailError('');
+                      setSubmitError('');
                     }}
                     className={`${styles.input} ${emailError ? styles['input-error'] : ''}`}
                     placeholder="Введите email"
@@ -109,6 +151,7 @@ function RegisterPage() {
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
+                        setSubmitError('');
                         checkPasswordStrength(e.target.value);
                       }}
                       className={styles['password-input']}
@@ -139,6 +182,9 @@ function RegisterPage() {
                     </div>
                   )}
                 </div>
+                {submitError && (
+                  <div className={styles['error-message']}>{submitError}</div>
+                )}
               </form>
             </div>
 
@@ -146,10 +192,15 @@ function RegisterPage() {
               <button
                 type="submit"
                 className={styles.button}
-                onClick={handleSubmit}
+                form="register-form"
               >
                 Далее
               </button>
+              <p className={styles.register}>
+                <Link to="/login" state={location.state}>
+                  Уже есть аккаунт
+                </Link>
+              </p>
             </div>
           </div>
 
