@@ -119,11 +119,7 @@ function RegisterPage() {
                 <span className={styles['divider-line']} />
               </div>
 
-              <form
-                id="register-form"
-                onSubmit={handleSubmit}
-                className={styles.form}
-              >
+              <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.field}>
                   <div className={styles.label}>Email</div>
                   <input
@@ -185,22 +181,17 @@ function RegisterPage() {
                 {submitError && (
                   <div className={styles['error-message']}>{submitError}</div>
                 )}
+                <div className={styles.block2}>
+                  <button type="submit" className={styles.button}>
+                    Далее
+                  </button>
+                  <p className={styles.register}>
+                    <Link to="/login" state={location.state}>
+                      Уже есть аккаунт
+                    </Link>
+                  </p>
+                </div>
               </form>
-            </div>
-
-            <div className={styles.block2}>
-              <button
-                type="submit"
-                className={styles.button}
-                form="register-form"
-              >
-                Далее
-              </button>
-              <p className={styles.register}>
-                <Link to="/login" state={location.state}>
-                  Уже есть аккаунт
-                </Link>
-              </p>
             </div>
           </div>
 

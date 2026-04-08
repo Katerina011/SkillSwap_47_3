@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import logoIcon from '../../assets/images/logo.svg';
 
@@ -101,6 +101,18 @@ function HeaderGuestUI({
   );
 }
 
-export function HeaderGuest(props: HeaderGuestUIProps) {
-  return <HeaderGuestUI {...props} />;
+export function HeaderGuest({
+  onLoginClick,
+  onRegisterClick,
+  onSearch,
+}: HeaderGuestUIProps) {
+  const navigate = useNavigate();
+
+  return (
+    <HeaderGuestUI
+      onLoginClick={onLoginClick ?? (() => navigate('/login'))}
+      onRegisterClick={onRegisterClick ?? (() => navigate('/register'))}
+      onSearch={onSearch}
+    />
+  );
 }
