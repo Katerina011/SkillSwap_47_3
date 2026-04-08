@@ -1,0 +1,223 @@
+/* Основные стили страницы */
+.skill-page {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.skill-page-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+  max-width: var(--container-max-width);
+  padding: var(--spacing-40px) var(--container-padding);
+  margin: 0 auto;
+}
+
+/* ===== Блок 1: Профиль пользователя ===== */
+.skill-page-profile {
+  margin-bottom: var(--spacing-40px);
+}
+
+.skill-page-profile-card {
+  padding: var(--spacing-32px);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.skill-page-profile-row {
+  display: flex;
+  gap: var(--spacing-24px);
+  align-items: flex-start;
+}
+
+@media (width <= 768px) {
+  .skill-page-profile-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.skill-page-profile-content {
+  flex: 1;
+}
+
+.skill-page-name {
+  margin: 0 0 var(--spacing-8px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h1);
+  color: var(--color-text);
+}
+
+.skill-page-location {
+  margin: 0 0 var(--spacing-16px) 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-caption);
+}
+
+.skill-page-bio {
+  padding-top: var(--spacing-16px);
+  margin: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+}
+
+/* ===== Блок 2: Навыки пользователя ===== */
+.skill-page-skills-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-32px);
+  margin-bottom: var(--spacing-40px);
+}
+
+@media (width <= 768px) {
+  .skill-page-skills-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-20px);
+  }
+}
+
+.skill-page-skills-card {
+  padding: var(--spacing-24px);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.skill-page-skills-title {
+  margin: 0 0 var(--spacing-16px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h3);
+  color: var(--color-text);
+}
+
+.skill-page-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12px);
+}
+
+/* ===== Блок 3: Детальное описание навыка ===== */
+.skill-page-detail-card {
+  padding: var(--spacing-32px);
+  margin-bottom: var(--spacing-40px);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.skill-page-detail-title {
+  margin: 0 0 var(--spacing-12px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h1);
+  color: var(--color-text);
+}
+
+.skill-page-detail-category {
+  margin-bottom: var(--spacing-20px);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-caption);
+}
+
+.skill-page-detail-category-separator {
+  margin: 0 var(--spacing-8px);
+}
+
+.skill-page-detail-description {
+  margin: 0 0 var(--spacing-32px) 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+/* Галерея */
+.skill-page-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-16px);
+  margin-bottom: var(--spacing-32px);
+}
+
+@media (width <= 768px) {
+  .skill-page-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skill-page-gallery-image {
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-default);
+}
+
+.skill-page-gallery-image:hover {
+  box-shadow: var(--shadow-md);
+  transform: scale(1.02);
+}
+
+/* Кнопка предложения обмена */
+.skill-page-exchange-button {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-24px);
+}
+
+/* ===== Блок 4: Похожие предложения ===== */
+.skill-page-related-section {
+  margin-top: var(--spacing-40px);
+}
+
+.skill-page-related-title {
+  margin: 0 0 var(--spacing-24px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  color: var(--color-text);
+}
+
+.skill-page-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-24px);
+}
+
+@media (width <= 768px) {
+  .skill-page-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Состояния загрузки и ошибки */
+.skill-page-loading,
+.skill-page-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-caption);
+}
+
+.skill-page-error {
+  color: var(--color-error);
+}
