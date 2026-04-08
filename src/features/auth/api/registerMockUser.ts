@@ -1,7 +1,7 @@
 import type { User } from '../../../entities/user/model/types';
 import {
-  addRegisteredUser,
-  getAllUsers,
+  appendUserToMockDb,
+  normalizeEmail,
 } from '../../../api/endpoints/usersApi';
 
 type RegisterMockUserInput = {
@@ -55,25 +55,17 @@ export async function registerMockUser({
   email,
   password,
 }: RegisterMockUserInput): Promise<RegisterMockUserResult> {
-  const normalizedEmail = email.trim().toLowerCase();
-  const users = await getAllUsers();
-  const hasUserWithEmail = users.some(
-    (user) => user.email.trim().toLowerCase() === normalizedEmail,
-  );
-
-  if (hasUserWithEmail) {
-    return {
-      ok: false,
-      error: 'EMAIL_TAKEN',
-    };
-  }
+  const normalizedEmail = normalizeEmail(email);
 
   const user = createMockUser({
     email: normalizedEmail,
     password,
   });
 
-  addRegisteredUser(user);
+  const appendResult = await appendUserToMockDb(user);
+  if (!appendResult.ok) {
+    return appendResult;
+  }
 
   return {
     ok: true,
