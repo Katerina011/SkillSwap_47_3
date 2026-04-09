@@ -10,8 +10,9 @@
   background-color: var(--color-bg, #fff);
   border-radius: var(--radius-md, 12px);
   box-shadow: var(--shadow-sm, 0 2px 8px rgb(0 0 0 / 8%));
-  transition: transform var(--transition-default, 0.2s ease),
-              box-shadow var(--transition-default);
+  transition:
+    transform var(--transition-default, 0.2s ease),
+    box-shadow var(--transition-default);
 }
 
 .skill-card:hover {

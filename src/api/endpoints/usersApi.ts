@@ -11,7 +11,9 @@ export const getAllUsers = async (): Promise<User[]> => {
 };
 
 // Получить пользователя по ID навыка
-export const getUserBySkillId = async (skillId: string): Promise<User | null> => {
+export const getUserBySkillId = async (
+  skillId: string,
+): Promise<User | null> => {
   const users = await getAllUsers();
   const user = users.find((u) => u.skillCanTeach?.id === skillId);
   return user || null;

@@ -29,7 +29,7 @@ export function SkillDetail({ skill, images }: SkillDetailProps) {
     <div className={styles.skillDetail}>
       <div className={styles.skillHeader}>
         <h2 className={styles.skillName}>{skill.name}</h2>
-        <LikeButtonUI 
+        <LikeButtonUI
           isLiked={isLiked}
           onLikeToggle={handleLike}
           canLike // TODO: проверять авторизацию
@@ -42,7 +42,7 @@ export function SkillDetail({ skill, images }: SkillDetailProps) {
         </div>
       )}
 
-        {images && images.length > 0 && (
+      {images && images.length > 0 && (
         <div className={styles['skill-page-gallery']}>
           {images.map((image) => (
             <img

@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
-import { getUserBySkillId, getUsersBySkillId } from '../../../api/endpoints/usersApi';
+import {
+  getUserBySkillId,
+  getUsersBySkillId,
+} from '../../../api/endpoints/usersApi';
 
 export function useSkillPage() {
   const { id: skillId } = useParams<{ id: string }>();
@@ -21,7 +24,7 @@ export function useSkillPage() {
       try {
         setLoading(true);
         const foundUser = await getUserBySkillId(skillId);
-        
+
         if (!foundUser) {
           setError('Пользователь с таким навыком не найден');
           setUser(null);
@@ -30,7 +33,7 @@ export function useSkillPage() {
         }
 
         setUser(foundUser);
-        
+
         // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
         setRelatedUsers(related);

@@ -15,7 +15,9 @@ export function RelatedOffers({ users }: RelatedOffersProps) {
   return (
     <div className={styles['skill-page__related-section']}>
       <div className={styles['skill-page__container']}>
-        <h2 className={styles['skill-page__section-title']}>Похожие предложения</h2>
+        <h2 className={styles['skill-page__section-title']}>
+          Похожие предложения
+        </h2>
         <div className={styles['skill-page__related-grid']}>
           {users.map((user) => (
             <SkillCard key={user.id} user={user} />
