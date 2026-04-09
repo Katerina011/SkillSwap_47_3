@@ -1,13 +1,12 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
-import TagUI from '../../shared/ui/Tag/tagUi';
-import {
-  SkillCard,
-  getCategoryVariant,
-} from '../../widgets/SkillCard/SkillCard';
+import { SkillName } from '../../shared/ui/SkillName/SkillName';
+import TagUI, { TSkillVariant } from '../../shared/ui/Tag/tagUi';
+import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
-import { SkillTag } from '../../shared/ui/SkillName/SkillTag';
+import { useAuth } from '../../shared/hooks/useAuth';
 
 function getAgeSuffix(age: number): string {
   if (age % 10 === 1 && age % 100 !== 11) return 'год';
@@ -16,8 +15,30 @@ function getAgeSuffix(age: number): string {
   return 'лет';
 }
 
+function getCategoryVariant(categoryId: string): TSkillVariant {
+  const variants: Record<string, TSkillVariant> = {
+    '1': 'business',
+    '2': 'creative',
+    '3': 'languages',
+    '4': 'education',
+    '5': 'home',
+    '6': 'health',
+  };
+  return variants[categoryId] || 'other';
+}
+
 export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isAuth } = useAuth();
+
+  const handleProposeExchange = () => {
+    if (!isAuth) {
+      navigate('/login', { state: { from: location } });
+    }
+    // TODO(F-3.6): открыть создание заявки на обмен
+  };
 
   if (loading) {
     return (
@@ -59,57 +80,48 @@ export function SkillPage() {
                   name={user.name}
                   size="lg"
                 />
-                <div className={styles['skill-page-text']}>
-                  <h1 className={styles['skill-page-name']}>{user.name}</h1>
-                  <p className={styles['skill-page-location']}>
-                    {user.city},
-                    <br />
-                    {user.age} {getAgeSuffix(user.age)}
-                  </p>
-                </div>
               </div>
+              <h1 className={styles['skill-page-name']}>{user.name}</h1>
+              <p className={styles['skill-page-location']}>
+                {user.city}, {user.age} {getAgeSuffix(user.age)}
+              </p>
               {user.about && (
                 <p className={styles['skill-page-bio']}>{user.about}</p>
               )}
+            </div>
 
-              {/* Может научить */}
-              <div className={styles['skill-page-skills-block']}>
-                <h2 className={styles['skill-page-section-title']}>
-                  Может научить
-                </h2>
-                <div className={styles['skill-page-skills-list']}>
-                  {user.skillCanTeach && (
-                    <TagUI
-                      className={styles['skill-text']}
-                      variant={getCategoryVariant(
-                        user.skillCanTeach.categoryId,
-                      )}
-                    >
-                      {user.skillCanTeach.name}
-                    </TagUI>
-                  )}
-                </div>
+            {/* Может научить */}
+            <div className={styles['skill-page-skills-block']}>
+              <h2 className={styles['skill-page-section-title']}>
+                Может научить
+              </h2>
+              <div className={styles['skill-page-skills-list']}>
+                {user.skillCanTeach && (
+                  <TagUI
+                    variant={getCategoryVariant(user.skillCanTeach.categoryId)}
+                  >
+                    {user.skillCanTeach.name}
+                  </TagUI>
+                )}
               </div>
+            </div>
 
-              {/* Хочет научиться */}
-              <div className={styles['skill-page-skills-block']}>
-                <h2 className={styles['skill-page-section-title']}>
-                  Хочет научиться
-                </h2>
-                <div className={styles['skill-page-skills-list']}>
-                  {skillsToLearn.map((skillId) => (
-                    <SkillTag
-                      className={styles['skill-text']}
-                      key={skillId}
-                      skillId={skillId}
-                    />
-                  ))}
-                  {remainingCount > 0 && (
-                    <TagUI key="remaining-count" variant="other">
-                      +{remainingCount}
-                    </TagUI>
-                  )}
-                </div>
+            {/* Хочет научиться */}
+            <div className={styles['skill-page-skills-block']}>
+              <h2 className={styles['skill-page-section-title']}>
+                Хочет научиться
+              </h2>
+              <div className={styles['skill-page-skills-list']}>
+                {skillsToLearn.map((skillId) => (
+                  <TagUI key={skillId} variant="other">
+                    <SkillName skillId={skillId} />
+                  </TagUI>
+                ))}
+                {remainingCount > 0 && (
+                  <TagUI key="remaining-count" variant="other">
+                    +{remainingCount}
+                  </TagUI>
+                )}
               </div>
             </div>
           </div>
@@ -134,7 +146,7 @@ export function SkillPage() {
                 <Button
                   variant="primary"
                   size="lg"
-                  className={styles['skill-page-exchange-full-width']}
+                  onClick={handleProposeExchange}
                 >
                   Предложить обмен
                 </Button>
