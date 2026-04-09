@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import styles from './CatalogFiltersPanel.module.css';
+import styles from './CatalogPage.module.css';
 
 interface CatalogFiltersPanelProps {
   children?: ReactNode;
