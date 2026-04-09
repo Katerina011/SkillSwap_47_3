@@ -9,10 +9,10 @@
 .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg);
+  gap: var(--spacing-34px);
   max-width: var(--container-max-width);
   padding: var(--spacing-32px);
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* Первая колонка */

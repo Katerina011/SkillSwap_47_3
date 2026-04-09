@@ -4,6 +4,7 @@ import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
@@ -41,14 +42,14 @@ function FavoritesPage() {
   );
 }
 
-function SkillPage() {
-  return (
-    <div className="container">
-      <h1>Страница навыка</h1>
-      <p>Здесь будет детальная информация о навыке</p>
-    </div>
-  );
-}
+// function SkillPage() {
+//   return (
+//     <div className="container">
+//       <h1>Страница навыка</h1>
+//       <p>Здесь будет детальная информация о навыке</p>
+//     </div>
+//   );
+// }
 
 function CreateSkillPage() {
   return (

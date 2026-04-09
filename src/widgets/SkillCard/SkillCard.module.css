@@ -1,0 +1,95 @@
+/* SkillCard.module.css
+ * Стили для карточки навыка (используется в блоке "Похожие предложения")
+ */
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-lg, 20px);
+  background-color: var(--color-bg, #fff);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgb(0 0 0 / 8%));
+  transition:
+    transform var(--transition-default, 0.2s ease),
+    box-shadow var(--transition-default);
+}
+
+.skill-card:hover {
+  box-shadow: var(--shadow-md, 0 8px 20px rgb(0 0 0 / 12%));
+  transform: translateY(-4px);
+}
+
+.skill-card-header {
+  display: flex;
+  gap: var(--spacing-md, 16px);
+  align-items: center;
+  margin-bottom: var(--spacing-md, 16px);
+}
+
+.skill-card-info {
+  flex: 1;
+}
+
+.skill-card-name {
+  margin: 0 0 var(--spacing-xs, 4px) 0;
+  font-family: var(--font-family-heading);
+  font-size: 18px;
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text, #1a1a1a);
+}
+
+.skill-card-location {
+  margin: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption, 13px);
+  color: var(--color-text-caption, #6c757d);
+}
+
+.skill-card-skills {
+  margin-bottom: var(--spacing-md, 16px);
+}
+
+.skill-card-skills-label {
+  margin: 0 0 var(--spacing-xs, 8px) 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-small, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text-secondary, #444);
+}
+
+.skill-card-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs, 8px);
+}
+
+.skill-card-skill-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption, 13px);
+  color: var(--color-text, #1a1a1a);
+  background-color: var(--color-bg-secondary, #f0f0f0);
+  border-radius: var(--radius-sm, 8px);
+}
+
+.skill-card-button {
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Адаптивность карточки */
+@media (width <= 480px) {
+  .skill-card {
+    padding: var(--spacing-md, 16px);
+  }
+
+  .skill-card-header {
+    gap: var(--spacing-sm, 12px);
+  }
+
+  .skill-card-name {
+    font-size: 16px;
+  }
+}

@@ -78,3 +78,22 @@ export async function appendUserToMockDb(
 }
 
 export { normalizeEmail };
+// Получить пользователя по ID навыка
+export const getUserBySkillId = async (
+  skillId: string,
+): Promise<User | null> => {
+  const users = await getAllUsers();
+  const user = users.find((u) => u.skillCanTeach?.id === skillId);
+  return user || null;
+};
+
+// Получить всех пользователей с таким же навыком (исключая указанного)
+export const getUsersBySkillId = async (
+  skillId: string,
+  excludeUserId?: string,
+): Promise<User[]> => {
+  const users = await getAllUsers();
+  return users.filter(
+    (u) => u.skillCanTeach?.id === skillId && u.id !== excludeUserId,
+  );
+};
