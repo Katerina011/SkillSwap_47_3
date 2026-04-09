@@ -34,12 +34,11 @@ export function SkillPage() {
   const { isAuth } = useAuth();
 
   const handleProposeExchange = () => {
-    if (!isAuth) {
-      navigate('/login', { state: { from: location } });
-      return;
-    }
-    // TODO(F-3.6): открыть создание заявки на обмен
-  };
+  if (!isAuth) {
+    navigate('/login', { state: { from: location } });
+  }
+  // TODO(F-3.6): открыть создание заявки на обмен
+};
 
   if (loading) {
     return (
