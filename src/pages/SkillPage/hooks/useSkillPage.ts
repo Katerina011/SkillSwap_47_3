@@ -35,6 +35,7 @@ export function useSkillPage() {
         setUser(foundUser);
 
         // skillId, максимум 4.
+        // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
         setRelatedUsers(related.slice(0, 4));
       } catch {

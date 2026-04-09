@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
-import { SkillName } from '../../shared/ui/SkillName/SkillName';
 import type { User } from '../../entities/user/model/types';
 import styles from './SkillCard.module.css';
+import { SkillTag } from '../../shared/ui/SkillName/SkillTag';
+import TagUI, { TSkillVariant } from '../../shared/ui/Tag/tagUi';
 
 interface SkillCardProps {
   user: User;
@@ -14,6 +15,18 @@ function getAgeSuffix(age: number): string {
   if ([2, 3, 4].includes(age % 10) && ![12, 13, 14].includes(age % 100))
     return 'года';
   return 'лет';
+}
+
+export function getCategoryVariant(categoryId: string): TSkillVariant {
+  const variants: Record<string, TSkillVariant> = {
+    '1': 'business',
+    '2': 'creative',
+    '3': 'languages',
+    '4': 'education',
+    '5': 'home',
+    '6': 'health',
+  };
+  return variants[categoryId] || 'other';
 }
 
 export function SkillCard({ user }: SkillCardProps) {
@@ -32,29 +45,36 @@ export function SkillCard({ user }: SkillCardProps) {
         </div>
       </div>
 
-      <div className={styles['skill-card-skills']}>
-        <p className={styles['skill-card-skills-label']}>Может научить:</p>
-        <div className={styles['skill-card-skills-list']}>
+      {/* Может научить */}
+      <div className={styles['skill-card-skills-block']}>
+        <h2 className={styles['skill-card-section-title']}>Может научить</h2>
+        <div className={styles['skill-page-skills-list']}>
           {user.skillCanTeach && (
-            <span className={styles['skill-card-skill-tag']}>
+            <TagUI
+              className={styles['skill-text']}
+              variant={getCategoryVariant(user.skillCanTeach.categoryId)}
+            >
               {user.skillCanTeach.name}
-            </span>
+            </TagUI>
           )}
         </div>
       </div>
 
-      <div className={styles['skill-card-skills']}>
-        <p className={styles['skill-card-skills-label']}>Хочет научиться:</p>
-        <div className={styles['skill-card-skills-list']}>
+      {/* Хочет научиться */}
+      <div className={styles['skill-page-skills-block']}>
+        <h2 className={styles['skill-page-section-title']}>Хочет научиться</h2>
+        <div className={styles['skill-page-skills-list']}>
           {skillsToLearn.map((skillId) => (
-            <span key={skillId} className={styles['skill-card-skill-tag']}>
-              <SkillName skillId={skillId} />
-            </span>
+            <SkillTag
+              className={styles['skill-text']}
+              key={skillId}
+              skillId={skillId}
+            />
           ))}
           {remainingCount > 0 && (
-            <span className={styles['skill-card-skill-tag']}>
+            <TagUI key="remaining-count" variant="other">
               +{remainingCount}
-            </span>
+            </TagUI>
           )}
         </div>
       </div>
@@ -62,6 +82,7 @@ export function SkillCard({ user }: SkillCardProps) {
       <Link to={`/skill/${user.skillCanTeach?.id}`}>
         <Button
           variant="secondary"
+          variant="primary"
           size="md"
           className={styles['skill-card-button']}
         >
