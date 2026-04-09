@@ -73,9 +73,7 @@ function RegisterPage() {
       navigate('/register/step2', {
         state: location.state,
       });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Registration error:', error);
+    } catch {
       setSubmitError('Ошибка регистрации. Попробуйте ещё раз.');
     }
   };
