@@ -7,16 +7,14 @@ const sections = ['Популярное', 'Новое', 'Рекомендуем'
 const cards = [1, 2, 3];
 
 export default function CatalogPage() {
-
   // TODO(F-3.3-2): Добавить состояние для фильтрации
   // const [filters, setFilters] = useState<FilterState>({});
-  
+
   // TODO(F-3.3-2): Добавить обработчики для onChange фильтров
   // const handleFilterChange = (key: string, value: any) => { ... };
 
   return (
     <div className={styles.catalogPage} aria-label="Страница каталога">
-
       <aside className={styles.sidebar} aria-label="Фильтры каталога">
         <CatalogFiltersPanel>
           {/* TODO(F-3.3-2): Здесь будут подключены готовые контролы фильтра:
@@ -37,13 +35,13 @@ export default function CatalogPage() {
               <div className={styles.filterRow}>
                 {/* компонент radio Всё / Хочу научиться / Могу научить */}
               </div>
-              
+
               <div className={styles.filterGroup}>
                 <h3 className={styles.filterGroupTitle}>Навыки</h3>
                 {/* список чекбоксов с навыками */}
                 <a href="#0" className={styles.toggleLink}>
                   Все категории
-                  <img src={chevronDown} alt="" aria-hidden="true" />  
+                  <img src={chevronDown} alt="" aria-hidden="true" />
                 </a>
               </div>
 
@@ -57,7 +55,7 @@ export default function CatalogPage() {
                 {/* список чекбоксов с городами */}
                 <a href="#0" className={styles.toggleLink}>
                   Все категории
-                  <img src={chevronDown} alt="" aria-hidden="true" />  
+                  <img src={chevronDown} alt="" aria-hidden="true" />
                 </a>
               </div>
             </div>

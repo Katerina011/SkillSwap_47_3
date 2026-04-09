@@ -8,11 +8,11 @@ interface CatalogFiltersPanelProps {
 /**
  * Компонент-обертка для панели фильтров каталога.
  * Предназначен для интеграции с готовыми контролами из F-3.3-2.
- * 
+ *
  * @example
  * // После подключения реальных фильтров:
  * <CatalogFiltersPanel>
- *   <RealFiltersComponent 
+ *   <RealFiltersComponent
  *     filters={filters}
  *     onChange={handleFilterChange}
  *   />
