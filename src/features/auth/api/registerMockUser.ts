@@ -102,15 +102,14 @@ function createMockUser({
   };
 }
 
-export async function registerMockUser({
-  email,
-  password,
-}: RegisterMockUserInput): Promise<RegisterMockUserResult> {
-  const normalizedEmail = normalizeEmail(email);
+export async function registerMockUser(
+  input: RegisterMockUserInput,
+): Promise<RegisterMockUserResult> {
+  const normalizedEmail = normalizeEmail(input.email);
 
   const user = createMockUser({
+    ...input,
     email: normalizedEmail,
-    password,
   });
 
   const appendResult = await appendUserToMockDb(user);
