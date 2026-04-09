@@ -34,12 +34,11 @@ export function useSkillPage() {
 
         setUser(foundUser);
 
-        // Загружаем похожие предложения (другие пользователи с таким же навыком)
+        // skillId, максимум 4.
         const related = await getUsersBySkillId(skillId, foundUser.id);
-        setRelatedUsers(related);
-      } catch (err) {
+        setRelatedUsers(related.slice(0, 4));
+      } catch {
         setError('Ошибка загрузки данных');
-        // console.error(err);
       } finally {
         setLoading(false);
       }
