@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
@@ -6,6 +6,7 @@ import { SkillName } from '../../shared/ui/SkillName/SkillName';
 import TagUI, { TSkillVariant } from '../../shared/ui/Tag/tagUi';
 import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
+import { useAuth } from '../../shared/hooks/useAuth';
 
 function getAgeSuffix(age: number): string {
   if (age % 10 === 1 && age % 100 !== 11) return 'год';
@@ -30,14 +31,14 @@ export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const isAuth = !!localStorage.getItem('user');
+  const { isAuth } = useAuth();
 
   const handleProposeExchange = () => {
     if (!isAuth) {
-      navigate('/login', { state: { from: location.pathname } });
+      navigate('/login', { state: { from: location } });
+      return;
     }
-    // TODO: открыть создание заявки на обмен (F-3.6)
+    // TODO(F-3.6): открыть создание заявки на обмен
   };
 
   if (loading) {
