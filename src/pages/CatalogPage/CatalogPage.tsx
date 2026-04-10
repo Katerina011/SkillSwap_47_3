@@ -1,7 +1,7 @@
 import styles from './CatalogPage.module.css';
 import chevronRight from '../../assets/images/chevron-right.svg';
 import { CatalogCard } from '../../widgets/CatalogCard';
-import { useCatalogSources } from '../../features/catalog/hooks/useCatalogSources'
+import { useCatalogSources } from '../../features/catalog/hooks/useCatalogSources';
 
 const sections = ['Популярное', 'Новое', 'Рекомендуем'];
 
@@ -10,11 +10,7 @@ export default function CatalogPage() {
 
   const renderContent = () => {
     if (loading) {
-      return (
-        <div className={styles.loadingState}>
-          Загрузка...
-        </div>
-      );
+      return <div className={styles.loadingState}>Загрузка...</div>;
     }
 
     if (error) {
@@ -66,9 +62,7 @@ export default function CatalogPage() {
         </div>
       </aside>
 
-      <div className={styles.contentZone}>
-        {renderContent()}
-      </div>
+      <div className={styles.contentZone}>{renderContent()}</div>
     </div>
   );
 }
