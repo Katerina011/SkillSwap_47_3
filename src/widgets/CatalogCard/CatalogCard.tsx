@@ -27,6 +27,11 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
         setIsLiked(!isLiked);
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            setIsLiked(!isLiked);
+        }
+    };
     // Функция для получения названия навыка из skillCanTeach
     const getTeachSkillName = (): string => {
         if (user.skillCanTeach && typeof user.skillCanTeach === 'object' && 'name' in user.skillCanTeach) {
@@ -74,8 +79,8 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
 
         return (
             <div className={styles.tagStyles}>
-                {visibleTags.map((tag, index) => (
-                    <TagUI key={index} variant="other">
+                {visibleTags.map((tag) => (
+                    <TagUI key={tag} variant="other">
                         {tag.trim()}
                     </TagUI>
                 ))}
@@ -93,13 +98,20 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
 
     return (
         <div className={styles.card}>
-            <img
-                src={isLiked ? like_active : like}
-                alt="Like"
+            <div
+                role="button"
+                tabIndex={0}
                 className={styles.likes}
                 onClick={handleLikeClick}
-                style={{ cursor: 'pointer' }}
-            />
+                onKeyDown={handleKeyPress}
+                aria-label={isLiked ? "Убрать из избранного" : "Добавить в избранное"}
+            >
+                <img
+                    src={isLiked ? like_active : like}
+                    alt=""
+                    aria-hidden="true"
+                />
+            </div>
             <div className={styles.header}>
                 <Avatar src={user.avatar ? `/avatars/${user.avatar}` : undefined} name={user.name} size="lg" />
 

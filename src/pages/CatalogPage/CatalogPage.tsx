@@ -1,7 +1,6 @@
 import styles from './CatalogPage.module.css';
 import chevronRight from '../../assets/images/chevron-right.svg';
 import { CatalogCard } from '../../widgets/CatalogCard';
-import { catalogItemFixtures } from '../../features/catalog';
 import { useCatalogSources } from '../../features/catalog/hooks/useCatalogSources'
 
 const sections = ['Популярное', 'Новое', 'Рекомендуем'];
@@ -22,12 +21,6 @@ export default function CatalogPage() {
       return (
         <div className={styles.errorState}>
           <p>Ошибка: {error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className={styles.retryButton}
-          >
-            Попробовать снова
-          </button>
         </div>
       );
     }
