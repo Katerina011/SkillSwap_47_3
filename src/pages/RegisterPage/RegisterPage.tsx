@@ -1,18 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './RegisterPage.module.css';
 import lightBulbImage from '../LoginPage/light-bulb.png';
 import googleIcon from '../LoginPage/Google.png';
 import appleIcon from '../LoginPage/Apple.png';
 import eyeIcon from '../LoginPage/eye.png';
+import { useAuth } from '../../shared/hooks/useAuth';
+import {
+  DEFAULT_REDIRECT_AFTER_LOGIN,
+  resolvePostAuthRedirect,
+} from '../../app/types/routes';
+import { isRegistrationEmailTaken } from '../../features/auth/api/registerMockUser';
+import { writeRegisterDraft } from '../../features/auth/lib/registerDraft';
 
 function RegisterPage() {
+  const { isAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [submitError, setSubmitError] = useState('');
   const [passwordStrength, setPasswordStrength] = useState('');
   const [showHint, setShowHint] = useState(true);
+
+  const from = resolvePostAuthRedirect(
+    (location.state as { from?: { pathname: string } } | null)?.from
+      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN,
+  );
 
   const checkPasswordStrength = (pwd: string) => {
     if (pwd.length >= 8) {
@@ -24,18 +42,45 @@ function RegisterPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (isAuth) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuth, navigate, from]);
 
-    if (email === 'test@example.com') {
-      setEmailError('Email уже используется');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError('');
+    setSubmitError('');
+
+    if (password.length < 8) {
+      setSubmitError('Пароль должен содержать не менее 8 знаков');
       return;
     }
 
-    setEmailError('');
-    // eslint-disable-next-line no-console
-    console.log('Регистрация:', { email, password });
+    try {
+      const emailTaken = await isRegistrationEmailTaken(email);
+      if (emailTaken) {
+        setEmailError('Email уже используется');
+        return;
+      }
+
+      writeRegisterDraft({
+        email,
+        password,
+      });
+
+      navigate('/register/step2', {
+        state: location.state,
+      });
+    } catch {
+      setSubmitError('Ошибка регистрации. Попробуйте ещё раз.');
+    }
   };
+
+  if (isAuth) {
+    return null;
+  }
 
   return (
     <>
@@ -91,6 +136,7 @@ function RegisterPage() {
                     onChange={(e) => {
                       setEmail(e.target.value);
                       setEmailError('');
+                      setSubmitError('');
                     }}
                     className={`${styles.input} ${emailError ? styles['input-error'] : ''}`}
                     placeholder="Введите email"
@@ -109,6 +155,7 @@ function RegisterPage() {
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
+                        setSubmitError('');
                         checkPasswordStrength(e.target.value);
                       }}
                       className={styles['password-input']}
@@ -139,17 +186,20 @@ function RegisterPage() {
                     </div>
                   )}
                 </div>
+                {submitError && (
+                  <div className={styles['error-message']}>{submitError}</div>
+                )}
+                <div className={styles.block2}>
+                  <button type="submit" className={styles.button}>
+                    Далее
+                  </button>
+                  <p className={styles.register}>
+                    <Link to="/login" state={location.state}>
+                      Уже есть аккаунт
+                    </Link>
+                  </p>
+                </div>
               </form>
-            </div>
-
-            <div className={styles.block2}>
-              <button
-                type="submit"
-                className={styles.button}
-                onClick={handleSubmit}
-              >
-                Далее
-              </button>
             </div>
           </div>
 

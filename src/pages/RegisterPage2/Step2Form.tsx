@@ -1,34 +1,119 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './Step2Form.module.css';
 import userInfoImage from './user info.png';
 import userCircleImage from './user-circle.png';
+import { fetchCities } from '../../api/endpoints/citiesApi';
+import {
+  fetchCategories,
+  fetchSubcategories,
+} from '../../api/endpoints/skillsApi';
+import type { Subcategory } from '../../entities/skill/model/types';
+import {
+  readRegisterDraft,
+  updateRegisterDraft,
+} from '../../features/auth/lib/registerDraft';
 
 function Step2Form() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [draft] = useState(() => readRegisterDraft());
+
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [city, setCity] = useState('');
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
+  const [cities, setCities] = useState<string[]>([]);
+  const [categories, setCategories] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+
+  useEffect(() => {
+    if (!draft?.email || !draft?.password) {
+      navigate('/register', { replace: true, state: location.state });
+      return;
+    }
+
+    setName(draft.name ?? '');
+    setBirthDate(draft.birthDate ?? '');
+    setGender(draft.gender ?? '');
+    setCity(draft.city ?? '');
+    setSubcategory(draft.skillToLearnId ?? '');
+  }, [draft, navigate, location.state]);
+
+  useEffect(() => {
+    const loadOptions = async () => {
+      const [nextCities, nextCategories, nextSubcategories] = await Promise.all(
+        [fetchCities(), fetchCategories(), fetchSubcategories()],
+      );
+
+      setCities(nextCities);
+      setCategories(nextCategories);
+      setSubcategories(nextSubcategories);
+    };
+
+    loadOptions().catch(() => {
+      setCities([]);
+      setCategories([]);
+      setSubcategories([]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!subcategory) {
+      return;
+    }
+
+    const selectedSubcategory = subcategories.find(
+      (item) => item.id === subcategory,
+    );
+    if (selectedSubcategory) {
+      setCategory(selectedSubcategory.categoryId);
+    }
+  }, [subcategory, subcategories]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('Шаг 2:', {
+    const normalizedGender =
+      gender === 'женский' || gender === 'мужской' ? gender : undefined;
+
+    updateRegisterDraft({
       name,
       birthDate,
-      gender,
+      gender: normalizedGender,
       city,
-      category,
-      subcategory,
+      skillToLearnId: subcategory || undefined,
+    });
+
+    navigate('/register/step3', {
+      state: location.state,
     });
   };
 
   const handleBack = () => {
-    // eslint-disable-next-line no-console
-    console.log('Назад');
+    const normalizedGender =
+      gender === 'женский' || gender === 'мужской' ? gender : undefined;
+
+    updateRegisterDraft({
+      name,
+      birthDate,
+      gender: normalizedGender,
+      city,
+      skillToLearnId: subcategory || undefined,
+    });
+
+    navigate('/register', {
+      state: location.state,
+    });
   };
+
+  const filteredSubcategories = subcategories.filter(
+    (item) => item.categoryId === category,
+  );
 
   return (
     <>
@@ -114,8 +199,8 @@ function Step2Form() {
                     className={styles.select}
                   >
                     <option value="">Не указан</option>
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
+                    <option value="мужской">Мужской</option>
+                    <option value="женский">Женский</option>
                   </select>
                 </div>
               </div>
@@ -128,6 +213,11 @@ function Step2Form() {
                   className={styles.select}
                 >
                   <option value="">Не указан</option>
+                  {cities.map((cityOption) => (
+                    <option key={cityOption} value={cityOption}>
+                      {cityOption}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -137,10 +227,18 @@ function Step2Form() {
                 </div>
                 <select
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    setSubcategory('');
+                  }}
                   className={styles.select}
                 >
                   <option value="">Выберите категорию</option>
+                  {categories.map((categoryOption) => (
+                    <option key={categoryOption.id} value={categoryOption.id}>
+                      {categoryOption.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -155,6 +253,14 @@ function Step2Form() {
                   disabled={!category}
                 >
                   <option value="">Выберите подкатегорию</option>
+                  {filteredSubcategories.map((subcategoryOption) => (
+                    <option
+                      key={subcategoryOption.id}
+                      value={subcategoryOption.id}
+                    >
+                      {subcategoryOption.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
