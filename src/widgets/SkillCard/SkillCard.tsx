@@ -66,7 +66,9 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
 
         {/* Хочет научиться */}
         <div className={styles['skill-card-skills-block']}>
-          <h2 className={styles['skill-card-section-title']}>Хочет научиться</h2>
+          <h2 className={styles['skill-card-section-title']}>
+            Хочет научиться
+          </h2>
           <div className={styles['skill-card-skills-list']}>
             {skillsToLearn.map((skillId) => (
               <SkillTag
@@ -111,9 +113,7 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
         </div>
       </div>
 
-      {user.about && (
-        <p className={styles['skill-card-bio']}>{user.about}</p>
-      )}
+      {user.about && <p className={styles['skill-card-bio']}>{user.about}</p>}
 
       {/* Может научить */}
       <div className={styles['skill-card-skills-block']}>

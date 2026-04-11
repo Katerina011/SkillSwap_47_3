@@ -1,9 +1,7 @@
-
 import { useSkillPage } from './hooks/useSkillPage';
 import { Button } from '../../shared/ui/Button';
 import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
-
 
 export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
@@ -105,7 +103,11 @@ export function SkillPage() {
             </h2>
             <div className={styles['skill-page-related-grid']}>
               {relatedUsers.map((relatedUser) => (
-                <SkillCard key={relatedUser.id} user={relatedUser} variant="compact" />
+                <SkillCard
+                  key={relatedUser.id}
+                  user={relatedUser}
+                  variant="compact"
+                />
               ))}
             </div>
           </div>
