@@ -9,6 +9,19 @@
   background-color: var(--color-bg);
 }
 
+.sidebar {
+  position: sticky;
+  top: var(--spacing-24px);
+  align-self: start;
+  height: fit-content;
+}
+
+.filtersPlaceholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16px);
+}
+
 .filtersZone {
   display: flex;
   flex-direction: column;
@@ -25,7 +38,7 @@
 
 .filtersCard {
   display: grid;
-  gap: var(--spacing-12px);
+  gap: var(--spacing-32px);
   padding: var(--spacing-16px);
   background: var(--color-surface);
   border-radius: var(--radius-sm);
@@ -36,16 +49,36 @@
   font-weight: var(--font-weight-medium);
 }
 
-.filterRow {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-8px);
-  padding-bottom: var(--spacing-8px);
-  border-bottom: 1px solid var(--color-accent-hover);
+.filterGroup {
+  display: inherit;
+  gap: var(--spacing-20px);
 }
 
-.filterPlaceholder {
-  color: var(--color-text-caption);
+.filterRow {
+  display: flex;
+  gap: var(--spacing-16px);
+  align-items: center;
+}
+
+.toggleLink {
+  display: inline-flex;
+  gap: var(--spacing-8px);
+  align-items: center;
+  font-size: var(--font-family-body);
+  color: var(--color-accent-pressed);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.toggleLink:hover {
+  color: var(--color-accent-hover);
+}
+
+.filterGroupTitle {
+  margin: 0;
+  font-size: var(--font-size-h3, 20px);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
 }
 
 .contentZone {

@@ -18,13 +18,6 @@ function likeButtonTitle(canLike: boolean, isLiked: boolean): string {
 }
 
 function LikeButtonUI({ isLiked, onLikeToggle, canLike }: LikeButtonUIProps) {
-function LikeButtonUI({ isLiked, onLikeToggle, canLike }: LikeButtonUIProps) {
-  let title = 'Войдите, чтобы ставить лайк';
-
-  if (canLike) {
-    title = isLiked ? 'Убрать лайк' : 'Поставить лайк';
-  }
-
   return (
     <button
       type="button"
@@ -32,7 +25,6 @@ function LikeButtonUI({ isLiked, onLikeToggle, canLike }: LikeButtonUIProps) {
       disabled={!canLike}
       className={cn(styles.likeButton, isLiked && styles.likeActive)}
       title={likeButtonTitle(canLike, isLiked)}
-      title={title}
       aria-label={isLiked ? 'Убрать лайк' : 'Поставить лайк'}
     >
       <svg
