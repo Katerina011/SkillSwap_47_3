@@ -2,6 +2,8 @@ import styles from './CatalogPage.module.css';
 import chevronRight from '../../assets/images/chevron-right.svg';
 import { CatalogCard } from '../../widgets/CatalogCard';
 import { useCatalogSources } from '../../features/catalog/hooks/useCatalogSources';
+import chevronDown from '../../assets/images/chevron-down.svg';
+import { CatalogFiltersPanel } from './CatalogFiltersPanel';
 
 const sections = ['Популярное', 'Новое', 'Рекомендуем'];
 
@@ -40,26 +42,60 @@ export default function CatalogPage() {
       </section>
     ));
   };
+  // TODO(F-3.3-2): Добавить состояние для фильтрации
+  // const [filters, setFilters] = useState<FilterState>({});
+
+  // TODO(F-3.3-2): Добавить обработчики для onChange фильтров
+  // const handleFilterChange = (key: string, value: any) => { ... };
 
   return (
     <div className={styles.catalogPage} aria-label="Страница каталога">
-      <aside className={styles.filtersZone} aria-label="Фильтры каталога">
-        <h1 className={styles.pageTitle}>Каркас</h1>
-        <div className={styles.filtersCard}>
-          <p className={styles.filtersTitle}>Фильтры</p>
-          <div className={styles.filterRow}>
-            <span>Категория</span>
-            <span className={styles.filterPlaceholder}>Все</span>
+      <aside className={styles.sidebar} aria-label="Фильтры каталога">
+        <CatalogFiltersPanel>
+          {/* TODO(F-3.3-2): Здесь будут подключены готовые контролы фильтра:
+              - RadioGroup для "Всё / Хочу научиться / Могу научить"
+              - CheckboxGroup для "Навыки"
+              - RadioGroup для "Пол автора"
+              - CheckboxGroup для "Город"
+              
+              Пример интеграции:
+              <FiltersComponent 
+                filters={filters}
+                onChange={handleFilterChange}
+              />
+          */}
+          <div className={styles.filtersPlaceholder}>
+            <h2 className={styles.filtersTitle}>Фильтры</h2>
+            <div className={styles.filtersCard}>
+              <div className={styles.filterRow}>
+                {/* компонент radio Всё / Хочу научиться / Могу научить */}
+              </div>
+
+              <div className={styles.filterGroup}>
+                <h3 className={styles.filterGroupTitle}>Навыки</h3>
+                {/* список чекбоксов с навыками */}
+                <a href="#0" className={styles.toggleLink}>
+                  Все категории
+                  <img src={chevronDown} alt="" aria-hidden="true" />
+                </a>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <h3 className={styles.filterGroupTitle}>Пол автора</h3>
+                {/* компонент radio Не имеет значения / Мужской / Женский */}
+              </div>
+
+              <div className={styles.filterGroup}>
+                <h3 className={styles.filterGroupTitle}>Город</h3>
+                {/* список чекбоксов с городами */}
+                <a href="#0" className={styles.toggleLink}>
+                  Все категории
+                  <img src={chevronDown} alt="" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
           </div>
-          <div className={styles.filterRow}>
-            <span>Режим</span>
-            <span className={styles.filterPlaceholder}>Все</span>
-          </div>
-          <div className={styles.filterRow}>
-            <span>Поиск</span>
-            <span className={styles.filterPlaceholder}>Искать навык</span>
-          </div>
-        </div>
+        </CatalogFiltersPanel>
       </aside>
 
       <div className={styles.contentZone}>{renderContent()}</div>
