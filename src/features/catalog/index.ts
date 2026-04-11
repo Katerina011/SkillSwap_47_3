@@ -6,4 +6,5 @@ export type {
   CatalogFilters,
   CatalogFilterMode,
   CatalogFilterCategory,
+  CatalogFilterSubcategory,
 } from './utils/filterCatalogItems';
