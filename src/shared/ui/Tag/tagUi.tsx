@@ -18,8 +18,9 @@ export interface ITagUIProps {
 }
 
 function TagUI({ children, variant, className }: ITagUIProps) {
+function TagUI({ children, variant, className = '' }: ITagUIProps) {
   return (
-    <span className={cn(styles.tag, variant && styles[variant], className)}>
+    <span className={cn(styles.tag, styles[variant], className)}>
       {children}
     </span>
   );
@@ -27,6 +28,7 @@ function TagUI({ children, variant, className }: ITagUIProps) {
 
 TagUI.defaultProps = {
   className: undefined,
+  className: '',
 };
 
 export default TagUI;
