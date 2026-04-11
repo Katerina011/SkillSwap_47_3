@@ -34,4 +34,7 @@
   /* Рамка и состояние ошибки */
   --field-border-color: var(--color-text-caption);
   --field-border-error-color: var(--color-error);
+
+  /* Аватар */
+  --avatar-size-lg: 100px;
 }

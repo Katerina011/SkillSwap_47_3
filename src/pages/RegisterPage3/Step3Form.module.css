@@ -301,3 +301,12 @@
   text-align: center;
   letter-spacing: 2%;
 }
+
+.error-message {
+  width: 100%;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-error);
+  letter-spacing: 2%;
+}

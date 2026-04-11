@@ -135,6 +135,18 @@
   align-items: center;
 }
 
+.user-name {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
 .button {
   padding: var(--control-button-padding-y-md) var(--control-button-padding-x-md);
   font-family: var(--font-family-body);

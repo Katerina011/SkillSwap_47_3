@@ -7,7 +7,7 @@ interface UserBioProps {
 
 export function UserBio({ bio }: UserBioProps) {
   if (!bio) return null;
-  
+
   return (
     <div className={styles.userBio}>
       <p>{bio}</p>

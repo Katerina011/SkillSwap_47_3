@@ -1,24 +1,151 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './Step3Form.module.css';
 import schoolBoardImage from './school-board.png';
+import {
+  fetchCategories,
+  fetchSubcategories,
+} from '../../api/endpoints/skillsApi';
+import type { Subcategory } from '../../entities/skill/model/types';
+import { registerMockUser } from '../../features/auth/api/registerMockUser';
+import {
+  clearRegisterDraft,
+  readRegisterDraft,
+  updateRegisterDraft,
+} from '../../features/auth/lib/registerDraft';
+import { useAuth } from '../../shared/hooks/useAuth';
+import { resolvePostAuthRedirect } from '../../app/types/routes';
 
 function Step3Form() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [draft] = useState(() => readRegisterDraft());
+
   const [skillName, setSkillName] = useState('');
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [description, setDescription] = useState('');
+  const [categories, setCategories] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!draft?.email || !draft?.password) {
+      navigate('/register', { replace: true, state: location.state });
+      return;
+    }
+
+    setDescription(draft.about ?? '');
+    setSkillName(draft.skillCanTeach?.name ?? '');
+    setCategory(draft.skillCanTeach?.categoryId ?? '');
+    setSubcategory(draft.skillCanTeach?.id ?? '');
+  }, [draft, navigate, location.state]);
+
+  useEffect(() => {
+    const loadOptions = async () => {
+      const [nextCategories, nextSubcategories] = await Promise.all([
+        fetchCategories(),
+        fetchSubcategories(),
+      ]);
+
+      setCategories(nextCategories);
+      setSubcategories(nextSubcategories);
+    };
+
+    loadOptions().catch(() => {
+      setCategories([]);
+      setSubcategories([]);
+    });
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('Шаг 3:', { skillName, category, subcategory, description });
+    setSubmitError('');
+
+    if (!draft?.email || !draft?.password) {
+      navigate('/register', { replace: true, state: location.state });
+      return;
+    }
+
+    const selectedSubcategory = subcategories.find(
+      (item) => item.id === subcategory,
+    );
+    const teachSkill = selectedSubcategory
+      ? {
+          id: selectedSubcategory.id,
+          categoryId: selectedSubcategory.categoryId,
+          name: skillName.trim() || selectedSubcategory.name,
+          description: description.trim() || 'Пока не заполнено',
+        }
+      : undefined;
+
+    updateRegisterDraft({
+      skillCanTeach: teachSkill,
+      about: description.trim() || undefined,
+    });
+
+    const result = await registerMockUser({
+      email: draft.email,
+      password: draft.password,
+      name: draft.name,
+      birthDate: draft.birthDate,
+      gender: draft.gender,
+      city: draft.city,
+      skillToLearnId: draft.skillToLearnId,
+      skillCanTeach: teachSkill,
+      about: description.trim() || undefined,
+    });
+
+    if (!result.ok) {
+      setSubmitError('Email уже используется');
+      return;
+    }
+
+    const isLoggedIn = await login(draft.email, draft.password);
+    if (!isLoggedIn) {
+      setSubmitError('Не удалось выполнить автологин после регистрации');
+      return;
+    }
+
+    clearRegisterDraft();
+    navigate(
+      resolvePostAuthRedirect(
+        (location.state as { from?: { pathname: string } } | null)?.from
+          ?.pathname,
+      ),
+      { replace: true },
+    );
   };
 
   const handleBack = () => {
-    // eslint-disable-next-line no-console
-    console.log('Назад');
+    const selectedSubcategory = subcategories.find(
+      (item) => item.id === subcategory,
+    );
+
+    updateRegisterDraft({
+      skillCanTeach: selectedSubcategory
+        ? {
+            id: selectedSubcategory.id,
+            categoryId: selectedSubcategory.categoryId,
+            name: skillName.trim() || selectedSubcategory.name,
+            description: description.trim() || 'Пока не заполнено',
+          }
+        : undefined,
+      about: description.trim() || undefined,
+    });
+
+    navigate('/register/step2', {
+      state: location.state,
+    });
   };
+
+  const filteredSubcategories = subcategories.filter(
+    (item) => item.categoryId === category,
+  );
 
   return (
     <>
@@ -51,10 +178,18 @@ function Step3Form() {
                 <div className={styles.label}>Категория навыка</div>
                 <select
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    setSubcategory('');
+                  }}
                   className={styles.select}
                 >
                   <option value="">Выберите категорию</option>
+                  {categories.map((categoryOption) => (
+                    <option key={categoryOption.id} value={categoryOption.id}>
+                      {categoryOption.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -66,6 +201,14 @@ function Step3Form() {
                   className={styles.select}
                 >
                   <option value="">Выберите подкатегорию</option>
+                  {filteredSubcategories.map((subcategoryOption) => (
+                    <option
+                      key={subcategoryOption.id}
+                      value={subcategoryOption.id}
+                    >
+                      {subcategoryOption.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -95,24 +238,22 @@ function Step3Form() {
                   </div>
                 </div>
               </div>
+              {submitError && (
+                <div className={styles['error-message']}>{submitError}</div>
+              )}
+              <div className={styles['button-group']}>
+                <button
+                  type="button"
+                  className={styles['button-secondary']}
+                  onClick={handleBack}
+                >
+                  Назад
+                </button>
+                <button type="submit" className={styles['button-primary']}>
+                  Продолжить
+                </button>
+              </div>
             </form>
-
-            <div className={styles['button-group']}>
-              <button
-                type="button"
-                className={styles['button-secondary']}
-                onClick={handleBack}
-              >
-                Назад
-              </button>
-              <button
-                type="submit"
-                className={styles['button-primary']}
-                onClick={handleSubmit}
-              >
-                Продолжить
-              </button>
-            </div>
           </div>
 
           <div className={styles['image-column']}>

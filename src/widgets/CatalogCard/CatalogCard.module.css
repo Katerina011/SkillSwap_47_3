@@ -1,0 +1,114 @@
+/* Карточка каталога: как компактный SkillCard — теги по категориям, те же отступы */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-20px);
+  background-color: var(--color-bg, var(--color-surface));
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgb(0 0 0 / 8%));
+  transition:
+    transform var(--transition-default, 0.2s ease),
+    box-shadow var(--transition-default);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md, 0 8px 20px rgb(0 0 0 / 12%));
+  transform: translateY(-4px);
+}
+
+.header {
+  display: flex;
+  gap: var(--spacing-16px);
+  align-items: center;
+  margin-bottom: var(--spacing-16px);
+}
+
+.author-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.skill-page-location {
+  margin: 0;
+  font-family: var(--font-family-body);
+  font-size: 13px;
+  line-height: var(--line-height-caption);
+  color: var(--color-text-caption);
+}
+
+.author-name {
+  margin: 0 0 var(--spacing-4px) 0;
+  font-family: var(--font-family-heading);
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.skills-block {
+  margin-bottom: var(--spacing-16px);
+}
+
+.section-title {
+  margin: var(--spacing-16px) 0 var(--spacing-8px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  color: var(--color-text-secondary, #555);
+  text-align: left;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-14px, 14px);
+  align-items: center;
+  margin-top: var(--spacing-8px);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+}
+
+.button {
+  width: 100%;
+}
+
+.likes {
+  position: absolute;
+  top: var(--spacing-20px);
+  right: var(--spacing-20px);
+  width: 18px;
+  height: 20px;
+  transition: all var(--transition-default);
+}
+
+@media (width <= 480px) {
+  .card {
+    padding: var(--spacing-16px);
+  }
+
+  .header {
+    gap: var(--spacing-12px);
+  }
+
+  .author-name {
+    font-size: var(--font-size-h4);
+  }
+}
