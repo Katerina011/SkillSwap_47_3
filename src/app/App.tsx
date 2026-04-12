@@ -8,27 +8,34 @@ import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
-import { CatalogSearchProvider } from '../features/catalog/CatalogSearchContext';
 import type { CatalogOutletContext } from './catalogOutletContext';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Layout
 function Layout() {
+  /** Строка для фильтра каталога: приходит из шапки уже после debounce */
   const [catalogSearch, setCatalogSearch] = useState('');
   const location = useLocation();
+  const onCatalog =
+    location.pathname === '/' || location.pathname === '/catalog';
 
   useEffect(() => {
-    const onCatalog =
-      location.pathname === '/' || location.pathname === '/catalog';
     if (!onCatalog) {
       setCatalogSearch('');
     }
-  }, [location.pathname]);
+  }, [location.pathname, onCatalog]);
 
   return (
     <div className="app">
-      <HeaderGuest onSearch={setCatalogSearch} searchValue={catalogSearch} />
+      {/*
+        key: при уходе с маршрутов каталога сбрасываем локальное поле поиска в шапке
+        (оно больше не синхронизируется через searchValue с родителем).
+      */}
+      <HeaderGuest
+        key={onCatalog ? 'header-catalog-routes' : 'header-other-routes'}
+        onSearch={setCatalogSearch}
+      />
       <main className="app-main">
         <Outlet context={{ catalogSearch } satisfies CatalogOutletContext} />
       </main>
@@ -115,22 +122,8 @@ export function App() {
       <Routes>
         {/* Страницы с общим хедером и футером */}
         <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              <CatalogSearchProvider>
-                <CatalogPage />
-              </CatalogSearchProvider>
-            }
-          />
-          <Route
-            path="catalog"
-            element={
-              <CatalogSearchProvider>
-                <CatalogPage />
-              </CatalogSearchProvider>
-            }
-          />
+          <Route index element={<CatalogPage />} />
+          <Route path="catalog" element={<CatalogPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
