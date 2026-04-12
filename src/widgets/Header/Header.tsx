@@ -5,6 +5,8 @@ import styles from './Header.module.css';
 import logoIcon from '../../assets/images/logo.svg';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useDebounce } from '../../shared/hooks/useDebounce';
+import type { CatalogFacetApply } from '../../app/catalogOutletContext';
+import { AllSkillsDropdown } from '../AllSkillsDropdown/AllSkillsDropdown';
 
 const CATALOG_SEARCH_DEBOUNCE_MS = 400;
 
@@ -13,6 +15,8 @@ interface HeaderGuestUIProps {
   onRegisterClick?: () => void;
   /** Вызывается с уже отложенной (debounced) строкой */
   onSearch?: (query: string) => void;
+  /** Панель «Все навыки»: применить фильтр каталога (как в сайдбаре) */
+  onApplyCatalogFacet?: (facet: CatalogFacetApply) => void;
 }
 
 type HeaderAuthUIProps = {
@@ -20,6 +24,7 @@ type HeaderAuthUIProps = {
   onProfileClick: () => void;
   onLogoutClick: () => void;
   onSearch?: (query: string) => void;
+  onApplyCatalogFacet?: (facet: CatalogFacetApply) => void;
 };
 
 function CatalogSearchInput({
@@ -52,6 +57,7 @@ function HeaderGuestUI({
   onLoginClick = () => {},
   onRegisterClick = () => {},
   onSearch = () => {},
+  onApplyCatalogFacet = () => {},
 }: HeaderGuestUIProps) {
   return (
     <header className={styles.header}>
@@ -76,9 +82,7 @@ function HeaderGuestUI({
                 </Link>
               </li>
               <li>
-                <Link to="/catalog" className={styles['nav-link']}>
-                  Все навыки
-                </Link>
+                <AllSkillsDropdown onApplyCatalogFacet={onApplyCatalogFacet} />
               </li>
             </ul>
           </div>
@@ -133,6 +137,7 @@ function HeaderAuthUI({
   onProfileClick,
   onLogoutClick,
   onSearch = () => {},
+  onApplyCatalogFacet = () => {},
 }: HeaderAuthUIProps) {
   return (
     <header className={styles.header}>
@@ -157,9 +162,7 @@ function HeaderAuthUI({
                 </Link>
               </li>
               <li>
-                <Link to="/catalog" className={styles['nav-link']}>
-                  Все навыки
-                </Link>
+                <AllSkillsDropdown onApplyCatalogFacet={onApplyCatalogFacet} />
               </li>
             </ul>
           </div>
@@ -214,6 +217,7 @@ export function HeaderGuest({
   onLoginClick,
   onRegisterClick,
   onSearch,
+  onApplyCatalogFacet,
 }: HeaderGuestUIProps) {
   const navigate = useNavigate();
   const { isAuth, user, logout } = useAuth();
@@ -228,6 +232,7 @@ export function HeaderGuest({
           navigate('/', { replace: true });
         }}
         onSearch={onSearch}
+        onApplyCatalogFacet={onApplyCatalogFacet}
       />
     );
   }
@@ -237,6 +242,7 @@ export function HeaderGuest({
       onLoginClick={onLoginClick ?? (() => navigate('/login'))}
       onRegisterClick={onRegisterClick ?? (() => navigate('/register'))}
       onSearch={onSearch}
+      onApplyCatalogFacet={onApplyCatalogFacet}
     />
   );
 }

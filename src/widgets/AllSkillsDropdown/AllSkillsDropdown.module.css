@@ -1,0 +1,41 @@
+.wrap {
+  display: inline-flex;
+}
+
+.trigger {
+  display: inline-flex;
+  gap: var(--spacing-8px);
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color var(--transition-default);
+}
+
+.trigger:hover {
+  color: var(--color-accent-pressed);
+}
+
+.trigger-open {
+  color: var(--color-accent-pressed);
+}
+
+.button-text {
+  text-decoration: none;
+}
+
+.arrow {
+  flex-shrink: 0;
+  color: currentcolor;
+  transition: transform var(--transition-default);
+}
+
+.arrow-rotated {
+  transform: rotate(180deg);
+}
