@@ -148,6 +148,15 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
           )}
         </div>
       </div>
+      <Link to={`/skill/${user.skillCanTeach?.id}`}>
+        <Button
+          variant="primary"
+          size="md"
+          className={styles['skill-card-button']}
+        >
+          Смотреть
+        </Button>
+      </Link>
     </div>
   );
 }

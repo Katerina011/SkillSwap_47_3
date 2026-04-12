@@ -1,185 +1,174 @@
-// src/shared/ui/Modal/ExchangeModal.tsx
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import styles from './ExchangeModal.module.css';
-import { useAuth } from '../../../auth/AuthProvider';
-import Modal from '../../../../shared/ui/Modal/Modal';
+
+export type ExchangeModalType = 'auth' | 'success' | 'request-sent';
 
 interface ExchangeModalProps {
   isOpen: boolean;
+  type: ExchangeModalType;
   onClose: () => void;
-  skillName: string;
-  userName: string;
+  onAction?: () => void;
+  skillName?: string;
+  userName?: string;
 }
 
-type ModalState = 'check-auth' | 'register' | 'success' | 'pending';
-
-export function ExchangeModal({
-  isOpen,
-  onClose,
-  skillName,
-  userName,
-}: ExchangeModalProps) {
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
-  const [modalState, setModalState] = useState<ModalState>('check-auth');
+export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, userName }: ExchangeModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
-      if (isAuth) {
-        setModalState('pending');
-      } else {
-        setModalState('register');
-      }
+      document.body.style.overflow = 'hidden';
+      // Фокусируемся на модалке для обработки клавиатуры
+      modalRef.current?.focus();
+    } else {
+      document.body.style.overflow = '';
     }
-  }, [isOpen, isAuth]);
 
-  const handleRegister = () => {
-    onClose();
-    navigate('/register', {
-      state: { from: { pathname: window.location.pathname } },
-    });
-  };
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
-  const handleSuccess = () => {
-    onClose();
-    setModalState('check-auth');
-  };
+  if (!isOpen) {
+    return null;
+  }
 
-  const handleKeyDown = (e: React.KeyboardEvent, callback: () => void) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      callback();
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose();
     }
   };
 
-  const renderContent = () => {
-    switch (modalState) {
-      case 'register':
-        return (
-          <div className={styles['modal-content']}>
-            <div className={styles['modal-icon']}>
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-label="Регистрация"
-              >
-                <path
-                  d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8ZM22 14V26H30V22H26V14H22Z"
-                  fill="#1976D2"
-                />
-              </svg>
-            </div>
-            <h3 className={styles['modal-title']}>
-              Предложить обмен навыком &quot;{skillName}&quot;
-            </h3>
-            <p className={styles['modal-text']}>
-              Чтобы предложить обмен, необходимо зарегистрироваться или войти в
-              аккаунт.
-            </p>
-            <div className={styles['modal-buttons']}>
-              <button
-                type="button"
-                className={styles['button-secondary']}
-                onClick={onClose}
-                onKeyDown={(e) => handleKeyDown(e, onClose)}
-              >
-                Отмена
-              </button>
-              <button
-                type="button"
-                className={styles['button-primary']}
-                onClick={handleRegister}
-                onKeyDown={(e) => handleKeyDown(e, handleRegister)}
-              >
-                Зарегистрироваться
-              </button>
-            </div>
-          </div>
-        );
-
-      case 'pending':
-        return (
-          <div className={styles['modal-content']}>
-            <div className={styles['modal-icon']}>
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-label="Предложение отправлено"
-              >
-                <path
-                  d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8ZM22 14V26H30V22H26V14H22Z"
-                  fill="#FF9800"
-                />
-              </svg>
-            </div>
-            <h3 className={styles['modal-title']}>Предложение отправлено!</h3>
-            <p className={styles['modal-text']}>
-              Вы предложили обмен навыком &quot;{skillName}&quot; пользователю {userName}.
-              Теперь дождитесь подтверждения. Вам придёт уведомление.
-            </p>
-            <div className={styles['modal-buttons']}>
-              <button
-                type="button"
-                className={styles['button-primary']}
-                onClick={handleSuccess}
-                onKeyDown={(e) => handleKeyDown(e, handleSuccess)}
-              >
-                Готово
-              </button>
-            </div>
-          </div>
-        );
-
+  const getContent = () => {
+    switch (type) {
+      case 'auth':
+        return {
+          title: 'Требуется регистрация',
+          message: 'Для предложения обмена необходимо зарегистрироваться',
+          description: 'Зарегистрируйтесь или войдите в аккаунт, чтобы продолжить',
+          buttonText: 'Зарегистрироваться',
+          showFooter: true,
+        };
       case 'success':
-        return (
-          <div className={styles['modal-content']}>
-            <div className={styles['modal-icon']}>
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-label="Успех"
-              >
-                <path
-                  d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8ZM20 30.6L13.4 24L10 27.4L20 37.4L38 19.4L34.6 16L20 30.6Z"
-                  fill="#4CAF50"
-                />
-              </svg>
-            </div>
-            <h3 className={styles['modal-title']}>Ваше предложение создано!</h3>
-            <p className={styles['modal-text']}>
-              Теперь вы можете предложить обмен навыком &quot;{skillName}&quot;.
-            </p>
-            <div className={styles['modal-buttons']}>
-              <button
-                type="button"
-                className={styles['button-primary']}
-                onClick={handleSuccess}
-                onKeyDown={(e) => handleKeyDown(e, handleSuccess)}
-              >
-                Готово
-              </button>
-            </div>
-          </div>
-        );
-
+        return {
+          title: 'Регистрация успешна!',
+          message: 'Ваше предложение создано',
+          description: skillName && userName
+            ? `Вы предложили обмен навыком "${skillName}" пользователю ${userName}`
+            : 'Теперь вы можете предлагать обмен',
+          buttonText: 'Готово',
+          showFooter: false,
+        };
+      case 'request-sent':
+        return {
+          title: 'Предложение отправлено',
+          message: 'Вы предложили обмен',
+          description: skillName && userName
+            ? `Вы уже предложили обмен навыком "${skillName}" пользователю ${userName}. Дождитесь подтверждения`
+            : 'Теперь дождитесь подтверждения. Вам придёт уведомление',
+          buttonText: 'Готово',
+          showFooter: false,
+        };
       default:
-        return null;
+        return {
+          title: '',
+          message: '',
+          description: '',
+          buttonText: '',
+          showFooter: false,
+        };
     }
   };
+
+  const content = getContent();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      {renderContent()}
-    </Modal>
+    <div
+      className={styles['modal-overlay']}
+      onClick={onClose}
+      onKeyDown={handleKeyDown}
+      role="presentation"
+    >
+      <div
+        ref={modalRef}
+        className={styles['modal-container']}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        tabIndex={-1}
+      >
+        <div className={styles['modal-header']}>
+          <h2 id="modal-title" className={styles['modal-title']}>
+            {content.title}
+          </h2>
+          <button
+            type="button"
+            className={styles['modal-close']}
+            onClick={onClose}
+            aria-label="Закрыть"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles['modal-content']}>
+          <div className={styles['modal-icon']}>
+            {type === 'auth' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  stroke="#1976d2"
+                />
+              </svg>
+            )}
+            {(type === 'success' || type === 'request-sent') && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            )}
+          </div>
+
+          <p className={styles['modal-message']}>{content.message}</p>
+          <p className={styles['modal-description']}>{content.description}</p>
+
+          <button
+            type="button"
+            className={styles['modal-button']}
+            onClick={() => {
+              if (onAction && content.showFooter === false) {
+                onAction();
+              }
+              onClose();
+            }}
+          >
+            {content.buttonText}
+          </button>
+        </div>
+
+        {content.showFooter && (
+          <div className={styles['modal-footer']}>
+            <button
+              type="button"
+              className={`${styles['modal-footer-button']} ${styles['modal-footer-button-secondary']}`}
+              onClick={onClose}
+            >
+              Закрыть
+            </button>
+            <button
+              type="button"
+              className={`${styles['modal-footer-button']} ${styles['modal-footer-button-primary']}`}
+              onClick={() => {
+                if (onAction) onAction();
+                onClose();
+              }}
+            >
+              {content.buttonText}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
