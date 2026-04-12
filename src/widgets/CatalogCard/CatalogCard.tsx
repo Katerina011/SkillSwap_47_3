@@ -43,7 +43,7 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
   return (
     <div className={styles.card}>
       <div
-        className={`${styles.likes} ${!isAuth ? styles.likesGuest : ''}`}
+        className={`${styles.likes} ${!isAuth ? styles['likes-guest'] : ''}`}
         {...(isAuth
           ? {
               role: 'button' as const,

@@ -107,7 +107,7 @@
   transition: all var(--transition-default);
 }
 
-.likesGuest {
+.likes-guest {
   pointer-events: none;
   cursor: default;
   opacity: 0.45;
