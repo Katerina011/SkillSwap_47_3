@@ -67,6 +67,19 @@ export default function CatalogPage() {
     setFilters((prev) => ({ ...prev, search: catalogSearch }));
   }, [catalogSearch]);
 
+  const pendingFacetApply = catalogCtx?.pendingFacetApply ?? null;
+  const clearPendingFacetApply = catalogCtx?.clearPendingFacetApply;
+
+  useEffect(() => {
+    if (!pendingFacetApply || !clearPendingFacetApply) return;
+    setFilters((prev) => ({
+      ...prev,
+      categoryId: pendingFacetApply.categoryId,
+      subcategoryId: pendingFacetApply.subcategoryId,
+    }));
+    clearPendingFacetApply();
+  }, [pendingFacetApply, clearPendingFacetApply]);
+
   const cityOptions = useMemo(() => {
     if (!users) return [];
     const set = new Set<string>();
