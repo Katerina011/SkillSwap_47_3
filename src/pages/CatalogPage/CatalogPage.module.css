@@ -91,7 +91,7 @@
 
 .filterGroupTitle {
   margin: 0;
-  font-size: var(--font-size-h3, 20px);
+  font-size: var(--font-size-h3);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
 }
@@ -106,7 +106,7 @@
 
 .filterBlockTitle {
   margin: 0;
-  font-size: var(--font-size-h3, 20px);
+  font-size: var(--font-size-h3);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
 }
@@ -120,47 +120,96 @@
 .categoryFilterBlock {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6px);
+  gap: var(--spacing-8px);
 }
 
+/* Подкатегории: отступ = квадрат + gap категории, чекбокс совпадает с началом текста родителя */
 .subcategoryNested {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6px);
-  margin: 0 0 var(--spacing-4px) var(--spacing-12px);
-  padding-left: var(--spacing-12px);
-  border-left: 1px solid var(--color-accent-hover);
-}
-
-.subcategoryRadioRow {
-  display: flex;
   gap: var(--spacing-8px);
-  align-items: flex-start;
-  font-size: var(--font-size-caption);
-  line-height: 1.35;
-  color: var(--color-text-caption);
-  cursor: pointer;
-}
-
-.subcategoryRadioRow input {
-  margin-top: 3px;
-  cursor: pointer;
-  accent-color: var(--color-text);
+  padding-left: calc(var(--spacing-20px) + var(--spacing-8px));
 }
 
 .filterCheckboxRow {
+  position: relative;
   display: flex;
   gap: var(--spacing-8px);
-  align-items: flex-start;
+  align-items: center;
   font-size: var(--font-size-body);
   color: var(--color-text);
   cursor: pointer;
 }
 
-.filterCheckboxRow input {
-  margin-top: 4px;
+/* Кликабельная зона поверх квадрата; маркер — кастомный */
+.filterInputVisuallyHidden {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  width: var(--spacing-20px);
+  height: var(--spacing-20px);
+  margin: 0;
   cursor: pointer;
-  accent-color: var(--color-text);
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+.filterSkillMark {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--spacing-20px);
+  height: var(--spacing-20px);
+  background-color: transparent;
+  border: var(--interactive-focus-ring-width) solid var(--color-text);
+  border-radius: var(--spacing-4px);
+}
+
+.filterCheckboxRow:has(.filterInputVisuallyHidden:focus-visible)
+  .filterSkillMark {
+  box-shadow: 0 0 0 var(--interactive-focus-ring-width)
+    var(--interactive-focus-ring-color);
+}
+
+/* Категория: выбрано — зелёный квадрат с прочерком, без тёмной обводки (рамка того же цвета, что заливка) */
+.filterInputVisuallyHidden:checked + .filterMarkCategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.filterInputVisuallyHidden:checked + .filterMarkCategory::after {
+  position: static;
+  width: var(--spacing-10px);
+  height: var(--interactive-focus-ring-width);
+  content: '';
+  background-color: var(--color-surface);
+  border-radius: calc(var(--interactive-focus-ring-width) / 2);
+}
+
+/* Подкатегория (radio): выбрано — зелёный квадрат с галочкой, без тёмной обводки */
+.filterInputVisuallyHidden:checked + .filterMarkSubcategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.filterInputVisuallyHidden:checked + .filterMarkSubcategory::after {
+  position: static;
+  box-sizing: border-box;
+  width: var(--spacing-4px);
+  height: var(--spacing-8px);
+  margin-top: -1px;
+  content: '';
+  border: solid var(--color-surface);
+  border-width: 0 var(--interactive-focus-ring-width)
+    var(--interactive-focus-ring-width) 0;
+  transform: rotate(45deg);
 }
 
 .cityClearButton {
