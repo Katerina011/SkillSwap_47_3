@@ -9,6 +9,8 @@ interface HeaderGuestUIProps {
   onLoginClick?: () => void;
   onRegisterClick?: () => void;
   onSearch?: (query: string) => void;
+  /** Контролируемое значение поиска (синхронизация с каталогом) */
+  searchValue?: string;
 }
 
 type HeaderAuthUIProps = {
@@ -25,10 +27,14 @@ type HeaderAuthUIProps = {
 // Здесь Header только получает onSearch через props и не зависит от контекста каталога.
 
 
+  searchValue?: string;
+};
+
 function HeaderGuestUI({
   onLoginClick = () => {},
   onRegisterClick = () => {},
   onSearch = () => {},
+  searchValue,
 }: HeaderGuestUIProps) {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
@@ -66,10 +72,12 @@ function HeaderGuestUI({
 
           <div className={styles['search-wrapper']}>
             <input
-              type="text"
+              type="search"
               placeholder="Искать навык"
               className={styles['search-input']}
+              {...(searchValue !== undefined ? { value: searchValue } : {})}
               onChange={handleSearch}
+              aria-label="Поиск по навыкам"
             />
           </div>
 
@@ -121,6 +129,7 @@ function HeaderAuthUI({
   onProfileClick,
   onLogoutClick,
   onSearch = () => {},
+  searchValue,
 }: HeaderAuthUIProps) {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
@@ -162,6 +171,12 @@ function HeaderAuthUI({
               placeholder="Искать навык"
               className={styles['search-input']}
               onChange={handleSearch}
+              type="search"
+              placeholder="Искать навык"
+              className={styles['search-input']}
+              {...(searchValue !== undefined ? { value: searchValue } : {})}
+              onChange={handleSearch}
+              aria-label="Поиск по навыкам"
             />
           </div>
 
@@ -213,6 +228,7 @@ export function HeaderGuest({
   onLoginClick,
   onRegisterClick,
   onSearch,
+  searchValue,
 }: HeaderGuestUIProps) {
   const navigate = useNavigate();
   const { isAuth, user, logout } = useAuth();
@@ -227,6 +243,7 @@ export function HeaderGuest({
           navigate('/', { replace: true });
         }}
         onSearch={onSearch}
+        searchValue={searchValue}
       />
     );
   }
@@ -236,6 +253,7 @@ export function HeaderGuest({
       onLoginClick={onLoginClick ?? (() => navigate('/login'))}
       onRegisterClick={onRegisterClick ?? (() => navigate('/register'))}
       onSearch={onSearch}
+      searchValue={searchValue}
     />
   );
 }

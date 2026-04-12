@@ -14,6 +14,7 @@ export const HOME_ROUTE = '/' as const;
  * Страница авторизации
  */
 export const LOGIN_ROUTE = '/login' as const;
+export const REGISTER_ROUTE = '/register' as const;
 
 // ============ МАРШРУТЫ СКИЛЛОВ ============
 
@@ -182,4 +183,12 @@ export const getProfileRoute = (
 ): string => {
   if (!segment) return PROFILE_ROUTE;
   return `/profile/${segment}`;
+};
+
+export const resolvePostAuthRedirect = (path?: string | null): string => {
+  if (!path || path === LOGIN_ROUTE || path === REGISTER_ROUTE) {
+    return DEFAULT_REDIRECT_AFTER_LOGIN;
+  }
+
+  return path;
 };

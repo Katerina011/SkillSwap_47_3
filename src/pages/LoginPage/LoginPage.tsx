@@ -8,7 +8,10 @@ import googleIcon from './Google.png';
 import appleIcon from './Apple.png';
 import eyeIcon from './eye.png';
 import { useAuth } from '../../shared/hooks/useAuth';
-import { DEFAULT_REDIRECT_AFTER_LOGIN } from '../../app/types/routes';
+import {
+  DEFAULT_REDIRECT_AFTER_LOGIN,
+  resolvePostAuthRedirect,
+} from '../../app/types/routes';
 
 function LoginPage() {
   const { login } = useAuth();
@@ -20,9 +23,10 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const from =
+  const from = resolvePostAuthRedirect(
     (location.state as { from?: { pathname: string } } | null)?.from
-      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN;
+      ?.pathname ?? DEFAULT_REDIRECT_AFTER_LOGIN,
+  );
 
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault();

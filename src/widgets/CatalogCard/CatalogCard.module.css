@@ -1,0 +1,128 @@
+/* Карточка каталога: как компактный SkillCard — теги по категориям, те же отступы */
+.card {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  padding: var(--spacing-20px);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-default),
+    box-shadow var(--transition-default);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(calc(-1 * var(--spacing-4px)));
+}
+
+.header {
+  display: flex;
+  gap: var(--spacing-16px);
+  align-items: center;
+  margin-bottom: var(--spacing-16px);
+}
+
+.author-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.skill-page-location {
+  margin: 0;
+  font-family: var(--font-family-body);
+
+  /* В макете между caption (12px) и body (16px) — отдельного токена нет */
+  font-size: 13px;
+  line-height: var(--line-height-caption);
+  color: var(--color-text-caption);
+}
+
+.author-name {
+  margin: 0 0 var(--spacing-4px) 0;
+  font-family: var(--font-family-heading);
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.skills-block {
+  margin-bottom: var(--spacing-16px);
+}
+
+.section-title {
+  margin: var(--spacing-16px) 0 var(--spacing-8px) 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  color: var(--color-text-caption);
+  text-align: left;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  /* 14px: в tokens/spacing нет шага 14px — сохраняем вёрстку */
+  gap: 14px;
+  align-items: center;
+  margin-top: var(--spacing-8px);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+}
+
+.button {
+  width: 100%;
+}
+
+.likes {
+  position: absolute;
+  top: var(--spacing-20px);
+  right: var(--spacing-20px);
+  width: 18px;
+  height: 20px;
+  transition: all var(--transition-default);
+}
+
+.likes-guest {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.45;
+}
+
+@media (width <= 480px) {
+  .card {
+    padding: var(--spacing-16px);
+  }
+
+  .header {
+    gap: var(--spacing-12px);
+  }
+
+  .author-name {
+    font-size: var(--font-size-h4);
+  }
+}

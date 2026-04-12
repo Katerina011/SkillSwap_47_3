@@ -6,8 +6,11 @@ export async function loginWithUsersJson(
   password: string,
 ): Promise<AuthUser | null> {
   const users = await getAllUsers();
+  const normalizedEmail = email.trim().toLowerCase();
   const found = users.find(
-    (u) => u.email.trim() === email.trim() && u.password === password,
+    (u) =>
+      u.email.trim().toLowerCase() === normalizedEmail &&
+      u.password === password,
   );
   if (!found) {
     return null;

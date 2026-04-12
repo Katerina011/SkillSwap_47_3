@@ -1,23 +1,36 @@
-import { Suspense, lazy } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Suspense, lazy, useEffect, useState } from 'react';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
 import { CatalogSearchProvider } from '../features/catalog/CatalogSearchContext';
+import type { CatalogOutletContext } from './catalogOutletContext';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Layout
 function Layout() {
+  const [catalogSearch, setCatalogSearch] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    const onCatalog =
+      location.pathname === '/' || location.pathname === '/catalog';
+    if (!onCatalog) {
+      setCatalogSearch('');
+    }
+  }, [location.pathname]);
+
   return (
     <div className="app">
-      <HeaderGuest />
+      <HeaderGuest onSearch={setCatalogSearch} searchValue={catalogSearch} />
       <main className="app-main">
-        <Outlet />
+        <Outlet context={{ catalogSearch } satisfies CatalogOutletContext} />
       </main>
       <Footer />
     </div>
@@ -38,15 +51,6 @@ function FavoritesPage() {
     <div className="container">
       <h1>Избранное</h1>
       <p>Здесь будут сохраненные навыки</p>
-    </div>
-  );
-}
-
-function SkillPage() {
-  return (
-    <div className="container">
-      <h1>Страница навыка</h1>
-      <p>Здесь будет детальная информация о навыке</p>
     </div>
   );
 }
