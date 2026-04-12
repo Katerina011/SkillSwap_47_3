@@ -77,6 +77,7 @@ export function CatalogCategoryModeFilters({
               >
                 <input
                   id={`catalog-category-${cat.id}`}
+                  className={styles.filterInputVisuallyHidden}
                   type="checkbox"
                   checked={filters.categoryId === cat.id}
                   onChange={() =>
@@ -95,6 +96,10 @@ export function CatalogCategoryModeFilters({
                     )
                   }
                 />
+                <span
+                  className={`${styles.filterSkillMark} ${styles.filterMarkCategory}`}
+                  aria-hidden
+                />
                 <span>{cat.name}</span>
               </label>
               {filters.categoryId === cat.id && cat.subcategory.length > 0 ? (
@@ -104,11 +109,12 @@ export function CatalogCategoryModeFilters({
                   aria-label={`Подкатегории: ${cat.name}`}
                 >
                   <label
-                    className={styles.subcategoryRadioRow}
+                    className={styles.filterCheckboxRow}
                     htmlFor={`catalog-subcat-all-${cat.id}`}
                   >
                     <input
                       id={`catalog-subcat-all-${cat.id}`}
+                      className={styles.filterInputVisuallyHidden}
                       type="radio"
                       name="catalog-subcategory-filter"
                       checked={filters.subcategoryId === 'all'}
@@ -120,16 +126,21 @@ export function CatalogCategoryModeFilters({
                         })
                       }
                     />
+                    <span
+                      className={`${styles.filterSkillMark} ${styles.filterMarkSubcategory}`}
+                      aria-hidden
+                    />
                     <span>Вся категория</span>
                   </label>
                   {cat.subcategory.map((sub) => (
                     <label
                       key={sub.id}
-                      className={styles.subcategoryRadioRow}
+                      className={styles.filterCheckboxRow}
                       htmlFor={`catalog-subcat-${sub.id}`}
                     >
                       <input
                         id={`catalog-subcat-${sub.id}`}
+                        className={styles.filterInputVisuallyHidden}
                         type="radio"
                         name="catalog-subcategory-filter"
                         checked={filters.subcategoryId === sub.id}
@@ -140,6 +151,10 @@ export function CatalogCategoryModeFilters({
                             subcategoryId: sub.id,
                           })
                         }
+                      />
+                      <span
+                        className={`${styles.filterSkillMark} ${styles.filterMarkSubcategory}`}
+                        aria-hidden
                       />
                       <span>{sub.name}</span>
                     </label>
