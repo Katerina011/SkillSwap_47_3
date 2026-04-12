@@ -37,4 +37,7 @@
 
   /* Аватар */
   --avatar-size-lg: 100px;
+
+  /* Минимальная ширина дорожки сетки каталога (см. minmax(min(..., 100%), 1fr) в CatalogPage) */
+  --catalog-card-grid-min: 260px;
 }
