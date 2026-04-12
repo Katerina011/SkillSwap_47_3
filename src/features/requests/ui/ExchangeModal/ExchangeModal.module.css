@@ -1,0 +1,103 @@
+/* ExchangeModal.module.css */
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-2xl, 32px);
+  text-align: center;
+}
+
+.modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: var(--spacing-lg, 24px);
+  background-color: var(--color-bg-secondary, #f5f5f5);
+  border-radius: 50%;
+}
+
+.modal-title {
+  margin: 0 0 var(--spacing-md, 16px) 0;
+  font-family: var(--font-family-heading, 'Jost', sans-serif);
+  font-size: 24px;
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text, #1a1a1a);
+}
+
+.modal-text {
+  margin: 0 0 var(--spacing-xl, 28px) 0;
+  font-family: var(--font-family-body, 'Roboto', sans-serif);
+  font-size: var(--font-size-body, 16px);
+  line-height: 1.5;
+  color: var(--color-text-secondary, #444);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: var(--spacing-md, 16px);
+  justify-content: center;
+  width: 100%;
+}
+
+.button-primary {
+  padding: 12px 24px;
+  font-family: var(--font-family-body, 'Roboto', sans-serif);
+  font-size: var(--font-size-button, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text, #fff);
+  cursor: pointer;
+  background-color: var(--color-accent, #1976d2);
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  transition: background-color var(--transition-default, 0.2s ease);
+}
+
+.button-primary:hover {
+  background-color: var(--color-accent-hover, #1565c0);
+}
+
+.button-secondary {
+  padding: 12px 24px;
+  font-family: var(--font-family-body, 'Roboto', sans-serif);
+  font-size: var(--font-size-button, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text, #666);
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: var(--radius-sm, 8px);
+  transition: all var(--transition-default, 0.2s ease);
+}
+
+.button-secondary:hover {
+  background-color: var(--color-bg-secondary, #f5f5f5);
+  border-color: var(--color-accent, #1976d2);
+}
+
+/* Адаптивность */
+@media (width <= 480px) {
+  .modal-content {
+    padding: var(--spacing-lg, 20px);
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-text {
+    font-size: 14px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm, 12px);
+  }
+
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+}

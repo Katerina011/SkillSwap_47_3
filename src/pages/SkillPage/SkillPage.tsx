@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { useSkillPage } from './hooks/useSkillPage';
 import { Button } from '../../shared/ui/Button';
 import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
+import { ExchangeModal } from '../../features/requests/ui/ExchangeModal/ExchangeModal';
 
 export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (loading) {
     return (
@@ -27,6 +30,15 @@ export function SkillPage() {
       </div>
     );
   }
+
+
+  const handleExchangeClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className={styles['skill-page']}>
@@ -58,6 +70,7 @@ export function SkillPage() {
                   variant="primary"
                   size="lg"
                   className={styles['skill-page-exchange-full-width']}
+                  onClick={handleExchangeClick}
                 >
                   Предложить обмен
                 </Button>
@@ -113,6 +126,15 @@ export function SkillPage() {
           </div>
         )}
       </div>
+
+{/* Модальное окно */}
+      <ExchangeModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        skillName={user.skillCanTeach?.name || 'навык'}
+        userName={user.name}
+      />
+
     </div>
   );
 }
