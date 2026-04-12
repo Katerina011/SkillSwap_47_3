@@ -14,20 +14,28 @@ const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
 // Компонент Layout
 function Layout() {
+  /** Строка для фильтра каталога: приходит из шапки уже после debounce */
   const [catalogSearch, setCatalogSearch] = useState('');
   const location = useLocation();
+  const onCatalog =
+    location.pathname === '/' || location.pathname === '/catalog';
 
   useEffect(() => {
-    const onCatalog =
-      location.pathname === '/' || location.pathname === '/catalog';
     if (!onCatalog) {
       setCatalogSearch('');
     }
-  }, [location.pathname]);
+  }, [location.pathname, onCatalog]);
 
   return (
     <div className="app">
-      <HeaderGuest onSearch={setCatalogSearch} searchValue={catalogSearch} />
+      {/*
+        key: при уходе с маршрутов каталога сбрасываем локальное поле поиска в шапке
+        (оно больше не синхронизируется через searchValue с родителем).
+      */}
+      <HeaderGuest
+        key={onCatalog ? 'header-catalog-routes' : 'header-other-routes'}
+        onSearch={setCatalogSearch}
+      />
       <main className="app-main">
         <Outlet context={{ catalogSearch } satisfies CatalogOutletContext} />
       </main>
