@@ -232,6 +232,7 @@
 .contentZone {
   display: grid;
   gap: var(--spacing-40px);
+  min-width: 0;
 }
 
 .loadMoreSentinel {
@@ -243,6 +244,7 @@
 .catalogSection {
   display: grid;
   gap: var(--spacing-32px);
+  min-width: 0;
 }
 
 .sectionHeader {
@@ -290,16 +292,18 @@
 }
 
 .horizontalScroll {
-  overflow-x: auto;
-}
-
-.horizontalScroll::-webkit-scrollbar {
-  height: 8px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: visible;
 }
 
 .cardsContainer {
   display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(var(--catalog-card-grid-min), 100%), 1fr)
+  );
+  align-items: stretch;
   gap: var(--spacing-24px);
 }
 
@@ -333,10 +337,6 @@
   .catalogPage {
     grid-template-columns: 1fr;
   }
-
-  .cardsContainer {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
 }
 
 @media (width <= 700px) {
@@ -347,9 +347,5 @@
   .sectionHeader {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .cardsContainer {
-    grid-template-columns: 1fr;
   }
 }

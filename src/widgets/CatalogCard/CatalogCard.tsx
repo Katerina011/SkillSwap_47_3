@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
@@ -10,6 +10,7 @@ import like_active from '../../assets/images/like_active.svg';
 import type { User } from '../../entities/user/model/types';
 import type { SkillsResponse } from '../../api/endpoints/skillsApi';
 import { getCategoryVariant } from '../SkillCard/SkillCard';
+import { useAuth } from '../../shared/hooks/useAuth';
 
 interface CatalogCardProps {
   user: User;
@@ -26,7 +27,14 @@ function getAgeSuffix(age: number): string {
 const VISIBLE_LEARN = 2;
 
 export function CatalogCard({ user, skills }: CatalogCardProps) {
+  const { isAuth } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (!isAuth) {
+      setIsLiked(false);
+    }
+  }, [isAuth]);
 
   const learnIds = user.skills ?? [];
   const visibleLearn = learnIds.slice(0, VISIBLE_LEARN);
@@ -35,17 +43,27 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
   return (
     <div className={styles.card}>
       <div
-        role="button"
-        tabIndex={0}
-        className={styles.likes}
-        onClick={() => setIsLiked(!isLiked)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setIsLiked(!isLiked);
-          }
-        }}
-        aria-label={isLiked ? 'Убрать из избранного' : 'Добавить в избранное'}
+        className={`${styles.likes} ${!isAuth ? styles.likesGuest : ''}`}
+        {...(isAuth
+          ? {
+              role: 'button' as const,
+              tabIndex: 0,
+              onClick: () => setIsLiked((v) => !v),
+              onKeyDown: (e: KeyboardEvent) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsLiked((v) => !v);
+                }
+              },
+              'aria-label': isLiked
+                ? 'Убрать из избранного'
+                : 'Добавить в избранное',
+            }
+          : {
+              'aria-label':
+                'Избранное недоступно: войдите в аккаунт, чтобы добавлять карточки',
+              title: 'Войдите в аккаунт, чтобы добавить в избранное',
+            })}
       >
         <img src={isLiked ? like_active : like} alt="" aria-hidden="true" />
       </div>
