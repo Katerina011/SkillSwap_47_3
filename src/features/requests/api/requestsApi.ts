@@ -1,4 +1,4 @@
-import { CreateExchangeRequestDTO, ExchangeRequest } from "../model/types";
+import { CreateExchangeRequestDTO, ExchangeRequest } from '../model/types';
 
 const REQUESTS_STORAGE_KEY = 'exchange_requests';
 
@@ -28,7 +28,9 @@ function writeRequestsToStorage(requests: ExchangeRequest[]): void {
   localStorage.setItem(REQUESTS_STORAGE_KEY, JSON.stringify(requests));
 }
 
-export function createExchangeRequest(dto: CreateExchangeRequestDTO): ExchangeRequest {
+export function createExchangeRequest(
+  dto: CreateExchangeRequestDTO,
+): ExchangeRequest {
   const requests = readRequestsFromStorage();
 
   const newRequest: ExchangeRequest = {
@@ -49,7 +51,9 @@ export function createExchangeRequest(dto: CreateExchangeRequestDTO): ExchangeRe
 
 export function getRequestsByUser(userId: string): ExchangeRequest[] {
   const requests = readRequestsFromStorage();
-  return requests.filter((req) => req.fromUserId === userId || req.toUserId === userId);
+  return requests.filter(
+    (req) => req.fromUserId === userId || req.toUserId === userId,
+  );
 }
 
 export function getRequestBySkillAndUsers(

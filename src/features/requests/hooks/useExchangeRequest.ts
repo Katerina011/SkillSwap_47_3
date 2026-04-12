@@ -26,12 +26,20 @@ export function useExchangeRequest(): UseExchangeRequestReturn {
   const [error, setError] = useState<string | null>(null);
 
   const createRequest = useCallback(
-    (fromUserId: string, toUserId: string, skillId: string): ExchangeRequest | null => {
+    (
+      fromUserId: string,
+      toUserId: string,
+      skillId: string,
+    ): ExchangeRequest | null => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const existingRequest = getRequestBySkillAndUsers(skillId, fromUserId, toUserId);
+        const existingRequest = getRequestBySkillAndUsers(
+          skillId,
+          fromUserId,
+          toUserId,
+        );
         if (existingRequest && existingRequest.status === 'pending') {
           setError('Заявка уже отправлена');
           return null;

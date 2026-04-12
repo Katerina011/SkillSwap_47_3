@@ -12,7 +12,14 @@ interface ExchangeModalProps {
   userName?: string;
 }
 
-export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, userName }: ExchangeModalProps) {
+export function ExchangeModal({
+  isOpen,
+  type,
+  onClose,
+  onAction,
+  skillName,
+  userName,
+}: ExchangeModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,7 +52,8 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
         return {
           title: 'Требуется регистрация',
           message: 'Для предложения обмена необходимо зарегистрироваться',
-          description: 'Зарегистрируйтесь или войдите в аккаунт, чтобы продолжить',
+          description:
+            'Зарегистрируйтесь или войдите в аккаунт, чтобы продолжить',
           buttonText: 'Зарегистрироваться',
           showFooter: true,
         };
@@ -53,9 +61,10 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
         return {
           title: 'Регистрация успешна!',
           message: 'Ваше предложение создано',
-          description: skillName && userName
-            ? `Вы предложили обмен навыком "${skillName}" пользователю ${userName}`
-            : 'Теперь вы можете предлагать обмен',
+          description:
+            skillName && userName
+              ? `Вы предложили обмен навыком "${skillName}" пользователю ${userName}`
+              : 'Теперь вы можете предлагать обмен',
           buttonText: 'Готово',
           showFooter: false,
         };
@@ -63,9 +72,10 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
         return {
           title: 'Предложение отправлено',
           message: 'Вы предложили обмен',
-          description: skillName && userName
-            ? `Вы уже предложили обмен навыком "${skillName}" пользователю ${userName}. Дождитесь подтверждения`
-            : 'Теперь дождитесь подтверждения. Вам придёт уведомление',
+          description:
+            skillName && userName
+              ? `Вы уже предложили обмен навыком "${skillName}" пользователю ${userName}. Дождитесь подтверждения`
+              : 'Теперь дождитесь подтверждения. Вам придёт уведомление',
           buttonText: 'Готово',
           showFooter: false,
         };
@@ -107,7 +117,12 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
             onClick={onClose}
             aria-label="Закрыть"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>
@@ -116,7 +131,12 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
         <div className={styles['modal-content']}>
           <div className={styles['modal-icon']}>
             {type === 'auth' && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
                 <path
                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                   stroke="#1976d2"
@@ -124,7 +144,12 @@ export function ExchangeModal({ isOpen, type, onClose, onAction, skillName, user
               </svg>
             )}
             {(type === 'success' || type === 'request-sent') && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#4caf50"
+                strokeWidth="2"
+              >
                 <path d="M20 6L9 17l-5-5" />
               </svg>
             )}

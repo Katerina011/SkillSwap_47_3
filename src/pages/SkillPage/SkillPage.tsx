@@ -3,11 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
-import { ExchangeModal, ExchangeModalType } from '../../features/requests/ui/ExchangeModal/ExchangeModal';
+import {
+  ExchangeModal,
+  ExchangeModalType,
+} from '../../features/requests/ui/ExchangeModal/ExchangeModal';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
 import TagUI from '../../shared/ui/Tag/tagUi';
-import { SkillCard, getCategoryVariant } from '../../widgets/SkillCard/SkillCard';
+import {
+  SkillCard,
+  getCategoryVariant,
+} from '../../widgets/SkillCard/SkillCard';
 import { SkillTag } from '../../shared/ui/SkillName/SkillTag';
 import styles from './SkillPage.module.css';
 
@@ -53,7 +59,11 @@ export function SkillPage() {
   const remainingCount = (user.skills?.length || 0) - 3;
 
   const hasActiveRequest = currentUser
-    ? hasActiveRequestForSkill(user.skillCanTeach?.id || '', currentUser.id, user.id)
+    ? hasActiveRequestForSkill(
+        user.skillCanTeach?.id || '',
+        currentUser.id,
+        user.id,
+      )
     : false;
 
   const handleExchangeClick = () => {
