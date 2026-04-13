@@ -15,7 +15,6 @@ import type { User } from '../../entities/user/model/types';
 import type { CatalogOutletContext } from '../../app/catalogOutletContext';
 import { CatalogCard } from '../../widgets/CatalogCard';
 import { useOnScreen } from '../../shared/hooks/useOnScreen';
-import { useDebounce } from '../../shared/hooks/useDebounce';
 
 const CATALOG_LOAD_LIMIT = 20;
 
@@ -64,11 +63,9 @@ export default function CatalogPage() {
     useState(CATALOG_LOAD_LIMIT);
   const [setLoadSentinel, isLoadSentinelVisible] = useOnScreen();
 
-  const debouncedSearch = useDebounce(catalogSearch, 300);
-
   useEffect(() => {
-    setFilters((prev) => ({ ...prev, search: debouncedSearch }));
-  }, [debouncedSearch]);
+    setFilters((prev) => ({ ...prev, search: catalogSearch }));
+  }, [catalogSearch]);
 
   const pendingFacetApply = catalogCtx?.pendingFacetApply ?? null;
   const clearPendingFacetApply = catalogCtx?.clearPendingFacetApply;
