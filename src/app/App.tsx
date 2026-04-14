@@ -19,14 +19,26 @@ import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
-import Step2Form from '../pages/RegisterPage2/Step2Form';
-import Step3Form from '../pages/RegisterPage3/Step3Form';
 import type {
   CatalogFacetApply,
   CatalogOutletContext,
 } from './catalogOutletContext';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
+const FavoritesPage = lazy(
+  () => import('../pages/FavoritesPage/FavoritesPage'),
+);
+const CreateSkillPage = lazy(
+  () => import('../pages/CreateSkillPage/CreateSkillPage'),
+);
+const AboutPage = lazy(() => import('../pages/AboutPage/AboutPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const BlogPage = lazy(() => import('../pages/BlogPage/BlogPage'));
+const TermsPage = lazy(() => import('../pages/TermsPage/TermsPage'));
+const PrivacyPage = lazy(() => import('../pages/PrivacyPage/PrivacyPage'));
+const Step2Form = lazy(() => import('../pages/RegisterPage2/Step2Form'));
+const Step3Form = lazy(() => import('../pages/RegisterPage3/Step3Form'));
 
 // Компонент Layout
 function Layout() {
@@ -83,78 +95,6 @@ function Layout() {
         <Outlet context={outletContext} />
       </main>
       <Footer />
-    </div>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <div className="container">
-      <h1>Профиль пользователя</h1>
-      <p>Здесь будет информация о пользователе</p>
-    </div>
-  );
-}
-
-function FavoritesPage() {
-  return (
-    <div className="container">
-      <h1>Избранное</h1>
-      <p>Здесь будут сохраненные навыки</p>
-    </div>
-  );
-}
-
-function CreateSkillPage() {
-  return (
-    <div className="container">
-      <h1>Создание навыка</h1>
-      <p>Здесь будет форма создания нового навыка</p>
-    </div>
-  );
-}
-
-function AboutPage() {
-  return (
-    <div className="container">
-      <h1>О проекте</h1>
-      <p>SkillSwap — платформа обмена навыками</p>
-    </div>
-  );
-}
-
-function ContactsPage() {
-  return (
-    <div className="container">
-      <h1>Контакты</h1>
-      <p>Свяжитесь с нами</p>
-    </div>
-  );
-}
-
-function BlogPage() {
-  return (
-    <div className="container">
-      <h1>Блог</h1>
-      <p>Новости и статьи</p>
-    </div>
-  );
-}
-
-function TermsPage() {
-  return (
-    <div className="container">
-      <h1>Пользовательское соглашение</h1>
-      <p>Условия использования сервиса SkillSwap</p>
-    </div>
-  );
-}
-
-function PrivacyPage() {
-  return (
-    <div className="container">
-      <h1>Политика конфиденциальности</h1>
-      <p>Политика конфиденциальности сервиса SkillSwap</p>
     </div>
   );
 }
