@@ -11,6 +11,9 @@ export interface CatalogFilters {
   mode: CatalogFilterMode;
 }
 
+const safeLower = (value: unknown) =>
+  typeof value === 'string' ? value.toLowerCase() : '';
+
 export const filterCatalogItems = (
   items: CatalogItem[],
   { search, categoryId, subcategoryId, mode }: CatalogFilters,
@@ -20,9 +23,9 @@ export const filterCatalogItems = (
   return items.filter((item) => {
     const matchesSearch =
       searchTerm === '' ||
-      item.title.toLowerCase().includes(searchTerm) ||
-      item.authorName.toLowerCase().includes(searchTerm) ||
-      item.description.toLowerCase().includes(searchTerm);
+      safeLower(item.title).includes(searchTerm) ||
+      safeLower(item.authorName).includes(searchTerm) ||
+      safeLower(item.description).includes(searchTerm);
 
     let matchesCategory = true;
     if (categoryId !== 'all') {

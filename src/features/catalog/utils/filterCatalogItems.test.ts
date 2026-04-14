@@ -16,6 +16,7 @@ const makeFilters = (search: string): CatalogFilters => ({
 
 describe('filterCatalogItems', () => {
   const malformedItems: CatalogItem[] = [
+  const items: CatalogItem[] = [
     {
       id: 'broken-item',
       kind: 'teach',
@@ -160,5 +161,19 @@ describe('filterCatalogItems', () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('teach-2');
+  });
+  it('не падает на отсутствующих или нестроковых полях при пустом поиске', () => {
+    expect(() => filterCatalogItems(items, defaultFilters)).not.toThrow();
+    expect(filterCatalogItems(items, defaultFilters)).toHaveLength(2);
+  });
+
+  it('находит карточку по authorName без учета регистра', () => {
+    expect(filterCatalogItems(items, makeFilters('alice'))).toEqual([items[1]]);
+  });
+
+  it('находит карточку по description без учета регистра', () => {
+    expect(filterCatalogItems(items, makeFilters('typescript'))).toEqual([
+      items[1],
+    ]);
   });
 });
