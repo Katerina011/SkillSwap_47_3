@@ -51,15 +51,6 @@ function Layout() {
   const onCatalog =
     location.pathname === '/' || location.pathname === '/catalog';
 
-
-function AboutPage() {
-  return (
-    <div className="container">
-      <h1>О проекте</h1>
-      <p>SkillSwap — платформа обмена навыками</p>
-    </div>
-  );
-}
   const clearPendingFacetApply = useCallback(() => {
     setPendingFacetApply(null);
   }, []);
