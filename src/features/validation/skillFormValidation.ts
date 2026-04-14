@@ -34,14 +34,19 @@ export const SKILL_VALIDATION_RULES = {
 } as const;
 
 // Тип для разрешенных MIME-типов
-type AllowedMimeType = typeof SKILL_VALIDATION_RULES.image.allowedTypes[number];
+type AllowedMimeType =
+  (typeof SKILL_VALIDATION_RULES.image.allowedTypes)[number];
 
 // Функция проверки MIME-типа
 function isAllowedMimeType(mimeType: string): mimeType is AllowedMimeType {
-  return (SKILL_VALIDATION_RULES.image.allowedTypes as readonly string[]).includes(mimeType);
+  return (
+    SKILL_VALIDATION_RULES.image.allowedTypes as readonly string[]
+  ).includes(mimeType);
 }
 
-export function validateSkillForm(data: Partial<SkillFormData>): ValidationErrors {
+export function validateSkillForm(
+  data: Partial<SkillFormData>,
+): ValidationErrors {
   const errors: ValidationErrors = {};
 
   // Валидация названия навыка
@@ -49,14 +54,19 @@ export function validateSkillForm(data: Partial<SkillFormData>): ValidationError
     const trimmedName = data.skillName.trim();
     if (trimmedName.length < SKILL_VALIDATION_RULES.skillName.minLength) {
       errors.skillName = `Название должно быть не менее ${SKILL_VALIDATION_RULES.skillName.minLength} символов`;
-    } else if (trimmedName.length > SKILL_VALIDATION_RULES.skillName.maxLength) {
+    } else if (
+      trimmedName.length > SKILL_VALIDATION_RULES.skillName.maxLength
+    ) {
       errors.skillName = `Название должно быть не более ${SKILL_VALIDATION_RULES.skillName.maxLength} символов`;
     }
   }
 
   // Валидация описания
   if (data.description !== undefined) {
-    if (data.description.trim().length > SKILL_VALIDATION_RULES.description.maxLength) {
+    if (
+      data.description.trim().length >
+      SKILL_VALIDATION_RULES.description.maxLength
+    ) {
       errors.description = `Описание должно быть не более ${SKILL_VALIDATION_RULES.description.maxLength} символов`;
     }
   }
@@ -89,5 +99,5 @@ export function validateSkillForm(data: Partial<SkillFormData>): ValidationError
 }
 
 export function isFormValid(errors: ValidationErrors): boolean {
-  return !Object.values(errors).some(error => error !== undefined);
+  return !Object.values(errors).some((error) => error !== undefined);
 }
