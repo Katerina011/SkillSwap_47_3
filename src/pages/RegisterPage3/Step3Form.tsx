@@ -1,3 +1,4 @@
+// src/pages/RegisterPage3/Step3Form.tsx
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginPage/LoginHeader';
@@ -16,6 +17,12 @@ import {
 } from '../../features/auth/lib/registerDraft';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { resolvePostAuthRedirect } from '../../app/types/routes';
+// Добавляем импорт валидации
+import {
+  validateSkillForm,
+  isFormValid,
+  type ValidationErrors,
+} from '../../features/validation/skillFormValidation';
 
 function Step3Form() {
   const { login } = useAuth();
@@ -32,6 +39,10 @@ function Step3Form() {
   >([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [submitError, setSubmitError] = useState('');
+  
+  // Добавляем состояние для ошибок валидации
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!draft?.email || !draft?.password) {
@@ -62,9 +73,45 @@ function Step3Form() {
     });
   }, []);
 
+  // Добавляем валидацию при изменении полей
+  useEffect(() => {
+    const errors = validateSkillForm({
+      skillName,
+      description,
+      category,
+      subcategory,
+    });
+    setValidationErrors(errors);
+  }, [skillName, description, category, subcategory]);
+
+  const handleFieldBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError('');
+
+    // Отмечаем все поля как touched
+    setTouched({
+      skillName: true,
+      description: true,
+      category: true,
+      subcategory: true,
+    });
+
+    // Проверяем валидацию
+    const errors = validateSkillForm({
+      skillName,
+      description,
+      category,
+      subcategory,
+    });
+    setValidationErrors(errors);
+
+    if (!isFormValid(errors)) {
+      return; // Блокируем submit при наличии ошибок
+    }
 
     if (!draft?.email || !draft?.password) {
       navigate('/register', { replace: true, state: location.state });
@@ -147,6 +194,9 @@ function Step3Form() {
     (item) => item.categoryId === category,
   );
 
+  // Проверяем, заблокирован ли submit
+  const isSubmitDisabled = !isFormValid(validationErrors);
+
   return (
     <>
       <LoginHeader />
@@ -164,25 +214,39 @@ function Step3Form() {
           <div className={styles['form-column']}>
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.field}>
-                <div className={styles.label}>Название навыка</div>
+                <div className={styles.label}>Название навыка *</div>
                 <input
                   type="text"
                   value={skillName}
                   onChange={(e) => setSkillName(e.target.value)}
-                  className={styles.input}
+                  onBlur={() => handleFieldBlur('skillName')}
+                  className={`${styles.input} ${
+                    touched.skillName && validationErrors.skillName ? styles['input-error'] : ''
+                  }`}
                   placeholder="Введите название вашего навыка"
                 />
+                <div className={styles['char-counter']}>
+                  {skillName.length}/50
+                </div>
+                {touched.skillName && validationErrors.skillName && (
+                  <div className={styles['error-message']}>
+                    {validationErrors.skillName}
+                  </div>
+                )}
               </div>
 
               <div className={styles.field}>
-                <div className={styles.label}>Категория навыка</div>
+                <div className={styles.label}>Категория навыка *</div>
                 <select
                   value={category}
                   onChange={(e) => {
                     setCategory(e.target.value);
                     setSubcategory('');
                   }}
-                  className={styles.select}
+                  onBlur={() => handleFieldBlur('category')}
+                  className={`${styles.select} ${
+                    touched.category && validationErrors.category ? styles['input-error'] : ''
+                  }`}
                 >
                   <option value="">Выберите категорию</option>
                   {categories.map((categoryOption) => (
@@ -191,14 +255,22 @@ function Step3Form() {
                     </option>
                   ))}
                 </select>
+                {touched.category && validationErrors.category && (
+                  <div className={styles['error-message']}>
+                    {validationErrors.category}
+                  </div>
+                )}
               </div>
 
               <div className={styles.field}>
-                <div className={styles.label}>Подкатегория навыка</div>
+                <div className={styles.label}>Подкатегория навыка *</div>
                 <select
                   value={subcategory}
                   onChange={(e) => setSubcategory(e.target.value)}
-                  className={styles.select}
+                  onBlur={() => handleFieldBlur('subcategory')}
+                  className={`${styles.select} ${
+                    touched.subcategory && validationErrors.subcategory ? styles['input-error'] : ''
+                  }`}
                 >
                   <option value="">Выберите подкатегорию</option>
                   {filteredSubcategories.map((subcategoryOption) => (
@@ -210,6 +282,11 @@ function Step3Form() {
                     </option>
                   ))}
                 </select>
+                {touched.subcategory && validationErrors.subcategory && (
+                  <div className={styles['error-message']}>
+                    {validationErrors.subcategory}
+                  </div>
+                )}
               </div>
 
               <div className={styles.field}>
@@ -217,10 +294,21 @@ function Step3Form() {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className={styles.textarea}
+                  onBlur={() => handleFieldBlur('description')}
+                  className={`${styles.textarea} ${
+                    touched.description && validationErrors.description ? styles['input-error'] : ''
+                  }`}
                   placeholder="Коротко опишите, чему можете научить"
                   rows={4}
                 />
+                <div className={styles['char-counter']}>
+                  {description.length}/500
+                </div>
+                {touched.description && validationErrors.description && (
+                  <div className={styles['error-message']}>
+                    {validationErrors.description}
+                  </div>
+                )}
               </div>
 
               <div className={styles['upload-area']}>
@@ -238,9 +326,11 @@ function Step3Form() {
                   </div>
                 </div>
               </div>
+              
               {submitError && (
                 <div className={styles['error-message']}>{submitError}</div>
               )}
+              
               <div className={styles['button-group']}>
                 <button
                   type="button"
@@ -249,7 +339,11 @@ function Step3Form() {
                 >
                   Назад
                 </button>
-                <button type="submit" className={styles['button-primary']}>
+                <button 
+                  type="submit" 
+                  className={styles['button-primary']}
+                  disabled={isSubmitDisabled}
+                >
                   Продолжить
                 </button>
               </div>
