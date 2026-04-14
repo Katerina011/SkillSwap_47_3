@@ -1,8 +1,45 @@
 import { describe, it, expect } from '@jest/globals';
-import { filterCatalogItems } from './filterCatalogItems';
+import { filterCatalogItems, type CatalogFilters } from './filterCatalogItems';
 import type { CatalogItem } from '../model/types';
 
+const defaultFilters: CatalogFilters = {
+  search: '',
+  categoryId: 'all',
+  subcategoryId: 'all',
+  mode: 'all',
+};
+
+const makeFilters = (search: string): CatalogFilters => ({
+  ...defaultFilters,
+  search,
+});
+
 describe('filterCatalogItems', () => {
+  const malformedItems: CatalogItem[] = [
+    {
+      id: 'broken-item',
+      kind: 'teach',
+      categoryId: 'cat-1',
+      subcategoryId: 'sub-1',
+      title: undefined,
+      authorName: null,
+      description: 42,
+      authorId: 'usr-1',
+      avatar: 'avatar.png',
+    } as unknown as CatalogItem,
+    {
+      id: 'searchable-item',
+      kind: 'learn',
+      categoryId: 'cat-2',
+      subcategoryId: 'sub-2',
+      title: '',
+      authorName: 'Alice',
+      description: 'Основы TypeScript',
+      authorId: 'usr-2',
+      avatar: 'avatar-2.png',
+    },
+  ];
+
   const mockItems: CatalogItem[] = [
     {
       id: 'teach-1',
@@ -39,12 +76,22 @@ describe('filterCatalogItems', () => {
     },
   ];
 
-  const defaultFilters = {
-    search: '',
-    categoryId: 'all',
-    subcategoryId: 'all',
-    mode: 'all',
-  } as const;
+  it('не падает на отсутствующих или нестроковых полях при пустом поиске', () => {
+    expect(() => filterCatalogItems(malformedItems, defaultFilters)).not.toThrow();
+    expect(filterCatalogItems(malformedItems, defaultFilters)).toHaveLength(2);
+  });
+
+  it('находит карточку по authorName без учета регистра', () => {
+    expect(filterCatalogItems(malformedItems, makeFilters('alice'))).toEqual([
+      malformedItems[1],
+    ]);
+  });
+
+  it('находит карточку по description без учета регистра', () => {
+    expect(filterCatalogItems(malformedItems, makeFilters('typescript'))).toEqual([
+      malformedItems[1],
+    ]);
+  });
 
   it('должна возвращать все элементы, если фильтры по умолчанию', () => {
     const result = filterCatalogItems(mockItems, defaultFilters);
@@ -56,7 +103,7 @@ describe('filterCatalogItems', () => {
       ...defaultFilters,
       search: '  react  ',
     });
-    // Подходят 'React Fundamentals' (title) и 'React' (title)
+
     expect(result).toHaveLength(2);
     expect(result.map((i) => i.id)).toEqual(
       expect.arrayContaining(['teach-1', 'learn-1']),
@@ -73,14 +120,12 @@ describe('filterCatalogItems', () => {
   });
 
   it('должна фильтровать по категории и подкатегории', () => {
-    // Только категория
     const resultCat1 = filterCatalogItems(mockItems, {
       ...defaultFilters,
       categoryId: 'cat-1',
     });
     expect(resultCat1).toHaveLength(2);
 
-    // Категория и подкатегория
     const resultSub2 = filterCatalogItems(mockItems, {
       ...defaultFilters,
       categoryId: 'cat-2',
@@ -113,7 +158,6 @@ describe('filterCatalogItems', () => {
       mode: 'teach',
     });
 
-    // Только teach-2 подходит: автор Ivan Ivanov, cat-2, режим teach
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('teach-2');
   });
