@@ -7,8 +7,10 @@ export const getFavoriteIds = (): string[] => {
   if (!raw) return [];
 
   try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed.filter((item): item is string => typeof item === 'string');
   } catch {
     return [];
   }
@@ -35,9 +37,9 @@ export const removeFavorite = (catalogItemId: string): void => {
 
 export const toggleFavoriteId = (catalogItemId: string): boolean => {
   const current = getFavoriteIds();
-  const isFavorite = current.includes(catalogItemId);
+  const isFav = current.includes(catalogItemId);
 
-  if (isFavorite) {
+  if (isFav) {
     setFavoriteIds(current.filter((id) => id !== catalogItemId));
     return false;
   }
