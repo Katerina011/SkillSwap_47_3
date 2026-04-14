@@ -39,9 +39,11 @@ function Step3Form() {
   >([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [submitError, setSubmitError] = useState('');
-  
+
   // Добавляем состояние для ошибок валидации
-  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+    {},
+  );
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -85,7 +87,7 @@ function Step3Form() {
   }, [skillName, description, category, subcategory]);
 
   const handleFieldBlur = (field: string) => {
-    setTouched(prev => ({ ...prev, [field]: true }));
+    setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -221,7 +223,9 @@ function Step3Form() {
                   onChange={(e) => setSkillName(e.target.value)}
                   onBlur={() => handleFieldBlur('skillName')}
                   className={`${styles.input} ${
-                    touched.skillName && validationErrors.skillName ? styles['input-error'] : ''
+                    touched.skillName && validationErrors.skillName
+                      ? styles['input-error']
+                      : ''
                   }`}
                   placeholder="Введите название вашего навыка"
                 />
@@ -245,7 +249,9 @@ function Step3Form() {
                   }}
                   onBlur={() => handleFieldBlur('category')}
                   className={`${styles.select} ${
-                    touched.category && validationErrors.category ? styles['input-error'] : ''
+                    touched.category && validationErrors.category
+                      ? styles['input-error']
+                      : ''
                   }`}
                 >
                   <option value="">Выберите категорию</option>
@@ -269,7 +275,9 @@ function Step3Form() {
                   onChange={(e) => setSubcategory(e.target.value)}
                   onBlur={() => handleFieldBlur('subcategory')}
                   className={`${styles.select} ${
-                    touched.subcategory && validationErrors.subcategory ? styles['input-error'] : ''
+                    touched.subcategory && validationErrors.subcategory
+                      ? styles['input-error']
+                      : ''
                   }`}
                 >
                   <option value="">Выберите подкатегорию</option>
@@ -296,7 +304,9 @@ function Step3Form() {
                   onChange={(e) => setDescription(e.target.value)}
                   onBlur={() => handleFieldBlur('description')}
                   className={`${styles.textarea} ${
-                    touched.description && validationErrors.description ? styles['input-error'] : ''
+                    touched.description && validationErrors.description
+                      ? styles['input-error']
+                      : ''
                   }`}
                   placeholder="Коротко опишите, чему можете научить"
                   rows={4}
@@ -326,11 +336,11 @@ function Step3Form() {
                   </div>
                 </div>
               </div>
-              
+
               {submitError && (
                 <div className={styles['error-message']}>{submitError}</div>
               )}
-              
+
               <div className={styles['button-group']}>
                 <button
                   type="button"
@@ -339,8 +349,8 @@ function Step3Form() {
                 >
                   Назад
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className={styles['button-primary']}
                   disabled={isSubmitDisabled}
                 >
