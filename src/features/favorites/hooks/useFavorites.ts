@@ -1,11 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import {
-  getFavoriteIds,
-  addFavorite,
-  removeFavorite,
-  toggleFavoriteId,
-  isFavorite,
-} from '../api/favoritesStorage';
+import { useState, useEffect, useCallback } from 'react';
+import { getFavoriteIds, addFavorite, removeFavorite } from '../api/favoritesStorage';
 import type { CatalogItem } from '../../catalog/model/types';
 
 export interface UseFavoritesReturn {
