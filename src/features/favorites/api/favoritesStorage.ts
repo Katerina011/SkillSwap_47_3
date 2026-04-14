@@ -1,6 +1,5 @@
 export const FAVORITES_KEY = 'skillswap_favorites';
 
-/*Список ID избранных карточек*/
 export const getFavoriteIds = (): string[] => {
   if (typeof window === 'undefined') return [];
 
@@ -15,13 +14,11 @@ export const getFavoriteIds = (): string[] => {
   }
 };
 
-/*Сохранить список ID избранных карточек*/
 export const setFavoriteIds = (ids: string[]): void => {
   if (typeof window === 'undefined') return;
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
 };
 
-/*Добавить карточку в избранное*/
 export const addFavorite = (catalogItemId: string): void => {
   const current = getFavoriteIds();
   if (!current.includes(catalogItemId)) {
@@ -29,7 +26,6 @@ export const addFavorite = (catalogItemId: string): void => {
   }
 };
 
-/*Удалить карточку из избранного*/
 export const removeFavorite = (catalogItemId: string): void => {
   const current = getFavoriteIds();
   if (current.includes(catalogItemId)) {
@@ -37,7 +33,6 @@ export const removeFavorite = (catalogItemId: string): void => {
   }
 };
 
-/*Переключить статус избранного (true - в избранном, false - не в избранном)*/
 export const toggleFavoriteId = (catalogItemId: string): boolean => {
   const current = getFavoriteIds();
   const isFavorite = current.includes(catalogItemId);
@@ -51,7 +46,6 @@ export const toggleFavoriteId = (catalogItemId: string): boolean => {
   }
 };
 
-/*Проверить, находится ли карточка в избранном*/
 export const isFavorite = (catalogItemId: string): boolean => {
   return getFavoriteIds().includes(catalogItemId);
 };

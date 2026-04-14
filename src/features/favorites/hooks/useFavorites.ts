@@ -9,19 +9,12 @@ import {
 import type { CatalogItem } from '../../catalog/model/types';
 
 export interface UseFavoritesReturn {
-  /*Массив ID избранных карточек*/
   favoriteIds: string[];
-  /*Функция для добавления в избранное*/
   addFavorite: (id: string) => void;
-  /*Функция для удаления из избранного*/
   removeFavorite: (id: string) => void;
-  /*Функция для переключения статуса избранного (возвращает новый статус)*/
   toggleFavorite: (id: string) => boolean;
-  /*Проверка, находится ли карточка в избранном*/
   isFavorite: (id: string) => boolean;
-  /*Загружен ли стейт (первоначальная загрузка)*/
   isLoading: boolean;
-  /*Получить избранные элементы из переданного массива*/
   getFavoritesFromItems: (items: CatalogItem[]) => CatalogItem[];
 }
 
