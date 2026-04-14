@@ -46,18 +46,15 @@ export function useFavorites(): UseFavoritesReturn {
       if (current) {
         handleRemoveFavorite(id);
         return false;
-      } else {
-        handleAddFavorite(id);
-        return true;
       }
+      handleAddFavorite(id);
+      return true;
     },
     [favoriteIds, handleAddFavorite, handleRemoveFavorite],
   );
 
   const checkIsFavorite = useCallback(
-    (id: string): boolean => {
-      return favoriteIds.includes(id);
-    },
+    (id: string): boolean => favoriteIds.includes(id),
     [favoriteIds],
   );
 

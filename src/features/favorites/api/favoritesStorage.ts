@@ -40,12 +40,11 @@ export const toggleFavoriteId = (catalogItemId: string): boolean => {
   if (isFavorite) {
     setFavoriteIds(current.filter((id) => id !== catalogItemId));
     return false;
-  } else {
-    setFavoriteIds([...current, catalogItemId]);
-    return true;
   }
+
+  setFavoriteIds([...current, catalogItemId]);
+  return true;
 };
 
-export const isFavorite = (catalogItemId: string): boolean => {
-  return getFavoriteIds().includes(catalogItemId);
-};
+export const isFavorite = (catalogItemId: string): boolean =>
+  getFavoriteIds().includes(catalogItemId);
