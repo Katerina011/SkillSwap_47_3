@@ -16,6 +16,21 @@
   height: fit-content;
 }
 
+.filtersPanel {
+  width: 100%;
+}
+
+.loadingState,
+.errorState {
+  padding: var(--spacing-24px);
+  font-size: var(--font-size-body);
+  color: var(--color-text-caption);
+}
+
+.errorText {
+  margin: 0;
+}
+
 .filtersPlaceholder {
   display: flex;
   flex-direction: column;
@@ -64,7 +79,7 @@
   display: inline-flex;
   gap: var(--spacing-8px);
   align-items: center;
-  font-size: var(--font-family-body);
+  font-size: var(--font-size-body);
   color: var(--color-accent-pressed);
   text-decoration: none;
   cursor: pointer;
@@ -76,19 +91,209 @@
 
 .filterGroupTitle {
   margin: 0;
-  font-size: var(--font-size-h3, 20px);
+  font-size: var(--font-size-h3);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
+}
+
+.filterBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8px);
+  padding-bottom: var(--spacing-16px);
+  border-bottom: 1px solid var(--color-accent-hover);
+}
+
+.filterBlockTitle {
+  margin: 0;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.filterCheckboxList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8px);
+}
+
+.categoryFilterBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8px);
+}
+
+/* Подкатегории: отступ = квадрат + gap категории, чекбокс совпадает с началом текста родителя */
+.subcategoryNested {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8px);
+  padding-left: calc(var(--spacing-20px) + var(--spacing-8px));
+}
+
+.filterCheckboxRow {
+  position: relative;
+  display: flex;
+  gap: var(--spacing-8px);
+  align-items: center;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* Кликабельная зона поверх квадрата; маркер — кастомный */
+.filterInputVisuallyHidden {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  width: var(--spacing-20px);
+  height: var(--spacing-20px);
+  margin: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+.filterSkillMark {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--spacing-20px);
+  height: var(--spacing-20px);
+  background-color: transparent;
+  border: var(--interactive-focus-ring-width) solid var(--color-text);
+  border-radius: var(--spacing-4px);
+}
+
+.filterCheckboxRow:has(.filterInputVisuallyHidden:focus-visible)
+  .filterSkillMark {
+  box-shadow: 0 0 0 var(--interactive-focus-ring-width)
+    var(--interactive-focus-ring-color);
+}
+
+/* Категория: выбрано — зелёный квадрат с прочерком, без тёмной обводки (рамка того же цвета, что заливка) */
+.filterInputVisuallyHidden:checked + .filterMarkCategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.filterInputVisuallyHidden:checked + .filterMarkCategory::after {
+  position: static;
+  width: var(--spacing-10px);
+  height: var(--interactive-focus-ring-width);
+  content: '';
+  background-color: var(--color-surface);
+  border-radius: calc(var(--interactive-focus-ring-width) / 2);
+}
+
+/* Подкатегория (radio): выбрано — зелёный квадрат с галочкой, без тёмной обводки */
+.filterInputVisuallyHidden:checked + .filterMarkSubcategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.filterInputVisuallyHidden:checked + .filterMarkSubcategory::after {
+  position: static;
+  box-sizing: border-box;
+  width: var(--spacing-4px);
+  height: var(--spacing-8px);
+  margin-top: -1px;
+  content: '';
+  border: solid var(--color-surface);
+  border-width: 0 var(--interactive-focus-ring-width)
+    var(--interactive-focus-ring-width) 0;
+  transform: rotate(45deg);
+}
+
+.cityClearButton {
+  display: inline-flex;
+  gap: var(--spacing-8px);
+  align-items: center;
+  padding: 0;
+  font: inherit;
+  font-size: var(--font-size-body);
+  color: var(--color-accent-pressed);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.cityClearButton:hover {
+  color: var(--color-accent-hover);
+}
+
+.cityClearButton img {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cityToggleChevronExpanded {
+  transform: rotate(180deg);
+}
+
+.filterLegend {
+  padding: 0;
+  margin: 0 0 var(--spacing-8px);
+  font-size: var(--font-size-body);
+  color: var(--color-text-caption);
+}
+
+.modeFieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12px);
+}
+
+.radioLabel {
+  display: flex;
+  gap: var(--spacing-8px);
+  align-items: center;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.radioLabel input[type='radio'] {
+  cursor: pointer;
+  accent-color: var(--color-text);
+}
+
+.filterHint {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--color-text-caption);
 }
 
 .contentZone {
   display: grid;
   gap: var(--spacing-40px);
+  min-width: 0;
+}
+
+.loadMoreSentinel {
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
 }
 
 .catalogSection {
   display: grid;
   gap: var(--spacing-32px);
+  min-width: 0;
 }
 
 .sectionHeader {
@@ -136,16 +341,18 @@
 }
 
 .horizontalScroll {
-  overflow-x: auto;
-}
-
-.horizontalScroll::-webkit-scrollbar {
-  height: 8px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: visible;
 }
 
 .cardsContainer {
   display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(var(--catalog-card-grid-min), 100%), 1fr)
+  );
+  align-items: stretch;
   gap: var(--spacing-24px);
 }
 
@@ -179,10 +386,6 @@
   .catalogPage {
     grid-template-columns: 1fr;
   }
-
-  .cardsContainer {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
 }
 
 @media (width <= 700px) {
@@ -193,9 +396,5 @@
   .sectionHeader {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .cardsContainer {
-    grid-template-columns: 1fr;
   }
 }

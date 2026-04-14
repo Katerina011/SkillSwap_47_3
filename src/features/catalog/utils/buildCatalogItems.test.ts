@@ -73,4 +73,25 @@ describe('buildCatalogItems', () => {
   it('должна возвращать пустой массив, если данные пустые', () => {
     expect(buildCatalogItems([], { categories: [] })).toEqual([]);
   });
+
+  it('должна игнорировать карточку teach, если у пользователя нет skillCanTeach (или null)', () => {
+    const userWithoutTeach = {
+      ...mockUsers[0],
+      skillCanTeach: null,
+    } as unknown as User;
+    const items = buildCatalogItems([userWithoutTeach], mockSkillsData);
+
+    // Ожидаем только карточки learn
+    expect(items.find((i) => i.kind === 'teach')).toBeUndefined();
+    expect(items.length).toBe(2);
+  });
+
+  it('должна обрабатывать пустые массивы навыков (learn) у пользователя', () => {
+    const userWithoutLearn = { ...mockUsers[0], skills: [] } as unknown as User;
+    const items = buildCatalogItems([userWithoutLearn], mockSkillsData);
+
+    // Ожидаем только карточку teach
+    expect(items.find((i) => i.kind === 'learn')).toBeUndefined();
+    expect(items.length).toBe(1);
+  });
 });

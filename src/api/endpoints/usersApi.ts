@@ -5,8 +5,6 @@ type UsersResponse = {
   users: User[];
 };
 
-// localStorage mock DB for users created in the client during registration flow.
-// Format is a JSON-serialized array of full User objects.
 export const MOCK_USERS_DB_STORAGE_KEY = 'mock_users_db';
 
 export type MockUsersDb = User[];
@@ -43,9 +41,6 @@ function writeMockUsersDb(users: MockUsersDb): void {
 
 export const getAllUsers = async (): Promise<User[]> => {
   const data = await loadJson<UsersResponse>('/db/users.json');
-  // Merge order is fixed: bundled mock JSON first, then localStorage users.
-  // This keeps the seed dataset stable and makes newly registered mock users
-  // visible through the same path loginWithUsersJson uses.
   return [...data.users, ...readMockUsersDb()];
 };
 

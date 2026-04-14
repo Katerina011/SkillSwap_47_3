@@ -1,63 +1,94 @@
-# SkillSwap
+# SkillSwap_47_3
 
-Базовый старт проекта на `React + TypeScript + Vite`.
+**SkillSwap** (обмен навыками): учебный MVP на **React 19**, **TypeScript**, **Vite 8**, **React Router v6**. Репозиторий команды: [PM-YandexPracticum/SkillSwap_47_3](https://github.com/PM-YandexPracticum/SkillSwap_47_3).
 
 ## Требования
 
-- `Node.js` 20+
-- `npm` 10+
+- **Node.js** 20+
+- **npm** 10+
 
 ## Установка
 
+Для совпадения с CI используйте lock-файл:
+
 ```bash
-npm install
+npm ci
 ```
 
-## Как мы ведём Git
+Для локальной разработки при необходимости можно использовать `npm install`, но в PR ориентируйтесь на **`npm ci`**.
 
-- **`main`** — стабильная ветка, содержит только готовый к продакшену код.
-- **`develop`** — основная ветка для разработки. Никакие изменения не вносятся напрямую — только через Pull Request (PR).
+## Git
 
-Ветку задачи создаём от **`develop`**, PR открываем **в `develop`**.
+- **`main`** — стабильная ветка.
+- **`develop`** — основная ветка разработки; изменения через **Pull Request**.
 
-## Запуск в development
+Фичевые ветки создаются от **`develop`**, PR в **`develop`**.
+
+## Запуск
 
 ```bash
 npm run dev
 ```
 
-После запуска откройте в браузере адрес, который выведет Vite в терминале (строка `Local:`).
+В терминале смотрите строку **`Local:`** (по умолчанию часто `http://localhost:5173/`).
 
-## Основные команды
+Просмотр production-сборки:
 
-- `npm run dev` — локальный сервер разработки
-- `npm run build` — проверка TypeScript и production-сборка
-- `npm run lint` — проверка ESLint
-- `npm run test` — запуск Jest (сейчас без тестов завершается успешно)
+```bash
+npm run build
+npm run preview
+```
 
-## Пустые папки и `.gitkeep`
+## Команды
 
-Git не хранит пустые каталоги. Файлы `.gitkeep` — это заглушки, чтобы нужная структура папок попадала в репозиторий.
+| Команда            | Назначение                                  |
+| ------------------ | ------------------------------------------- |
+| `npm run dev`      | dev-сервер Vite                             |
+| `npm run build`    | `tsc --noEmit` + production-сборка          |
+| `npm run preview`  | раздача собранного `dist/`                  |
+| `npm run lint`     | ESLint (`.ts`, `.tsx`, `--max-warnings=0`)  |
+| `npm run lint:css` | Stylelint для `src/**/*.{css,scss}`         |
+| `	`                 | Prettier — проверка                         |
+| `npm run format`   | Prettier — запись                           |
+| `npm run test`     | Jest (тесты добавляются по мере готовности) |
 
-## Что уже подключено (базовый набор под MVP проекта)
+Перед PR имеет смысл последовательно выполнить: **`npm ci`**, **`npm run lint`**, **`npm run format:check`**, **`npm run lint:css`**, **`npm run build`**, **`npm run test`**.
 
-- React, React DOM, React Router
-- Redux Toolkit + React Redux
-- Axios
-- ESLint (Airbnb + TypeScript)
-- Prettier
-- Stylelint
-- Jest + React Testing Library
+## Структура `src/`
 
-## Проверка кода перед PR
+| Папка                | Роль                                                                |
+| -------------------- | ------------------------------------------------------------------- |
+| `app/`               | `App.tsx`, роутинг, `main.tsx`, контекст каталога, глобальные стили |
+| `pages/`             | Страницы: каталог, карточка навыка, логин/регистрация, 404 и др.    |
+| `widgets/`           | Крупные блоки: шапка, футер, карточка каталога, карточка навыка     |
+| `features/`          | Фичи: `auth`, `catalog`, заготовки под заявки/избранное             |
+| `entities/`          | Модели домена (`user`, `skill`)                                     |
+| `api/endpoints/`     | Загрузка моков (`users`, `skills`, `cities` и т.д.)                 |
+| `shared/`            | UI-кит, общие хуки                                                  |
+| `app/styles/tokens/` | Дизайн-токены (цвета, отступы, типографика, тени)                   |
 
-Перед отправкой Pull Request рекомендуется запустить:
+Пустые каталоги в Git помечаются **`.gitkeep`**, если каталог должен сохраниться в репозитории.
 
-- `npm run lint` — проверка TS/TSX через ESLint
-- `npm run lint:css` — проверка стилей через Stylelint
-- `npm run format:check` — проверка форматирования через Prettier
+## Данные
 
-Для автоматического форматирования можно использовать:
+Моки лежат в **`public/db/`** (`users.json`, `skills.json`) и статике **`public/avatars/`**, **`public/photos/`**.
 
-- `npm run format`
-- На pull request в `develop` и `main` запускаются проверки: `npm ci`, `npm run lint`, `npm run format:check`, `npm run lint:css`, `npm run build`, `npm test`.
+## Состояние функционала (кратко)
+
+Реализовано и связано с моками:
+
+- **Каталог** `/`, `/catalog`: фильтры (режим, категории/подкатегории, пол, города), поиск из шапки, догрузка списка, карточки **`CatalogCard`**.
+- **Карточка навыка** `/skill/:id`: данные, похожие предложения.
+- **Авторизация**: `AuthProvider`, мок-логин, хранение сессии в `localStorage`, редирект после входа (см. `src/app/types/routes.ts`).
+- **Регистрация**: многошаговые экраны, слой мок-регистрации в `features/auth`.
+- **404**, **lazy** для страницы каталога.
+
+В **`App.tsx`** пока **заглушки** (inline-компоненты): профиль, избранное, создание навыка, статические страницы (о проекте, контакты, блог, соглашения). Их вынос в `pages/*` и доработка по MVP — по плану команды.
+
+## Зависимости
+
+В проекте используются в том числе **axios** (актуальная ветка 1.15.x в `package.json` для закрытия известных уязвимостей **≤ 1.14.0**), **React Router**, **@reduxjs/toolkit** и **react-redux** (подключение стора Redux при появлении задачи на глобальное состояние).
+
+## Полезные ссылки
+
+- Issues: `https://github.com/PM-YandexPracticum/SkillSwap_47_3/issues`

@@ -6,7 +6,7 @@
 /* ===== Контейнеры ===== */
 .skill-page {
   min-height: 100vh;
-  background-color: var(--color-bg-secondary, #f5f5f5);
+  background-color: var(--color-bg-secondary);
 }
 
 .skill-page-container {
@@ -21,13 +21,6 @@
   grid-template-columns: 320px 1fr;
   gap: var(--spacing-xl, 32px);
   margin-bottom: var(--spacing-2xl, 48px);
-}
-
-/* ===== ЛЕВАЯ КОЛОНКА (320px) ===== */
-.skill-page-left {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg, 24px);
 }
 
 /* ===== ПРАВАЯ КОЛОНКА (1fr) — ВНУТРЕННИЙ ГРИД 3 КОЛОНКИ ===== */

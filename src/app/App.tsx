@@ -1,64 +1,55 @@
-import { Suspense, lazy } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  Routes,
+  Route,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { HeaderGuest } from '../widgets/Header';
 import { Footer } from '../widgets/Footer';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
-import Step2Form from '../pages/RegisterPage2/Step2Form';
-import Step3Form from '../pages/RegisterPage3/Step3Form';
+import type {
+  CatalogFacetApply,
+  CatalogOutletContext,
+} from './catalogOutletContext';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
+const FavoritesPage = lazy(
+  () => import('../pages/FavoritesPage/FavoritesPage'),
+);
+const CreateSkillPage = lazy(
+  () => import('../pages/CreateSkillPage/CreateSkillPage'),
+);
+const AboutPage = lazy(() => import('../pages/AboutPage/AboutPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const BlogPage = lazy(() => import('../pages/BlogPage/BlogPage'));
+const TermsPage = lazy(() => import('../pages/TermsPage/TermsPage'));
+const PrivacyPage = lazy(() => import('../pages/PrivacyPage/PrivacyPage'));
+const Step2Form = lazy(() => import('../pages/RegisterPage2/Step2Form'));
+const Step3Form = lazy(() => import('../pages/RegisterPage3/Step3Form'));
 
 // Компонент Layout
 function Layout() {
-  return (
-    <div className="app">
-      <HeaderGuest />
-      <main className="app-main">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <div className="container">
-      <h1>Профиль пользователя</h1>
-      <p>Здесь будет информация о пользователе</p>
-    </div>
-  );
-}
-
-function FavoritesPage() {
-  return (
-    <div className="container">
-      <h1>Избранное</h1>
-      <p>Здесь будут сохраненные навыки</p>
-    </div>
-  );
-}
-
-// function SkillPage() {
-//   return (
-//     <div className="container">
-//       <h1>Страница навыка</h1>
-//       <p>Здесь будет детальная информация о навыке</p>
-//     </div>
-//   );
-// }
-
-function CreateSkillPage() {
-  return (
-    <div className="container">
-      <h1>Создание навыка</h1>
-      <p>Здесь будет форма создания нового навыка</p>
-    </div>
-  );
-}
+  /** Строка для фильтра каталога: приходит из шапки уже после debounce */
+  const [catalogSearch, setCatalogSearch] = useState('');
+  const [pendingFacetApply, setPendingFacetApply] =
+    useState<CatalogFacetApply | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onCatalog =
+    location.pathname === '/' || location.pathname === '/catalog';
 
 
 function AboutPage() {
@@ -69,39 +60,50 @@ function AboutPage() {
     </div>
   );
 }
+  const clearPendingFacetApply = useCallback(() => {
+    setPendingFacetApply(null);
+  }, []);
 
-function ContactsPage() {
-  return (
-    <div className="container">
-      <h1>Контакты</h1>
-      <p>Свяжитесь с нами</p>
-    </div>
+  const applyCatalogFacet = useCallback(
+    (facet: CatalogFacetApply) => {
+      setPendingFacetApply(facet);
+      if (location.pathname !== '/' && location.pathname !== '/catalog') {
+        navigate('/catalog');
+      }
+    },
+    [location.pathname, navigate],
   );
-}
 
-function BlogPage() {
-  return (
-    <div className="container">
-      <h1>Блог</h1>
-      <p>Новости и статьи</p>
-    </div>
+  useEffect(() => {
+    if (!onCatalog) {
+      setCatalogSearch('');
+    }
+  }, [location.pathname, onCatalog]);
+
+  const outletContext = useMemo(
+    (): CatalogOutletContext => ({
+      catalogSearch,
+      pendingFacetApply,
+      clearPendingFacetApply,
+    }),
+    [catalogSearch, pendingFacetApply, clearPendingFacetApply],
   );
-}
 
-function TermsPage() {
   return (
-    <div className="container">
-      <h1>Пользовательское соглашение</h1>
-      <p>Условия использования сервиса SkillSwap</p>
-    </div>
-  );
-}
-
-function PrivacyPage() {
-  return (
-    <div className="container">
-      <h1>Политика конфиденциальности</h1>
-      <p>Политика конфиденциальности сервиса SkillSwap</p>
+    <div className="app">
+      {/*
+        key: при уходе с маршрутов каталога сбрасываем локальное поле поиска в шапке
+        (оно больше не синхронизируется через searchValue с родителем).
+      */}
+      <HeaderGuest
+        key={onCatalog ? 'header-catalog-routes' : 'header-other-routes'}
+        onSearch={setCatalogSearch}
+        onApplyCatalogFacet={applyCatalogFacet}
+      />
+      <main className="app-main">
+        <Outlet context={outletContext} />
+      </main>
+      <Footer />
     </div>
   );
 }

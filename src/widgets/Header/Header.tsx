@@ -1,14 +1,22 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import logoIcon from '../../assets/images/logo.svg';
 import { useAuth } from '../../shared/hooks/useAuth';
+import { useDebounce } from '../../shared/hooks/useDebounce';
+import type { CatalogFacetApply } from '../../app/catalogOutletContext';
+import { AllSkillsDropdown } from '../AllSkillsDropdown/AllSkillsDropdown';
+
+const CATALOG_SEARCH_DEBOUNCE_MS = 400;
 
 interface HeaderGuestUIProps {
   onLoginClick?: () => void;
   onRegisterClick?: () => void;
+  /** Вызывается с уже отложенной (debounced) строкой */
   onSearch?: (query: string) => void;
+  /** Панель «Все навыки»: применить фильтр каталога (как в сайдбаре) */
+  onApplyCatalogFacet?: (facet: CatalogFacetApply) => void;
 }
 
 type HeaderAuthUIProps = {
@@ -16,17 +24,41 @@ type HeaderAuthUIProps = {
   onProfileClick: () => void;
   onLogoutClick: () => void;
   onSearch?: (query: string) => void;
+  onApplyCatalogFacet?: (facet: CatalogFacetApply) => void;
 };
+
+function CatalogSearchInput({
+  onSearch,
+}: {
+  onSearch: (query: string) => void;
+}) {
+  const [value, setValue] = useState('');
+  const debounced = useDebounce(value, CATALOG_SEARCH_DEBOUNCE_MS);
+
+  useEffect(() => {
+    onSearch(debounced);
+  }, [debounced, onSearch]);
+
+  return (
+    <div className={styles['search-wrapper']}>
+      <input
+        type="search"
+        placeholder="Искать навык"
+        className={styles['search-input']}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        aria-label="Поиск по навыкам"
+      />
+    </div>
+  );
+}
 
 function HeaderGuestUI({
   onLoginClick = () => {},
   onRegisterClick = () => {},
   onSearch = () => {},
+  onApplyCatalogFacet = () => {},
 }: HeaderGuestUIProps) {
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSearch(e.target.value);
-  };
-
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -50,21 +82,12 @@ function HeaderGuestUI({
                 </Link>
               </li>
               <li>
-                <Link to="/catalog" className={styles['nav-link']}>
-                  Все навыки
-                </Link>
+                <AllSkillsDropdown onApplyCatalogFacet={onApplyCatalogFacet} />
               </li>
             </ul>
           </div>
 
-          <div className={styles['search-wrapper']}>
-            <input
-              type="text"
-              placeholder="Искать навык"
-              className={styles['search-input']}
-              onChange={handleSearch}
-            />
-          </div>
+          <CatalogSearchInput onSearch={onSearch} />
 
           <div className={styles['theme-toggle']}>
             <button
@@ -114,11 +137,8 @@ function HeaderAuthUI({
   onProfileClick,
   onLogoutClick,
   onSearch = () => {},
+  onApplyCatalogFacet = () => {},
 }: HeaderAuthUIProps) {
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSearch(e.target.value);
-  };
-
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -142,21 +162,12 @@ function HeaderAuthUI({
                 </Link>
               </li>
               <li>
-                <Link to="/catalog" className={styles['nav-link']}>
-                  Все навыки
-                </Link>
+                <AllSkillsDropdown onApplyCatalogFacet={onApplyCatalogFacet} />
               </li>
             </ul>
           </div>
 
-          <div className={styles['search-wrapper']}>
-            <input
-              type="text"
-              placeholder="Искать навык"
-              className={styles['search-input']}
-              onChange={handleSearch}
-            />
-          </div>
+          <CatalogSearchInput onSearch={onSearch} />
 
           <div className={styles['theme-toggle']}>
             <button
@@ -206,6 +217,7 @@ export function HeaderGuest({
   onLoginClick,
   onRegisterClick,
   onSearch,
+  onApplyCatalogFacet,
 }: HeaderGuestUIProps) {
   const navigate = useNavigate();
   const { isAuth, user, logout } = useAuth();
@@ -220,6 +232,7 @@ export function HeaderGuest({
           navigate('/', { replace: true });
         }}
         onSearch={onSearch}
+        onApplyCatalogFacet={onApplyCatalogFacet}
       />
     );
   }
@@ -229,6 +242,7 @@ export function HeaderGuest({
       onLoginClick={onLoginClick ?? (() => navigate('/login'))}
       onRegisterClick={onRegisterClick ?? (() => navigate('/register'))}
       onSearch={onSearch}
+      onApplyCatalogFacet={onApplyCatalogFacet}
     />
   );
 }

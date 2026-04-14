@@ -9,7 +9,8 @@ import styles from './SkillCard.module.css';
 
 interface SkillCardProps {
   user: User;
-  variant?: 'default' | 'compact'; // default - полная версия, compact - для похожих
+  variant?: 'default' | 'compact';
+  hideButton?: boolean; // Для страницы навыка кнопка не нужна (она в правой колонке)
 }
 
 function getAgeSuffix(age: number): string {
@@ -31,7 +32,11 @@ export function getCategoryVariant(categoryId: string): TSkillVariant {
   return variants[categoryId] || 'other';
 }
 
-export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
+export function SkillCard({
+  user,
+  variant = 'default',
+  hideButton = false,
+}: SkillCardProps) {
   const skillsToLearn = user.skills?.slice(0, 3) || [];
   const remainingCount = (user.skills?.length || 0) - 3;
 
@@ -41,15 +46,16 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
       <div className={styles['skill-card-compact']}>
         <div className={styles['skill-card-header']}>
           <Avatar src={`/avatars/${user.avatar}`} name={user.name} size="lg" />
-          <div className={styles['skill-card-info']}>
-            <h3 className={styles['skill-card-name']}>{user.name}</h3>
+          <div className={styles['skill-card-text']}>
+            <h1 className={styles['skill-card-name']}>{user.name}</h1>
             <p className={styles['skill-card-location']}>
-              {user.city}, {user.age} {getAgeSuffix(user.age)}
+              {user.city},
+              <br />
+              {user.age} {getAgeSuffix(user.age)}
             </p>
           </div>
         </div>
 
-        {/* Может научить */}
         <div className={styles['skill-card-skills-block']}>
           <h2 className={styles['skill-card-section-title']}>Может научить</h2>
           <div className={styles['skill-card-skills-list']}>
@@ -64,7 +70,6 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
           </div>
         </div>
 
-        {/* Хочет научиться */}
         <div className={styles['skill-card-skills-block']}>
           <h2 className={styles['skill-card-section-title']}>
             Хочет научиться
@@ -115,7 +120,6 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
 
       {user.about && <p className={styles['skill-card-bio']}>{user.about}</p>}
 
-      {/* Может научить */}
       <div className={styles['skill-card-skills-block']}>
         <h2 className={styles['skill-card-section-title']}>Может научить</h2>
         <div className={styles['skill-card-skills-list']}>
@@ -130,7 +134,6 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
         </div>
       </div>
 
-      {/* Хочет научиться */}
       <div className={styles['skill-card-skills-block']}>
         <h2 className={styles['skill-card-section-title']}>Хочет научиться</h2>
         <div className={styles['skill-card-skills-list']}>
@@ -148,6 +151,18 @@ export function SkillCard({ user, variant = 'default' }: SkillCardProps) {
           )}
         </div>
       </div>
+
+      {!hideButton && (
+        <Link to={`/skill/${user.skillCanTeach?.id}`}>
+          <Button
+            variant="primary"
+            size="md"
+            className={styles['skill-card-button']}
+          >
+            Смотреть
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
