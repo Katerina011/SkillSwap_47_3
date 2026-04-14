@@ -3,10 +3,10 @@ export const FAVORITES_KEY = 'skillswap_favorites';
 /*Список ID избранных карточек*/
 export const getFavoriteIds = (): string[] => {
   if (typeof window === 'undefined') return [];
-  
+
   const raw = localStorage.getItem(FAVORITES_KEY);
   if (!raw) return [];
-  
+
   try {
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -33,7 +33,7 @@ export const addFavorite = (catalogItemId: string): void => {
 export const removeFavorite = (catalogItemId: string): void => {
   const current = getFavoriteIds();
   if (current.includes(catalogItemId)) {
-    setFavoriteIds(current.filter(id => id !== catalogItemId));
+    setFavoriteIds(current.filter((id) => id !== catalogItemId));
   }
 };
 
@@ -41,9 +41,9 @@ export const removeFavorite = (catalogItemId: string): void => {
 export const toggleFavoriteId = (catalogItemId: string): boolean => {
   const current = getFavoriteIds();
   const isFavorite = current.includes(catalogItemId);
-  
+
   if (isFavorite) {
-    setFavoriteIds(current.filter(id => id !== catalogItemId));
+    setFavoriteIds(current.filter((id) => id !== catalogItemId));
     return false;
   } else {
     setFavoriteIds([...current, catalogItemId]);
