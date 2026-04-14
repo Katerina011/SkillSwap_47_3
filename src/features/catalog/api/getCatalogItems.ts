@@ -15,7 +15,7 @@ export async function getCatalogItems(): Promise<CatalogItem[]> {
     loadBaseCatalogItems(),
     Promise.resolve(getCreatedSkills()),
   ]);
-  
+
   // Созданные навыки показываем первыми
   return [...createdItems, ...baseItems];
 }
