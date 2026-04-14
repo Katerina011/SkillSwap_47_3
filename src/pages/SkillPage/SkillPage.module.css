@@ -23,13 +23,6 @@
   margin-bottom: var(--spacing-2xl, 48px);
 }
 
-/* ===== ЛЕВАЯ КОЛОНКА (320px) ===== */
-.skill-page-left {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg, 24px);
-}
-
 /* ===== ПРАВАЯ КОЛОНКА (1fr) — ВНУТРЕННИЙ ГРИД 3 КОЛОНКИ ===== */
 .skill-page-right {
   display: grid;
