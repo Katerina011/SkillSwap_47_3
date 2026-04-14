@@ -25,7 +25,7 @@ export function getCreatedSkills(): CreatedSkill[] {
   try {
     const raw = localStorage.getItem(CREATED_SKILLS_KEY);
     if (!raw) return [];
-    
+
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
@@ -35,7 +35,7 @@ export function getCreatedSkills(): CreatedSkill[] {
 
 export function addCreatedSkill(skillData: CreatedSkillData): CreatedSkill {
   const current = getCreatedSkills();
-  
+
   const newSkill: CreatedSkill = {
     id: `created_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     kind: skillData.kind,
@@ -50,17 +50,19 @@ export function addCreatedSkill(skillData: CreatedSkillData): CreatedSkill {
     createdAt: new Date().toISOString(),
     tags: skillData.tags,
   };
-  
+
   localStorage.setItem(
     CREATED_SKILLS_KEY,
-    JSON.stringify([newSkill, ...current])
+    JSON.stringify([newSkill, ...current]),
   );
-  
+
   return newSkill;
 }
 
 // Функция для получения всех навыков (созданные + базовые)
-export function getAllSkillsForCatalog(baseSkills: CatalogItem[]): CatalogItem[] {
+export function getAllSkillsForCatalog(
+  baseSkills: CatalogItem[],
+): CatalogItem[] {
   const createdSkills = getCreatedSkills();
   // CreatedSkill совместим с CatalogItem, так как расширяет его
   return [...createdSkills, ...baseSkills];
