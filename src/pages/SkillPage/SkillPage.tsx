@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
@@ -12,10 +12,12 @@ import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
 
 export function SkillPage() {
+  // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
   const { user, relatedUsers, loading, error } = useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ExchangeModalType>('auth');
@@ -42,6 +44,7 @@ export function SkillPage() {
     );
   }
 
+  // ✅ Вычисляем hasActiveRequest после всех хуков
   const hasActiveRequest = currentUser
     ? hasActiveRequestForSkill(
         user.skillCanTeach?.id || '',
@@ -80,9 +83,7 @@ export function SkillPage() {
 
   const handleModalAction = () => {
     if (modalType === 'auth') {
-      navigate('/login', {
-        state: { from: { pathname: `/skill/${user.skillCanTeach?.id}` } },
-      });
+      navigate('/login', { state: { from: location } });
     }
   };
 
@@ -90,6 +91,7 @@ export function SkillPage() {
     setModalOpen(false);
   };
 
+  // ✅ Основной return
   return (
     <div className={styles['skill-page']}>
       <div className={styles['skill-page-container']}>
