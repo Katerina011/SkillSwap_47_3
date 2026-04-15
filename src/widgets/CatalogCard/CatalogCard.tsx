@@ -68,7 +68,11 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
               title: 'Войдите в аккаунт, чтобы добавить в избранное',
             })}
       >
-        <img src={isFavorite(user.id) ? like_active : like} alt="" aria-hidden="true" />
+        <img
+          src={isFavorite(user.id) ? like_active : like}
+          alt=""
+          aria-hidden="true"
+        />
       </div>
       <div className={styles.header}>
         <Avatar

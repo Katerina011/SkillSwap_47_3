@@ -26,7 +26,10 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--catalog-card-grid-min, 280px), 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--catalog-card-grid-min, 280px), 1fr)
+  );
   gap: var(--spacing-24px);
 }
 

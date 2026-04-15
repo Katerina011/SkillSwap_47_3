@@ -52,7 +52,9 @@ export default function FavoritesPage() {
 
       // Находим полные объекты User для избранных ID
       const favoriteIds = new Set(favorites.map((item) => item.id));
-      const favoriteUsersList = allUsers.filter((user) => favoriteIds.has(user.id));
+      const favoriteUsersList = allUsers.filter((user) =>
+        favoriteIds.has(user.id),
+      );
 
       setFavoriteUsers(favoriteUsersList);
     }
