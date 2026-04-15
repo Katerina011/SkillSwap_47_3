@@ -37,7 +37,7 @@ export function useSkillPage() {
 
         // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
-        
+
         // 🔍 ЛОГИРОВАНИЕ - добавьте этот блок
         console.log('=== useSkillPage Debug ===');
         console.log('Current skillId:', skillId);
@@ -45,18 +45,24 @@ export function useSkillPage() {
           id: foundUser.id,
           name: foundUser.name,
           skillId: foundUser.skillCanTeach?.id,
-          skillName: foundUser.skillCanTeach?.name
+          skillName: foundUser.skillCanTeach?.name,
         });
-        console.log('Related users (before slice):', related.map(u => ({
-          id: u.id,
-          name: u.name,
-          skillId: u.skillCanTeach?.id,
-          skillName: u.skillCanTeach?.name
-        })));
-        
+        console.log(
+          'Related users (before slice):',
+          related.map((u) => ({
+            id: u.id,
+            name: u.name,
+            skillId: u.skillCanTeach?.id,
+            skillName: u.skillCanTeach?.name,
+          })),
+        );
+
         setRelatedUsers(related.slice(0, 4));
-        
-        console.log('Related users (after slice, max 4):', related.slice(0, 4).map(u => u.name));
+
+        console.log(
+          'Related users (after slice, max 4):',
+          related.slice(0, 4).map((u) => u.name),
+        );
       } catch {
         setError('Ошибка загрузки данных');
       } finally {

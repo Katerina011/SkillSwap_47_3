@@ -83,9 +83,7 @@ export const getUserBySkillId = async (
 };
 
 // Создаём новую функцию для поиска по ID пользователя
-export const getUserById = async (
-  userId: string,
-): Promise<User | null> => {
+export const getUserById = async (userId: string): Promise<User | null> => {
   const users = await getAllUsers();
   const user = users.find((u) => u.id === userId);
   return user || null;

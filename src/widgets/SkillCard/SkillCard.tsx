@@ -44,7 +44,11 @@ export function SkillCard({
   // Используем navigate вместо window.location
   const handleViewClick = () => {
     const userId = user.id;
-    console.log('🔘 Переход на страницу пользователя:', `/user/${userId}`, user.name);
+    console.log(
+      '🔘 Переход на страницу пользователя:',
+      `/user/${userId}`,
+      user.name,
+    );
     if (userId) {
       navigate(`/user/${userId}`);
     }
@@ -69,7 +73,9 @@ export function SkillCard({
           <h2 className={styles['skill-card-section-title']}>Может научить</h2>
           <div className={styles['skill-card-skills-list']}>
             {user.skillCanTeach && (
-              <TagUI variant={getCategoryVariant(user.skillCanTeach.categoryId)}>
+              <TagUI
+                variant={getCategoryVariant(user.skillCanTeach.categoryId)}
+              >
                 {user.skillCanTeach.name}
               </TagUI>
             )}
@@ -77,7 +83,9 @@ export function SkillCard({
         </div>
 
         <div className={styles['skill-card-skills-block']}>
-          <h2 className={styles['skill-card-section-title']}>Хочет научиться</h2>
+          <h2 className={styles['skill-card-section-title']}>
+            Хочет научиться
+          </h2>
           <div className={styles['skill-card-skills-list']}>
             {skillsToLearn.map((skillId) => (
               <SkillTag key={skillId} skillId={skillId} />
@@ -102,7 +110,7 @@ export function SkillCard({
             fontSize: '16px',
             fontWeight: 500,
             color: 'var(--color-text, #253017)',
-            marginTop: '16px'
+            marginTop: '16px',
           }}
         >
           Смотреть
