@@ -1,4 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { format, isValid, parse } from 'date-fns';
@@ -98,6 +102,10 @@ function getClickCount(event: unknown): number {
   const { nativeEvent } = event as { nativeEvent?: { detail?: unknown } };
   return typeof nativeEvent?.detail === 'number' ? nativeEvent.detail : 0;
 }
+
+type DatePickerInputEvent =
+  | ReactMouseEvent<HTMLElement>
+  | ReactKeyboardEvent<HTMLElement>;
 
 function validateProfileForm(data: ProfileFormData): ProfileValidationErrors {
   const errors: ProfileValidationErrors = {};
@@ -455,7 +463,10 @@ export default function ProfilePage() {
                       open={isBirthDatePickerOpen}
                       onInputClick={handleBirthDatePickerOpen}
                       onClickOutside={() => setIsBirthDatePickerOpen(false)}
-                      onChange={(date, event) => {
+                      onChange={(
+                        date: Date | null,
+                        event?: DatePickerInputEvent,
+                      ) => {
                         setBirthDateDraft(date);
                         if (getClickCount(event) === 2) {
                           setBirthDate(date ? format(date, 'dd.MM.yyyy') : '');
@@ -463,11 +474,10 @@ export default function ProfilePage() {
                           setTouched((prev) => ({ ...prev, birthDate: true }));
                         }
                       }}
-                      onChangeRaw={(event) => {
-                        const { currentTarget } = event;
+                      onChangeRaw={(event?: DatePickerInputEvent) => {
                         const nextValue =
-                          currentTarget instanceof HTMLInputElement
-                            ? currentTarget.value
+                          event?.target instanceof HTMLInputElement
+                            ? event.target.value
                             : '';
                         setBirthDate(nextValue);
                       }}
@@ -480,12 +490,6 @@ export default function ProfilePage() {
                       calendarClassName="ss-datepicker-calendar"
                       popperClassName="ss-datepicker-popper"
                       popperPlacement="bottom-start"
-                      popperModifiers={[
-                        {
-                          name: 'flip',
-                          enabled: false,
-                        },
-                      ]}
                       shouldCloseOnSelect={false}
                       showMonthDropdown
                       showYearDropdown
