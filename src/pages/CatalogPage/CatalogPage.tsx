@@ -9,12 +9,13 @@ import {
   filterCatalogItems,
   type CatalogFilters,
 } from '../../features/catalog';
-import { buildCatalogItems } from '../../features/catalog/utils/buildCatalogItems';
+// import { buildCatalogItems } from '../../features/catalog/utils/buildCatalogItems';
 import type { CatalogItem } from '../../features/catalog/model/types';
 import type { User } from '../../entities/user/model/types';
 import type { CatalogOutletContext } from '../../app/catalogOutletContext';
 import { CatalogCard } from '../../widgets/CatalogCard';
 import { useOnScreen } from '../../shared/hooks/useOnScreen';
+import { useCatalogItems } from '../../features/catalog/hooks/useCatalogItems';
 
 const CATALOG_LOAD_LIMIT = 20;
 
@@ -54,7 +55,9 @@ function orderedUsersFromItems(items: CatalogItem[], userList: User[]): User[] {
 export default function CatalogPage() {
   const catalogCtx = useOutletContext<CatalogOutletContext | undefined>();
   const catalogSearch = catalogCtx?.catalogSearch ?? '';
-  const { users, skills, loading, error } = useCatalogSources();
+  // const { users, skills, loading, error } = useCatalogSources();
+  const { users, skills, error } = useCatalogSources();
+  const { items, loading } = useCatalogItems();
   const [filters, setFilters] = useState<CatalogFilters>(defaultFilters);
   const [genderFilter, setGenderFilter] = useState<GenderFilter>('any');
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
@@ -89,23 +92,27 @@ export default function CatalogPage() {
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'ru'));
   }, [users]);
 
-  const usersFiltered = useMemo(() => {
-    if (!users) return [];
-    return users.filter((u) => {
-      if (genderFilter !== 'any' && u.gender !== genderFilter) return false;
-      if (
-        selectedCities.length > 0 &&
-        (!u.city || !selectedCities.includes(u.city))
-      )
-        return false;
-      return true;
-    });
-  }, [users, genderFilter, selectedCities]);
+  // const usersFiltered = useMemo(() => {
+  //   if (!users) return [];
+  //   return users.filter((u) => {
+  //     if (genderFilter !== 'any' && u.gender !== genderFilter) return false;
+  //     if (
+  //       selectedCities.length > 0 &&
+  //       (!u.city || !selectedCities.includes(u.city))
+  //     )
+  //       return false;
+  //     return true;
+  //   });
+  // }, [users, genderFilter, selectedCities]);
 
+  // const allItems = useMemo(() => {
+  //   if (!usersFiltered.length || !skills) return [];
+  //   return buildCatalogItems(usersFiltered, skills);
+  // }, [usersFiltered, skills]);
   const allItems = useMemo(() => {
-    if (!usersFiltered.length || !skills) return [];
-    return buildCatalogItems(usersFiltered, skills);
-  }, [usersFiltered, skills]);
+    if (!items) return [];
+    return items;
+  }, [items]);
 
   const visibleItems = useMemo(
     () => filterCatalogItems(allItems, filters),
