@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/pages/SkillPage/SkillPage.tsx
+import { useState, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
@@ -12,14 +13,66 @@ import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
 
 export function SkillPage() {
+  // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
   const { user, relatedUsers, loading, error } = useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ExchangeModalType>('auth');
 
+  // ✅ Вычисляем hasActiveRequest после всех хуков
+  const hasActiveRequest = currentUser
+    ? hasActiveRequestForSkill(
+        user?.skillCanTeach?.id || '',
+        currentUser.id,
+        user?.id || '',
+      )
+    : false;
+
+  // ✅ useCallback до любого return
+  const handleExchangeClick = useCallback(() => {
+    if (!isAuth || !currentUser) {
+      setModalType('auth');
+      setModalOpen(true);
+      return;
+    }
+
+    if (hasActiveRequest) {
+      setModalType('request-sent');
+      setModalOpen(true);
+      return;
+    }
+
+    const newRequest = createRequest(
+      currentUser.id,
+      user?.id || '',
+      user?.skillCanTeach?.id || '',
+    );
+
+    if (newRequest) {
+      setModalType('success');
+      setModalOpen(true);
+    } else {
+      setModalType('error');
+      setModalOpen(true);
+    }
+  }, [isAuth, currentUser, hasActiveRequest, createRequest, user]);
+
+  const handleModalAction = useCallback(() => {
+    if (modalType === 'auth') {
+      setModalOpen(false);
+      navigate('/login', { state: { from: location } });
+    }
+  }, [modalType, navigate, location]);
+
+  const handleModalClose = useCallback(() => {
+    setModalOpen(false);
+  }, []);
+
+  // ✅ Только после всех хуков идут условные возвраты (early returns)
   if (loading) {
     return (
       <div className={styles['skill-page']}>
@@ -42,54 +95,7 @@ export function SkillPage() {
     );
   }
 
-  const hasActiveRequest = currentUser
-    ? hasActiveRequestForSkill(
-        user.skillCanTeach?.id || '',
-        currentUser.id,
-        user.id,
-      )
-    : false;
-
-  const handleExchangeClick = () => {
-    if (!isAuth || !currentUser) {
-      setModalType('auth');
-      setModalOpen(true);
-      return;
-    }
-
-    if (hasActiveRequest) {
-      setModalType('request-sent');
-      setModalOpen(true);
-      return;
-    }
-
-    const newRequest = createRequest(
-      currentUser.id,
-      user.id,
-      user.skillCanTeach?.id || '',
-    );
-
-    if (newRequest) {
-      setModalType('success');
-      setModalOpen(true);
-    } else {
-      setModalType('request-sent');
-      setModalOpen(true);
-    }
-  };
-
-  const handleModalAction = () => {
-    if (modalType === 'auth') {
-      navigate('/login', {
-        state: { from: { pathname: `/skill/${user.skillCanTeach?.id}` } },
-      });
-    }
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
-
+  // ✅ Основной return
   return (
     <div className={styles['skill-page']}>
       <div className={styles['skill-page-container']}>
