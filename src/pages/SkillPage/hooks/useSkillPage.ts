@@ -1,3 +1,4 @@
+// src/pages/SkillPage/hooks/useSkillPage.ts
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
@@ -34,10 +35,28 @@ export function useSkillPage() {
 
         setUser(foundUser);
 
-        // skillId, максимум 4.
         // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
+        
+        // 🔍 ЛОГИРОВАНИЕ - добавьте этот блок
+        console.log('=== useSkillPage Debug ===');
+        console.log('Current skillId:', skillId);
+        console.log('Main user:', {
+          id: foundUser.id,
+          name: foundUser.name,
+          skillId: foundUser.skillCanTeach?.id,
+          skillName: foundUser.skillCanTeach?.name
+        });
+        console.log('Related users (before slice):', related.map(u => ({
+          id: u.id,
+          name: u.name,
+          skillId: u.skillCanTeach?.id,
+          skillName: u.skillCanTeach?.name
+        })));
+        
         setRelatedUsers(related.slice(0, 4));
+        
+        console.log('Related users (after slice, max 4):', related.slice(0, 4).map(u => u.name));
       } catch {
         setError('Ошибка загрузки данных');
       } finally {
