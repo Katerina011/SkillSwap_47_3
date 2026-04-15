@@ -1,0 +1,317 @@
+.page {
+  width: 100%;
+  background: #f9faf7;
+  padding: 32px 36px 52px;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1368px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  width: 324px;
+  min-height: 752px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 24px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.sidebarItems {
+  width: 244px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sidebarItem {
+  width: 244px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.sidebarItemActive {
+  background: #deebc5;
+}
+
+.sidebarIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.sidebarLabel {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+}
+
+.userInfo {
+  width: 1020px;
+  min-height: 752px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 196px;
+  padding: 60px;
+  background: #fff;
+  border-radius: 24px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.formSection {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.inputs {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.inputWithLink {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.field,
+.fieldTextarea {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.fieldSmall {
+  width: 218px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1 1 0;
+}
+
+.rowFields {
+  width: 460px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.label {
+  width: 100%;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+}
+
+.inputBox,
+.inputBoxSmall,
+.textareaBox {
+  box-sizing: border-box;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  background: transparent;
+}
+
+.inputBox {
+  width: 460px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+}
+
+.inputBoxSmall {
+  width: 218px;
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+}
+
+.textareaBox {
+  width: 460px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+}
+
+.inputText,
+.textareaText {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+}
+
+.inputText {
+  flex-grow: 1;
+}
+
+.textareaText {
+  width: 386px;
+  height: 96px;
+  flex-grow: 1;
+}
+
+.fieldIcon,
+.fieldIconMuted,
+.userPhotoEditIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.passwordLink {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #508826;
+  cursor: pointer;
+}
+
+.buttons {
+  width: 460px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.saveButton {
+  width: 460px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #e4e8df;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #69735d;
+  cursor: pointer;
+}
+
+.userPhoto {
+  position: relative;
+  width: 244px;
+  height: 244px;
+  flex-shrink: 0;
+}
+
+.userPhotoFrame {
+  width: 244px;
+  height: 244px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.userPhotoImage {
+  display: block;
+  width: 244px;
+  height: 244px;
+  object-fit: cover;
+}
+
+.userPhotoEdit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border: none;
+  border-radius: 100px;
+  background: #deebc5;
+  cursor: pointer;
+}
+
+.userPhotoEditIcon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (width <= 1440px) {
+  .page {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+}
+
+@media (width <= 1240px) {
+  .userInfo {
+    width: 100%;
+    gap: 48px;
+    padding: 40px;
+  }
+}
+
+@media (width <= 1024px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .userInfo {
+    width: 100%;
+  }
+
+  .userInfo {
+    justify-content: space-between;
+  }
+}

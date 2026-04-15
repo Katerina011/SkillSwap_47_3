@@ -25,6 +25,7 @@ import type {
   CatalogFacetApply,
   CatalogOutletContext,
 } from './catalogOutletContext';
+import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -83,15 +84,6 @@ function Layout() {
         <Outlet context={outletContext} />
       </main>
       <Footer />
-    </div>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <div className="container">
-      <h1>Профиль пользователя</h1>
-      <p>Здесь будет информация о пользователе</p>
     </div>
   );
 }

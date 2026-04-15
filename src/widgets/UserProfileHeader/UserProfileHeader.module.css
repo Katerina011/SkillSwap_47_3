@@ -1,0 +1,67 @@
+.card {
+  display: flex;
+  gap: var(--spacing-20px);
+  align-items: center;
+  padding: var(--spacing-24px);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 4%);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  font-family: var(--font-family-heading);
+  font-size: 28px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  background-color: var(--color-accent-hover);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8px);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12px);
+  align-items: center;
+}
+
+.name {
+  margin: 0;
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  color: var(--color-text);
+}
+
+.nickname {
+  color: var(--color-text-caption);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-caption);
+  line-height: var(--line-height-body);
+}
+
+@media (width <= 768px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .name {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+}
