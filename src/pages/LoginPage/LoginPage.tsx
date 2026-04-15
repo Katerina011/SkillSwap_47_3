@@ -44,18 +44,23 @@ function LoginPage() {
     e.preventDefault();
     setError('');
 
-    try {
-      const ok = await login(email, password);
-      if (ok) {
-        navigate(from, { replace: true });
-      } else {
-        setError('Email или пароль введён неверно');
-      }
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Login error:', err);
-      setError('Ошибка входа. Попробуйте ещё раз.');
+   try {
+  const ok = await login(email, password);
+  if (ok) {
+    const savedRedirect = localStorage.getItem('redirectAfterLogin');
+    if (savedRedirect) {
+      localStorage.removeItem('redirectAfterLogin');
+      window.location.href = savedRedirect;
+    } else {
+      window.location.href = from;
     }
+  } else {
+    setError('Email или пароль введён неверно');
+  }
+} catch (err) {
+  console.error('Login error:', err);
+  setError('Ошибка входа. Попробуйте ещё раз.');
+}
   };
 
   return (

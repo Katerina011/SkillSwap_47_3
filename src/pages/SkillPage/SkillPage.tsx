@@ -78,13 +78,13 @@ export function SkillPage() {
     }
   };
 
-  const handleModalAction = () => {
-    if (modalType === 'auth') {
-      navigate('/login', {
-        state: { from: { pathname: `/skill/${user.skillCanTeach?.id}` } },
-      });
-    }
-  };
+const handleModalAction = () => {
+  if (modalType === 'auth') {
+    localStorage.setItem('redirectAfterLogin', window.location.pathname);
+    window.location.href = '/login';
+  }
+  setModalOpen(false);
+};
 
   const handleModalClose = () => {
     setModalOpen(false);
