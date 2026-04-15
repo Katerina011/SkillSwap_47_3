@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './ExchangeModal.module.css';
 
-export type ExchangeModalType = 'auth' | 'success' | 'request-sent';
+export type ExchangeModalType = 'auth' | 'success' | 'request-sent' | 'error';
 
 interface ExchangeModalProps {
   isOpen: boolean;
