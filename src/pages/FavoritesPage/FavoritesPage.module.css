@@ -55,6 +55,19 @@
   color: var(--color-text-caption);
 }
 
+.back-link {
+  margin-top: var(--spacing-8px);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
 .loading {
   display: flex;
   align-items: center;
