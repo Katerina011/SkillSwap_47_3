@@ -41,9 +41,7 @@ const PrivacyPage = lazy(() => import('../pages/PrivacyPage/PrivacyPage'));
 const Step2Form = lazy(() => import('../pages/RegisterPage2/Step2Form'));
 const Step3Form = lazy(() => import('../pages/RegisterPage3/Step3Form'));
 
-// Компонент Layout
 function Layout() {
-  /** Строка для фильтра каталога: приходит из шапки уже после debounce */
   const [catalogSearch, setCatalogSearch] = useState('');
   const [pendingFacetApply, setPendingFacetApply] =
     useState<CatalogFacetApply | null>(null);
@@ -83,10 +81,6 @@ function Layout() {
 
   return (
     <div className="app">
-      {/*
-        key: при уходе с маршрутов каталога сбрасываем локальное поле поиска в шапке
-        (оно больше не синхронизируется через searchValue с родителем).
-      */}
       <HeaderGuest
         key={onCatalog ? 'header-catalog-routes' : 'header-other-routes'}
         onSearch={setCatalogSearch}
@@ -167,7 +161,6 @@ export function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {/* Страницы с общим хедером и футером */}
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
           <Route path="catalog" element={<CatalogPage />} />
@@ -182,7 +175,6 @@ export function App() {
           <Route path="privacy" element={<PrivacyPage />} />
         </Route>
 
-        {/* Страницы со своим хедером (без общего Layout) */}
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="register/step2" element={<Step2Form />} />
