@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { format, isValid, parse } from 'date-fns';
@@ -32,6 +36,10 @@ function getClickCount(event: unknown): number {
   const { nativeEvent } = event as { nativeEvent?: { detail?: unknown } };
   return typeof nativeEvent?.detail === 'number' ? nativeEvent.detail : 0;
 }
+
+type DatePickerInputEvent =
+  | ReactMouseEvent<HTMLElement>
+  | ReactKeyboardEvent<HTMLElement>;
 
 function Step2Form() {
   const navigate = useNavigate();
@@ -228,18 +236,20 @@ function Step2Form() {
                       open={isBirthDatePickerOpen}
                       onInputClick={handleBirthDatePickerOpen}
                       onClickOutside={() => setIsBirthDatePickerOpen(false)}
-                      onChange={(date, event) => {
+                      onChange={(
+                        date: Date | null,
+                        event?: DatePickerInputEvent,
+                      ) => {
                         setBirthDateDraft(date);
                         if (getClickCount(event) === 2) {
                           setBirthDate(date ? format(date, 'dd.MM.yyyy') : '');
                           setIsBirthDatePickerOpen(false);
                         }
                       }}
-                      onChangeRaw={(event) => {
-                        const { currentTarget } = event;
+                      onChangeRaw={(event?: DatePickerInputEvent) => {
                         const nextValue =
-                          currentTarget instanceof HTMLInputElement
-                            ? currentTarget.value
+                          event?.target instanceof HTMLInputElement
+                            ? event.target.value
                             : '';
                         setBirthDate(nextValue);
                       }}
@@ -250,12 +260,6 @@ function Step2Form() {
                       calendarClassName="ss-datepicker-calendar"
                       popperClassName="ss-datepicker-popper"
                       popperPlacement="bottom-start"
-                      popperModifiers={[
-                        {
-                          name: 'flip',
-                          enabled: false,
-                        },
-                      ]}
                       shouldCloseOnSelect={false}
                       showMonthDropdown
                       showYearDropdown
