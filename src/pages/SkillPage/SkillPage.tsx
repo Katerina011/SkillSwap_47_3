@@ -1,10 +1,26 @@
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
+import { useAuth } from '../../shared/hooks/useAuth';
+import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
+import {
+  ExchangeModal,
+  ExchangeModalType,
+} from '../../features/requests/ui/ExchangeModal/ExchangeModal';
 import { Button } from '../../shared/ui/Button';
 import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
 
 export function SkillPage() {
+  // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
   const { user, relatedUsers, loading, error } = useSkillPage();
+  const { isAuth, user: currentUser } = useAuth();
+  const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<ExchangeModalType>('auth');
 
   if (loading) {
     return (
@@ -28,19 +44,65 @@ export function SkillPage() {
     );
   }
 
+  // ✅ Вычисляем hasActiveRequest после всех хуков
+  const hasActiveRequest = currentUser
+    ? hasActiveRequestForSkill(
+        user.skillCanTeach?.id || '',
+        currentUser.id,
+        user.id,
+      )
+    : false;
+
+  const handleExchangeClick = () => {
+    if (!isAuth || !currentUser) {
+      setModalType('auth');
+      setModalOpen(true);
+      return;
+    }
+
+    if (hasActiveRequest) {
+      setModalType('request-sent');
+      setModalOpen(true);
+      return;
+    }
+
+    const newRequest = createRequest(
+      currentUser.id,
+      user.id,
+      user.skillCanTeach?.id || '',
+    );
+
+    if (newRequest) {
+      setModalType('success');
+      setModalOpen(true);
+    } else {
+      setModalType('request-sent');
+      setModalOpen(true);
+    }
+  };
+
+  const handleModalAction = () => {
+    if (modalType === 'auth') {
+      navigate('/login', { state: { from: location } });
+    }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  // ✅ Основной return
   return (
     <div className={styles['skill-page']}>
       <div className={styles['skill-page-container']}>
-        {/* ОСНОВНАЯ СЕТКА (2 колонки) */}
         <div className={styles['skill-page-main-grid']}>
-          {/* ЛЕВАЯ КОЛОНКА (320px) — используем SkillCard в полной версии */}
+          {/* ЛЕВАЯ КОЛОНКА — используем SkillCard с hideButton */}
           <div className={styles['skill-page-left']}>
-            <SkillCard user={user} variant="default" />
+            <SkillCard user={user} variant="default" hideButton />
           </div>
 
-          {/* ПРАВАЯ КОЛОНКА (внутренний грид 3 колонки) */}
+          {/* ПРАВАЯ КОЛОНКА — описание, фото, кнопка обмена */}
           <div className={styles['skill-page-right']}>
-            {/* Колонка 2A — Описание */}
             <div className={styles['skill-page-description-block']}>
               <div className={styles['skill-page-skill-text']}>
                 <h2 className={styles['skill-page-skill-name']}>
@@ -58,13 +120,13 @@ export function SkillPage() {
                   variant="primary"
                   size="lg"
                   className={styles['skill-page-exchange-full-width']}
+                  onClick={handleExchangeClick}
                 >
                   Предложить обмен
                 </Button>
               </div>
             </div>
 
-            {/* Колонка 2B — Главное фото */}
             <div className={styles['skill-page-main-photo']}>
               <img
                 src={
@@ -77,7 +139,6 @@ export function SkillPage() {
               />
             </div>
 
-            {/* Колонка 2C — Вертикальная карусель */}
             {user.images && user.images.length > 1 && (
               <div className={styles['skill-page-vertical-carousel']}>
                 <div className={styles['skill-page-carousel-container']}>
@@ -95,7 +156,7 @@ export function SkillPage() {
           </div>
         </div>
 
-        {/* Похожие предложения — используем SkillCard в компактной версии */}
+        {/* Похожие предложения — компактные карточки */}
         {relatedUsers.length > 0 && (
           <div className={styles['skill-page-related-section']}>
             <h2 className={styles['skill-page-section-title']}>
@@ -113,6 +174,15 @@ export function SkillPage() {
           </div>
         )}
       </div>
+
+      <ExchangeModal
+        isOpen={modalOpen}
+        type={modalType}
+        onClose={handleModalClose}
+        onAction={handleModalAction}
+        skillName={user.skillCanTeach?.name}
+        userName={user.name}
+      />
     </div>
   );
 }

@@ -19,8 +19,6 @@ import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
-import Step2Form from '../pages/RegisterPage2/Step2Form';
-import Step3Form from '../pages/RegisterPage3/Step3Form';
 import type {
   CatalogFacetApply,
   CatalogOutletContext,
@@ -28,6 +26,20 @@ import type {
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
+const FavoritesPage = lazy(
+  () => import('../pages/FavoritesPage/FavoritesPage'),
+);
+const CreateSkillPage = lazy(
+  () => import('../pages/CreateSkillPage/CreateSkillPage'),
+);
+const AboutPage = lazy(() => import('../pages/AboutPage/AboutPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const BlogPage = lazy(() => import('../pages/BlogPage/BlogPage'));
+const TermsPage = lazy(() => import('../pages/TermsPage/TermsPage'));
+const PrivacyPage = lazy(() => import('../pages/PrivacyPage/PrivacyPage'));
+const Step2Form = lazy(() => import('../pages/RegisterPage2/Step2Form'));
+const Step3Form = lazy(() => import('../pages/RegisterPage3/Step3Form'));
 
 // Компонент Layout
 function Layout() {

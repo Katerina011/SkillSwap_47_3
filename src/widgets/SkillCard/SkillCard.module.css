@@ -5,7 +5,8 @@
 
 /* ===== ПОЛНАЯ ВЕРСИЯ (для главной страницы) ===== */
 .skill-card-full {
-  padding: var(--spacing-28px);
+  height: stretch;
+  padding: var(--spacing-32px);
   background-color: var(--color-surface);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
@@ -49,7 +50,6 @@
   line-height: var(--line-height-body);
   color: var(--color-text-caption);
   text-align: left;
-  border-top: 1px solid var(--color-accent-hover);
 }
 
 /* Блок навыков (общий для обеих версий) */
@@ -118,7 +118,7 @@
   font-family: var(--font-family-heading);
 
   /* Между h4 (16px) и h3 (20px) — отдельного токена нет */
-  font-size: 18px;
+  font-size: var(--font-size-h3, 20px);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
 }
@@ -147,6 +147,6 @@
   }
 
   .skill-card-name {
-    font-size: var(--font-size-h4);
+    font-size: var(--font-size-h3);
   }
 }

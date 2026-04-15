@@ -41,16 +41,16 @@ npm run preview
 
 ## Команды
 
-| Команда                | Назначение                                  |
-| ---------------------- | ------------------------------------------- |
-| `npm run dev`          | dev-сервер Vite                             |
-| `npm run build`        | `tsc --noEmit` + production-сборка          |
-| `npm run preview`      | раздача собранного `dist/`                  |
-| `npm run lint`         | ESLint (`.ts`, `.tsx`, `--max-warnings=0`)  |
-| `npm run lint:css`     | Stylelint для `src/**/*.{css,scss}`         |
-| `npm run format:check` | Prettier — проверка                         |
-| `npm run format`       | Prettier — запись                           |
-| `npm run test`         | Jest (тесты добавляются по мере готовности) |
+| Команда            | Назначение                                  |
+| ------------------ | ------------------------------------------- |
+| `npm run dev`      | dev-сервер Vite                             |
+| `npm run build`    | `tsc --noEmit` + production-сборка          |
+| `npm run preview`  | раздача собранного `dist/`                  |
+| `npm run lint`     | ESLint (`.ts`, `.tsx`, `--max-warnings=0`)  |
+| `npm run lint:css` | Stylelint для `src/**/*.{css,scss}`         |
+| `	`                 | Prettier — проверка                         |
+| `npm run format`   | Prettier — запись                           |
+| `npm run test`     | Jest (тесты добавляются по мере готовности) |
 
 Перед PR имеет смысл последовательно выполнить: **`npm ci`**, **`npm run lint`**, **`npm run format:check`**, **`npm run lint:css`**, **`npm run build`**, **`npm run test`**.
 
