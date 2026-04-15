@@ -1,3 +1,4 @@
+/*
 import styles from './UserProfileHeader.module.css';
 
 type UserProfileHeaderProps = {
@@ -38,3 +39,4 @@ export function UserProfileHeader({
     </section>
   );
 }
+*/

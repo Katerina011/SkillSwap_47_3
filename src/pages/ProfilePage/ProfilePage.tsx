@@ -31,7 +31,7 @@ const profileUser = {
 если это можно делать за чаем и в пижаме.
 Всегда готова пообщаться и обменяться чем-то
 интересным!`,
-  avatar: '/avatars/image.jpg',
+  avatar: '/avatars/maria.jpg',
 };
 
 export function ProfilePage() {
@@ -41,7 +41,10 @@ export function ProfilePage() {
     <div className={styles.page}>
       <section className={styles.content}>
         <aside className={styles.sidebar}>
-          <nav className={styles.sidebarItems} aria-label="Навигация профиля">
+          <nav
+            className={styles['sidebar-items']}
+            aria-label="Навигация профиля"
+          >
             {sidebarItems.map((item) => {
               const isActive = item.label === 'Личные данные';
 
@@ -49,44 +52,44 @@ export function ProfilePage() {
                 <button
                   key={item.label}
                   type="button"
-                  className={`${styles.sidebarItem} ${
-                    isActive ? styles.sidebarItemActive : ''
+                  className={`${styles['sidebar-item']} ${
+                    isActive ? styles['sidebar-item-active'] : ''
                   }`}
                 >
                   <img
                     src={item.icon}
                     alt=""
-                    className={styles.sidebarIcon}
+                    className={styles['sidebar-icon']}
                     aria-hidden="true"
                   />
-                  <span className={styles.sidebarLabel}>{item.label}</span>
+                  <span className={styles['sidebar-label']}>{item.label}</span>
                 </button>
               );
             })}
           </nav>
         </aside>
 
-        <section className={styles.userInfo}>
-          <div className={styles.formSection}>
+        <section className={styles['user-info']}>
+          <div className={styles['form-section']}>
             <div className={styles.inputs}>
-              <div className={styles.inputWithLink}>
+              <div className={styles['input-with-link']}>
                 <div className={styles.field}>
                   <span className={styles.label}>Почта</span>
 
-                  <div className={styles.inputBox}>
-                    <span className={styles.inputText}>
+                  <div className={styles['input-box']}>
+                    <span className={styles['input-text']}>
                       {profileUser.email}
                     </span>
                     <img
                       src={editIcon}
                       alt=""
-                      className={styles.fieldIconMuted}
+                      className={styles['field-icon-muted']}
                       aria-hidden="true"
                     />
                   </div>
                 </div>
 
-                <button type="button" className={styles.passwordLink}>
+                <button type="button" className={styles['password-link']}>
                   Изменить пароль
                 </button>
               </div>
@@ -94,45 +97,47 @@ export function ProfilePage() {
               <div className={styles.field}>
                 <span className={styles.label}>Имя</span>
 
-                <div className={styles.inputBox}>
-                  <span className={styles.inputText}>{profileUser.name}</span>
+                <div className={styles['input-box']}>
+                  <span className={styles['input-text']}>
+                    {profileUser.name}
+                  </span>
                   <img
                     src={editIcon}
                     alt=""
-                    className={styles.fieldIconMuted}
+                    className={styles['field-icon-muted']}
                     aria-hidden="true"
                   />
                 </div>
               </div>
 
-              <div className={styles.rowFields}>
-                <div className={styles.fieldSmall}>
+              <div className={styles['row-fields']}>
+                <div className={styles['field-small']}>
                   <span className={styles.label}>Дата рождения</span>
 
-                  <div className={styles.inputBoxSmall}>
-                    <span className={styles.inputText}>
+                  <div className={styles['input-box-small']}>
+                    <span className={styles['input-text']}>
                       {profileUser.birthDate}
                     </span>
                     <img
                       src={calendarIcon}
                       alt=""
-                      className={styles.fieldIcon}
+                      className={styles['field-icon']}
                       aria-hidden="true"
                     />
                   </div>
                 </div>
 
-                <div className={styles.fieldSmall}>
+                <div className={styles['field-small']}>
                   <span className={styles.label}>Пол</span>
 
-                  <div className={styles.inputBoxSmall}>
-                    <span className={styles.inputText}>
+                  <div className={styles['input-box-small']}>
+                    <span className={styles['input-text']}>
                       {profileUser.gender}
                     </span>
                     <img
                       src={chevronDownIcon}
                       alt=""
-                      className={styles.fieldIcon}
+                      className={styles['field-icon']}
                       aria-hidden="true"
                     />
                   </div>
@@ -142,22 +147,24 @@ export function ProfilePage() {
               <div className={styles.field}>
                 <span className={styles.label}>Город</span>
 
-                <div className={styles.inputBox}>
-                  <span className={styles.inputText}>{profileUser.city}</span>
+                <div className={styles['input-box']}>
+                  <span className={styles['input-text']}>
+                    {profileUser.city}
+                  </span>
                   <img
                     src={chevronDownIcon}
                     alt=""
-                    className={styles.fieldIcon}
+                    className={styles['field-icon']}
                     aria-hidden="true"
                   />
                 </div>
               </div>
 
-              <div className={styles.fieldTextarea}>
+              <div className={styles['field-textarea']}>
                 <span className={styles.label}>О себе</span>
 
-                <div className={styles.textareaBox}>
-                  <span className={styles.textareaText}>
+                <div className={styles['textarea-box']}>
+                  <span className={styles['textarea-text']}>
                     {profileUser.about.split('\n').map((line) => (
                       <span key={line}>
                         {line}
@@ -169,7 +176,7 @@ export function ProfilePage() {
                   <img
                     src={editIcon}
                     alt=""
-                    className={styles.fieldIconMuted}
+                    className={styles['field-icon-muted']}
                     aria-hidden="true"
                   />
                 </div>
@@ -177,16 +184,16 @@ export function ProfilePage() {
             </div>
 
             <div className={styles.buttons}>
-              <button type="button" className={styles.saveButton}>
+              <button type="button" className={styles['save-button']}>
                 Сохранить
               </button>
             </div>
           </div>
 
-          <div className={styles.userPhoto}>
-            <div className={styles.userPhotoFrame}>
+          <div className={styles['user-photo']}>
+            <div className={styles['user-photo-frame']}>
               <img
-                className={styles.userPhotoImage}
+                className={styles['user-photo-image']}
                 src={avatarSrc}
                 alt={profileUser.name}
                 onError={() => setAvatarSrc('/avatars/default.jpg')}
@@ -195,13 +202,13 @@ export function ProfilePage() {
 
             <button
               type="button"
-              className={styles.userPhotoEdit}
+              className={styles['user-photo-edit']}
               aria-label="Изменить фото"
             >
               <img
                 src={galleryEditIcon}
                 alt=""
-                className={styles.userPhotoEditIcon}
+                className={styles['user-photo-edit-icon']}
                 aria-hidden="true"
               />
             </button>
