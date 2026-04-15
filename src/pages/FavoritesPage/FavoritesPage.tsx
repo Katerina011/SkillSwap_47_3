@@ -1,93 +1,134 @@
-// src/pages/FavoritesPage/FavoritesPage.tsx
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../shared/hooks/useAuth';
-import { useFavorites } from '../../features/favorites/hooks/useFavorites';
-import { SkillCard } from '../../widgets/SkillCard/SkillCard';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  getAllSkills,
+  type SkillsResponse,
+} from '../../api/endpoints/skillsApi';
 import { getAllUsers } from '../../api/endpoints/usersApi';
 import type { User } from '../../entities/user/model/types';
+import { useFavorites } from '../../features/favorites/hooks/useFavorites';
+import type { CatalogItem } from '../../features/catalog/model/types';
+import { buildCatalogItems } from '../../features/catalog/utils/buildCatalogItems';
+import { useAuth } from '../../shared/hooks/useAuth';
+import { CatalogCard } from '../../widgets/CatalogCard';
 import styles from './FavoritesPage.module.css';
 
 export default function FavoritesPage() {
   const { isAuth } = useAuth();
   const { getFavoritesFromItems, isLoading: favoritesLoading } = useFavorites();
-  const [allUsers, setAllUsers] = useState<User[]>([]);
-  const [favoriteUsers, setFavoriteUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [skills, setSkills] = useState<SkillsResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Загружаем всех пользователей
   useEffect(() => {
-    const loadUsers = async () => {
+    let cancelled = false;
+
+    const loadSources = async () => {
       try {
-        const users = await getAllUsers();
-        setAllUsers(users);
-      } catch (error) {
-        // Ошибка загрузки пользователей
+        setLoading(true);
+        setError(null);
+        const [nextUsers, nextSkills] = await Promise.all([
+          getAllUsers(),
+          getAllSkills(),
+        ]);
+        if (!cancelled) {
+          setUsers(nextUsers);
+          setSkills(nextSkills);
+        }
+      } catch {
+        if (!cancelled) {
+          setError(
+            'Не удалось загрузить избранное. Попробуйте обновить страницу.',
+          );
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
-    loadUsers();
+
+    loadSources();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Преобразуем пользователей в формат CatalogItem для getFavoritesFromItems
-  // и получаем избранных
-  useEffect(() => {
-    if (allUsers.length > 0 && !favoritesLoading) {
-      // Преобразуем User в CatalogItem (структуру, которую понимает getFavoritesFromItems)
-      const catalogItems = allUsers.map((user) => ({
-        id: user.id,
-        kind: 'teach' as const,
-        categoryId: user.skillCanTeach?.categoryId || '',
-        subcategoryId: user.skillCanTeach?.id || '',
-        title: user.skillCanTeach?.name || '',
-        description: user.skillCanTeach?.description || '',
-        authorName: user.name,
-        authorId: user.id,
-        avatar: user.avatar,
-        images: user.images,
-      }));
+  const allItems = useMemo((): CatalogItem[] => {
+    if (!skills) return [];
+    return buildCatalogItems(users, skills);
+  }, [users, skills]);
 
-      // Используем getFavoritesFromItems для получения избранных
-      const favorites = getFavoritesFromItems(catalogItems);
+  const favoriteItems = useMemo(
+    () => getFavoritesFromItems(allItems),
+    [allItems, getFavoritesFromItems],
+  );
 
-      // Находим полные объекты User для избранных ID
-      const favoriteIds = new Set(favorites.map((item) => item.id));
-      const favoriteUsersList = allUsers.filter((user) =>
-        favoriteIds.has(user.id),
-      );
+  const usersById = useMemo(
+    () => new Map(users.map((u) => [u.id, u])),
+    [users],
+  );
 
-      setFavoriteUsers(favoriteUsersList);
-    }
-  }, [allUsers, favoritesLoading, getFavoritesFromItems]);
+  const favoriteUsers = useMemo(() => {
+    const out: User[] = [];
+    const seen = new Set<string>();
+    favoriteItems.forEach((item) => {
+      if (seen.has(item.authorId)) return;
+      const user = usersById.get(item.authorId);
+      if (!user) return;
+      seen.add(item.authorId);
+      out.push(user);
+    });
+    return out;
+  }, [favoriteItems, usersById]);
 
-  // Если пользователь не авторизован
   if (!isAuth) {
     return (
       <div className={styles.container}>
         <div className={styles['empty-state']}>
           <h2>Войдите в аккаунт</h2>
-          <p>Чтобы просматривать избранное, пожалуйста, авторизуйтесь</p>
+          <p>Чтобы просматривать избранное, пожалуйста, авторизуйтесь.</p>
+          <Link className={styles['back-link']} to="/login">
+            Перейти ко входу
+          </Link>
         </div>
       </div>
     );
   }
 
-  // Во время загрузки
   if (loading || favoritesLoading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>Загрузка избранного...</div>
+        <p className={styles.loading}>Загрузка избранного...</p>
       </div>
     );
   }
 
-  // Если избранное пусто
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles['empty-state']}>
+          <h2>Ошибка</h2>
+          <p>{error}</p>
+          <Link className={styles['back-link']} to="/catalog">
+            Перейти в каталог
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (favoriteUsers.length === 0) {
     return (
       <div className={styles.container}>
         <div className={styles['empty-state']}>
           <h2>Избранное пусто</h2>
           <p>Добавляйте пользователей в избранное, чтобы не потерять их</p>
+          <Link className={styles['back-link']} to="/catalog">
+            Перейти в каталог
+          </Link>
         </div>
       </div>
     );
@@ -101,7 +142,7 @@ export default function FavoritesPage() {
       </div>
       <div className={styles.grid}>
         {favoriteUsers.map((user) => (
-          <SkillCard key={user.id} user={user} variant="default" />
+          <CatalogCard key={user.id} user={user} skills={skills} />
         ))}
       </div>
     </div>
