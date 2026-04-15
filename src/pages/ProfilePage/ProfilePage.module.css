@@ -251,7 +251,7 @@
   width: 244px;
   height: 244px;
   overflow: hidden;
-  border-radius: 100px;
+  border-radius: 50%;
 }
 
 .user-photo-image {

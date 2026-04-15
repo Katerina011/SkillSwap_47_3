@@ -31,7 +31,7 @@ const profileUser = {
 если это можно делать за чаем и в пижаме.
 Всегда готова пообщаться и обменяться чем-то
 интересным!`,
-  avatar: '/avatars/maria.jpg',
+  avatar: '/avatars/image.jpg',
 };
 
 export function ProfilePage() {
