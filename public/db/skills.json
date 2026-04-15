@@ -34,8 +34,7 @@
         {
           "id": "skill_006",
           "name": "тайм-менеджмент",
-          "categoryId": "1",
-          "description": "Планирование времени и приоритетов"
+          "categoryId": "1"
         },
         {
           "id": "skill_007",
@@ -106,8 +105,7 @@
         {
           "id": "skill_017",
           "name": "английский",
-          "categoryId": "3",
-          "description": "Английский язык: разговорный, деловой, академический"
+          "categoryId": "3"
         },
         {
           "id": "skill_018",
@@ -231,8 +229,7 @@
         {
           "id": "skill_037",
           "name": "йога и медитация",
-          "categoryId": "6",
-          "description": "Практики осознанности"
+          "categoryId": "6"
         },
         {
           "id": "skill_038",
