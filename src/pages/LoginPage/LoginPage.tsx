@@ -1,6 +1,6 @@
 // src/pages/LoginPage/LoginPage.tsx
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { LoginHeader } from './LoginHeader';
 import styles from './LoginPage.module.css';
 import lightBulbImage from './light-bulb.png';
@@ -15,7 +15,7 @@ import {
 
 function LoginPage() {
   const { login } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
 
   const [email, setEmail] = useState('');
@@ -44,23 +44,23 @@ function LoginPage() {
     e.preventDefault();
     setError('');
 
-   try {
-  const ok = await login(email, password);
-  if (ok) {
-    const savedRedirect = localStorage.getItem('redirectAfterLogin');
-    if (savedRedirect) {
-      localStorage.removeItem('redirectAfterLogin');
-      window.location.href = savedRedirect;
-    } else {
-      window.location.href = from;
+    try {
+      const ok = await login(email, password);
+      if (ok) {
+        const savedRedirect = localStorage.getItem('redirectAfterLogin');
+        if (savedRedirect) {
+          localStorage.removeItem('redirectAfterLogin');
+          window.location.href = savedRedirect;
+        } else {
+          window.location.href = from;
+        }
+      } else {
+        setError('Email или пароль введён неверно');
+      }
+    } catch (err) {
+      // console.error('Login error:', err);
+      setError('Ошибка входа. Попробуйте ещё раз.');
     }
-  } else {
-    setError('Email или пароль введён неверно');
-  }
-} catch (err) {
-  console.error('Login error:', err);
-  setError('Ошибка входа. Попробуйте ещё раз.');
-}
   };
 
   return (

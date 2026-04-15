@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
@@ -15,7 +15,7 @@ export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ExchangeModalType>('auth');
@@ -78,13 +78,13 @@ export function SkillPage() {
     }
   };
 
-const handleModalAction = () => {
-  if (modalType === 'auth') {
-    localStorage.setItem('redirectAfterLogin', window.location.pathname);
-    window.location.href = '/login';
-  }
-  setModalOpen(false);
-};
+  const handleModalAction = () => {
+    if (modalType === 'auth') {
+      localStorage.setItem('redirectAfterLogin', window.location.pathname);
+      window.location.href = '/login';
+    }
+    setModalOpen(false);
+  };
 
   const handleModalClose = () => {
     setModalOpen(false);
