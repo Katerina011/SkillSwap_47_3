@@ -1,4 +1,4 @@
-import { useEffect, useState, type KeyboardEvent } from 'react';
+import { type KeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
@@ -11,6 +11,7 @@ import type { User } from '../../entities/user/model/types';
 import type { SkillsResponse } from '../../api/endpoints/skillsApi';
 import { getCategoryVariant } from '../SkillCard/SkillCard';
 import { useAuth } from '../../shared/hooks/useAuth';
+import { useFavorites } from '../../features/favorites/hooks/useFavorites';
 
 interface CatalogCardProps {
   user: User;
@@ -28,13 +29,9 @@ const VISIBLE_LEARN = 2;
 
 export function CatalogCard({ user, skills }: CatalogCardProps) {
   const { isAuth } = useAuth();
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    if (!isAuth) {
-      setIsLiked(false);
-    }
-  }, [isAuth]);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const catalogItemId = `teach-${user.id}`;
+  const liked = isFavorite(catalogItemId);
 
   const learnIds = user.skills ?? [];
   const visibleLearn = learnIds.slice(0, VISIBLE_LEARN);
@@ -48,14 +45,14 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
           ? {
               role: 'button' as const,
               tabIndex: 0,
-              onClick: () => setIsLiked((v) => !v),
+              onClick: () => toggleFavorite(catalogItemId),
               onKeyDown: (e: KeyboardEvent) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setIsLiked((v) => !v);
+                  toggleFavorite(catalogItemId);
                 }
               },
-              'aria-label': isLiked
+              'aria-label': liked
                 ? 'Убрать из избранного'
                 : 'Добавить в избранное',
             }
@@ -65,7 +62,7 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
               title: 'Войдите в аккаунт, чтобы добавить в избранное',
             })}
       >
-        <img src={isLiked ? like_active : like} alt="" aria-hidden="true" />
+        <img src={liked ? like_active : like} alt="" aria-hidden="true" />
       </div>
       <div className={styles.header}>
         <Avatar
