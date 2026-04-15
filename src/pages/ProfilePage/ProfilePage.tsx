@@ -74,7 +74,9 @@ export function ProfilePage() {
                   <span className={styles.label}>Почта</span>
 
                   <div className={styles.inputBox}>
-                    <span className={styles.inputText}>{profileUser.email}</span>
+                    <span className={styles.inputText}>
+                      {profileUser.email}
+                    </span>
                     <img
                       src={editIcon}
                       alt=""
@@ -124,7 +126,9 @@ export function ProfilePage() {
                   <span className={styles.label}>Пол</span>
 
                   <div className={styles.inputBoxSmall}>
-                    <span className={styles.inputText}>{profileUser.gender}</span>
+                    <span className={styles.inputText}>
+                      {profileUser.gender}
+                    </span>
                     <img
                       src={chevronDownIcon}
                       alt=""
