@@ -1,10 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
+  FAVORITES_CHANGED_EVENT,
+  FAVORITES_KEY,
   getFavoriteIds,
   addFavorite,
   removeFavorite,
 } from '../api/favoritesStorage';
 import type { CatalogItem } from '../../catalog/model/types';
+import { useAuth } from '../../../shared/hooks/useAuth';
 
 export interface UseFavoritesReturn {
   favoriteIds: string[];
@@ -17,29 +20,72 @@ export interface UseFavoritesReturn {
 }
 
 export function useFavorites(): UseFavoritesReturn {
+  const { user } = useAuth();
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setFavoriteIds(getFavoriteIds());
+    setFavoriteIds(getFavoriteIds(user?.id));
     setIsLoading(false);
-  }, []);
+  }, [user?.id]);
 
-  const handleAddFavorite = useCallback((id: string) => {
-    addFavorite(id);
-    setFavoriteIds((prev) => {
-      if (prev.includes(id)) return prev;
-      return [...prev, id];
-    });
-  }, []);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !user?.id) {
+      return undefined;
+    }
 
-  const handleRemoveFavorite = useCallback((id: string) => {
-    removeFavorite(id);
-    setFavoriteIds((prev) => prev.filter((itemId) => itemId !== id));
-  }, []);
+    const syncFavorites = () => {
+      setFavoriteIds(getFavoriteIds(user.id));
+    };
+
+    const handleStorage = (event: StorageEvent) => {
+      const { key } = event;
+      if (!key?.startsWith(`${FAVORITES_KEY}_`)) return;
+      if (key !== `${FAVORITES_KEY}_${user.id}`) return;
+      syncFavorites();
+    };
+
+    const handleFavoritesChanged = (event: Event) => {
+      const custom = event as CustomEvent<{ userId?: string }>;
+      if (custom.detail?.userId !== user.id) return;
+      syncFavorites();
+    };
+
+    window.addEventListener('storage', handleStorage);
+    window.addEventListener(FAVORITES_CHANGED_EVENT, handleFavoritesChanged);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener(
+        FAVORITES_CHANGED_EVENT,
+        handleFavoritesChanged,
+      );
+    };
+  }, [user?.id]);
+
+  const handleAddFavorite = useCallback(
+    (id: string) => {
+      if (!user?.id) return;
+      addFavorite(id, user.id);
+      setFavoriteIds((prev) => {
+        if (prev.includes(id)) return prev;
+        return [...prev, id];
+      });
+    },
+    [user?.id],
+  );
+
+  const handleRemoveFavorite = useCallback(
+    (id: string) => {
+      if (!user?.id) return;
+      removeFavorite(id, user.id);
+      setFavoriteIds((prev) => prev.filter((itemId) => itemId !== id));
+    },
+    [user?.id],
+  );
 
   const handleToggleFavorite = useCallback(
     (id: string): boolean => {
+      if (!user?.id) return false;
       const current = favoriteIds.includes(id);
       if (current) {
         handleRemoveFavorite(id);
@@ -48,7 +94,7 @@ export function useFavorites(): UseFavoritesReturn {
       handleAddFavorite(id);
       return true;
     },
-    [favoriteIds, handleAddFavorite, handleRemoveFavorite],
+    [favoriteIds, handleAddFavorite, handleRemoveFavorite, user?.id],
   );
 
   const checkIsFavorite = useCallback(
