@@ -3,19 +3,13 @@ import type {
   KeyboardEvent as ReactKeyboardEvent,
   MouseEvent as ReactMouseEvent,
 } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { flip, offset } from '@floating-ui/dom';
 import DatePicker from 'react-datepicker';
 import { format, isValid, parse } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import {
-  getAllUsers,
-  updateUserProfileInMockDb,
-} from '../../api/endpoints/usersApi';
+import { updateUserProfileInMockDb } from '../../api/endpoints/usersApi';
 import { fetchCities } from '../../api/endpoints/citiesApi';
-import {
-  getAllSkills,
-  type SkillsResponse,
-} from '../../api/endpoints/skillsApi';
 import requestIcon from '../../assets/images/request.svg';
 import messageIcon from '../../assets/images/message-text.svg';
 import favoriteIcon from '../../assets/images/like.svg';
@@ -25,10 +19,7 @@ import editIcon from '../../assets/images/edit.png';
 import calendarIcon from '../../assets/images/calendar.svg';
 import chevronDownIcon from '../../assets/images/chevron-down.svg';
 import { useAuth } from '../../shared/hooks/useAuth';
-import type { User } from '../../entities/user/model/types';
-import type { CatalogItem } from '../../features/catalog/model/types';
-import { buildCatalogItems } from '../../features/catalog/utils/buildCatalogItems';
-import { useFavorites } from '../../features/favorites/hooks/useFavorites';
+import { useFavoriteUsers } from '../../features/favorites/hooks/useFavoriteUsers';
 import { CatalogCard } from '../../widgets/CatalogCard';
 import { UserProfileHeader } from '../../widgets/UserProfileHeader/UserProfileHeader';
 import { NotFoundPage } from '../NotFoundPage/NotFoundPage';
@@ -142,17 +133,19 @@ function isProfileFormValid(errors: ProfileValidationErrors): boolean {
 }
 
 export default function ProfilePage() {
+  const { id: routeUserId } = useParams<{ id?: string }>();
   const { user, isAuth, isLoading, updateUser } = useAuth();
-  const { getFavoritesFromItems, isLoading: favoritesLoading } = useFavorites();
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<ProfileTabKey>('profile');
+  const isFavoritesTab = activeTab === 'favorites';
+  const {
+    favoriteUsers,
+    skills,
+    isLoading: isFavoritesLoading,
+    error: favoritesError,
+  } = useFavoriteUsers(isAuth && isFavoritesTab);
   const [cities, setCities] = useState<string[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [skills, setSkills] = useState<SkillsResponse | null>(null);
-  const [favoritesError, setFavoritesError] = useState<string | null>(null);
-  const [isFavoritesSourcesLoading, setIsFavoritesSourcesLoading] =
-    useState(false);
   const [isBirthDatePickerOpen, setIsBirthDatePickerOpen] = useState(false);
   const [birthDateDraft, setBirthDateDraft] = useState<Date | null>(null);
   const [email, setEmail] = useState('');
@@ -192,41 +185,6 @@ export default function ProfilePage() {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    const loadFavoritesSources = async () => {
-      if (activeTab !== 'favorites') return;
-      try {
-        setIsFavoritesSourcesLoading(true);
-        setFavoritesError(null);
-        const [nextUsers, nextSkills] = await Promise.all([
-          getAllUsers(),
-          getAllSkills(),
-        ]);
-        if (!cancelled) {
-          setUsers(nextUsers);
-          setSkills(nextSkills);
-        }
-      } catch {
-        if (!cancelled) {
-          setFavoritesError(
-            'Не удалось загрузить избранное. Попробуйте обновить страницу.',
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsFavoritesSourcesLoading(false);
-        }
-      }
-    };
-
-    loadFavoritesSources();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [activeTab]);
-
-  useEffect(() => {
     const errors = validateProfileForm({
       email,
       name,
@@ -250,40 +208,16 @@ export default function ProfilePage() {
     );
   }, [email, name, birthDate, gender, city, about, user]);
 
-  const allItems = useMemo((): CatalogItem[] => {
-    if (!skills) return [];
-    return buildCatalogItems(users, skills);
-  }, [users, skills]);
-
-  const favoriteItems = useMemo(
-    () => getFavoritesFromItems(allItems),
-    [allItems, getFavoritesFromItems],
-  );
-
-  const usersById = useMemo(
-    () => new Map(users.map((u) => [u.id, u])),
-    [users],
-  );
-
-  const favoriteUsers = useMemo(() => {
-    const out: User[] = [];
-    const seen = new Set<string>();
-    favoriteItems.forEach((item) => {
-      if (seen.has(item.authorId)) return;
-      const author = usersById.get(item.authorId);
-      if (!author) return;
-      seen.add(item.authorId);
-      out.push(author);
-    });
-    return out;
-  }, [favoriteItems, usersById]);
-
   if (isLoading) {
     return <div className={styles['profile-state']}>Загрузка профиля...</div>;
   }
 
   if (!isAuth || !user) {
     return null;
+  }
+
+  if (routeUserId && routeUserId !== user.id) {
+    return <NotFoundPage />;
   }
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
@@ -490,6 +424,10 @@ export default function ProfilePage() {
                       calendarClassName="ss-datepicker-calendar"
                       popperClassName="ss-datepicker-popper"
                       popperPlacement="bottom-start"
+                      popperModifiers={[
+                        flip({ fallbackPlacements: [] }),
+                        offset(8),
+                      ]}
                       shouldCloseOnSelect={false}
                       showMonthDropdown
                       showYearDropdown
@@ -658,24 +596,20 @@ export default function ProfilePage() {
         {activeTab === 'favorites' ? (
           <div className={styles['favorites-content']}>
             <h2 className={styles['favorites-title']}>Избранное</h2>
-            {isFavoritesSourcesLoading || favoritesLoading ? (
+            {isFavoritesLoading ? (
               <p className={styles.loading}>Загрузка избранного...</p>
             ) : null}
-            {!isFavoritesSourcesLoading &&
-            !favoritesLoading &&
-            favoritesError ? (
+            {!isFavoritesLoading && favoritesError ? (
               <p className={styles['favorites-error']}>{favoritesError}</p>
             ) : null}
-            {!isFavoritesSourcesLoading &&
-            !favoritesLoading &&
+            {!isFavoritesLoading &&
             !favoritesError &&
             favoriteUsers.length === 0 ? (
               <p className={styles['favorites-empty']}>
                 Вы еще не добавили карточки в избранное.
               </p>
             ) : null}
-            {!isFavoritesSourcesLoading &&
-            !favoritesLoading &&
+            {!isFavoritesLoading &&
             !favoritesError &&
             favoriteUsers.length > 0 ? (
               <div className={styles['favorites-grid']}>

@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/PM-YandexPracticum/SkillSwap_47_3#readme",
   "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
     "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.15.0",
     "clsx": "^2.1.1",

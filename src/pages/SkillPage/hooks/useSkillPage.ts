@@ -1,14 +1,17 @@
 // src/pages/SkillPage/hooks/useSkillPage.ts
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
 import {
+  getUserById,
   getUserBySkillId,
   getUsersBySkillId,
 } from '../../../api/endpoints/usersApi';
 
 export function useSkillPage() {
   const { id: skillId } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const selectedUserId = searchParams.get('user');
   const [user, setUser] = useState<User | null>(null);
   const [relatedUsers, setRelatedUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +27,16 @@ export function useSkillPage() {
     const loadData = async () => {
       try {
         setLoading(true);
-        const foundUser = await getUserBySkillId(skillId);
+        let foundUser: User | null = null;
+        if (selectedUserId) {
+          const byId = await getUserById(selectedUserId);
+          if (byId && byId.skillCanTeach?.id === skillId) {
+            foundUser = byId;
+          }
+        }
+        if (!foundUser) {
+          foundUser = await getUserBySkillId(skillId);
+        }
 
         if (!foundUser) {
           setError('Пользователь с таким навыком не найден');
@@ -47,7 +59,7 @@ export function useSkillPage() {
     };
 
     loadData();
-  }, [skillId]);
+  }, [skillId, selectedUserId]);
 
   return { user, relatedUsers, loading, error, skillId };
 }

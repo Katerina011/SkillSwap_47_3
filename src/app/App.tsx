@@ -19,6 +19,7 @@ import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
 import type {
@@ -84,15 +85,6 @@ function Layout() {
         <Outlet context={outletContext} />
       </main>
       <Footer />
-    </div>
-  );
-}
-
-function FavoritesPage() {
-  return (
-    <div className="container">
-      <h1>Избранное</h1>
-      <p>Здесь будут сохраненные навыки</p>
     </div>
   );
 }
