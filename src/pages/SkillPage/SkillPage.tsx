@@ -12,6 +12,8 @@ import styles from './SkillPage.module.css';
 
 export function SkillPage() {
   const { user, relatedUsers, loading, error } = useSkillPage();
+  const { user, relatedUsers, loading, error, skillId } = useSkillPage();
+  // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
 
@@ -47,6 +49,10 @@ export function SkillPage() {
         user.id,
       )
     : false;
+  const hasActiveRequest =
+    currentUser && skillId && user
+      ? hasActiveRequestForSkill(skillId, currentUser.id, user.id)
+      : false;
 
   const handleExchangeClick = () => {
     if (!isAuth || !currentUser) {
@@ -61,11 +67,7 @@ export function SkillPage() {
       return;
     }
 
-    const newRequest = createRequest(
-      currentUser.id,
-      user.id,
-      user.skillCanTeach?.id || '',
-    );
+    const newRequest = createRequest(currentUser.id, user.id, skillId || '');
 
     if (newRequest) {
       setModalType('success');
@@ -80,6 +82,10 @@ export function SkillPage() {
     if (modalType === 'auth') {
       localStorage.setItem('redirectAfterLogin', window.location.pathname);
       window.location.href = '/login';
+      navigate('/login', {
+        state: { from: { pathname: `/skill/${skillId}` } },
+      });
+      navigate('/login', { state: { from: location } });
     }
     setModalOpen(false);
   };

@@ -72,6 +72,21 @@ export async function appendUserToMockDb(
   };
 }
 
+export function updateUserProfileInMockDb(
+  userId: string,
+  patch: Partial<Omit<User, 'password'>>,
+): boolean {
+  const mockUsers = readMockUsersDb();
+  const index = mockUsers.findIndex((item) => item.id === userId);
+  if (index === -1) {
+    return false;
+  }
+
+  mockUsers[index] = { ...mockUsers[index], ...patch };
+  writeMockUsersDb(mockUsers);
+  return true;
+}
+
 export { normalizeEmail };
 // Получить пользователя по ID навыка
 export const getUserBySkillId = async (
@@ -79,6 +94,13 @@ export const getUserBySkillId = async (
 ): Promise<User | null> => {
   const users = await getAllUsers();
   const user = users.find((u) => u.skillCanTeach?.id === skillId);
+  return user || null;
+};
+
+// Создаём новую функцию для поиска по ID пользователя
+export const getUserById = async (userId: string): Promise<User | null> => {
+  const users = await getAllUsers();
+  const user = users.find((u) => u.id === userId);
   return user || null;
 };
 

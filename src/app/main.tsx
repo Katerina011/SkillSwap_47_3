@@ -1,9 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import 'react-datepicker/dist/react-datepicker.css';
 import './styles/variables.css';
 import './styles/fonts.css';
 import './styles/layout.css';
+import './styles/datepicker.css';
 import { App } from './App';
 import { AuthProvider } from '../features/auth/AuthProvider';
 
