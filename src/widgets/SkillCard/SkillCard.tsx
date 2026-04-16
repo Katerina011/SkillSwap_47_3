@@ -1,5 +1,5 @@
 // src/widgets/SkillCard/SkillCard.tsx
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../../shared/ui/Avatar';
 import { Button } from '../../shared/ui/Button';
 import TagUI, { TSkillVariant } from '../../shared/ui/Tag/tagUi';
@@ -10,7 +10,7 @@ import styles from './SkillCard.module.css';
 interface SkillCardProps {
   user: User;
   variant?: 'default' | 'compact';
-  hideButton?: boolean; // Для страницы навыка кнопка не нужна (она в правой колонке)
+  hideButton?: boolean;
 }
 
 function getAgeSuffix(age: number): string {
@@ -37,10 +37,24 @@ export function SkillCard({
   variant = 'default',
   hideButton = false,
 }: SkillCardProps) {
+  const navigate = useNavigate();
   const skillsToLearn = user.skills?.slice(0, 3) || [];
   const remainingCount = (user.skills?.length || 0) - 3;
 
-  // Компактная версия для похожих предложений
+  // Используем navigate вместо window.location
+  const handleViewClick = () => {
+    const userId = user.id;
+    console.log(
+      '🔘 Переход на страницу пользователя:',
+      `/user/${userId}`,
+      user.name,
+    );
+    if (userId) {
+      navigate(`/user/${userId}`);
+    }
+  };
+
+  // Компактная версия
   if (variant === 'compact') {
     return (
       <div className={styles['skill-card-compact']}>
@@ -49,8 +63,7 @@ export function SkillCard({
           <div className={styles['skill-card-text']}>
             <h1 className={styles['skill-card-name']}>{user.name}</h1>
             <p className={styles['skill-card-location']}>
-              {user.city},
-              <br />
+              {user.city},<br />
               {user.age} {getAgeSuffix(user.age)}
             </p>
           </div>
@@ -61,7 +74,6 @@ export function SkillCard({
           <div className={styles['skill-card-skills-list']}>
             {user.skillCanTeach && (
               <TagUI
-                className={styles['skill-card-skill-text']}
                 variant={getCategoryVariant(user.skillCanTeach.categoryId)}
               >
                 {user.skillCanTeach.name}
@@ -76,29 +88,33 @@ export function SkillCard({
           </h2>
           <div className={styles['skill-card-skills-list']}>
             {skillsToLearn.map((skillId) => (
-              <SkillTag
-                className={styles['skill-card-skill-text']}
-                key={skillId}
-                skillId={skillId}
-              />
+              <SkillTag key={skillId} skillId={skillId} />
             ))}
             {remainingCount > 0 && (
-              <TagUI key="remaining-count" variant="other">
-                +{remainingCount}
-              </TagUI>
+              <TagUI variant="other">+{remainingCount}</TagUI>
             )}
           </div>
         </div>
 
-        <Link to={`/skill/${user.skillCanTeach?.id}`}>
-          <Button
-            variant="primary"
-            size="md"
-            className={styles['skill-card-button']}
-          >
-            Смотреть
-          </Button>
-        </Link>
+        <button
+          type="button"
+          onClick={handleViewClick}
+          style={{
+            width: '100%',
+            padding: '12px 24px',
+            backgroundColor: 'var(--color-accent, #abd27a)',
+            border: 'none',
+            borderRadius: 'var(--radius-sm, 12px)',
+            cursor: 'pointer',
+            fontFamily: 'var(--font-family-body)',
+            fontSize: '16px',
+            fontWeight: 500,
+            color: 'var(--color-text, #253017)',
+            marginTop: '16px',
+          }}
+        >
+          Смотреть
+        </button>
       </div>
     );
   }
@@ -153,16 +169,16 @@ export function SkillCard({
       </div>
 
       {!hideButton && (
-        <Link to={`/skill/${user.skillCanTeach?.id}`}>
-          <Button
-            variant="primary"
-            size="md"
-            className={styles['skill-card-button']}
-          >
-            Смотреть
-          </Button>
-        </Link>
+        <Button
+          variant="primary"
+          size="md"
+          className={styles['skill-card-button']}
+          onClick={handleViewClick}
+        >
+          Смотреть
+        </Button>
       )}
     </div>
   );
 }
+
