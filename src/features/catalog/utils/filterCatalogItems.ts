@@ -14,11 +14,19 @@ export interface CatalogFilters {
 const safeLower = (value: unknown) =>
   typeof value === 'string' ? value.toLowerCase() : '';
 
+const normalizeFilterId = (value: unknown): 'all' | string => {
+  if (value === 'all') return 'all';
+  if (typeof value === 'string') return value;
+  return String(value);
+};
+
 export const filterCatalogItems = (
   items: CatalogItem[],
   { search, categoryId, subcategoryId, mode }: CatalogFilters,
 ): CatalogItem[] => {
   const searchTerm = search.trim().toLowerCase();
+  const normalizedCategoryId = normalizeFilterId(categoryId);
+  const normalizedSubcategoryId = normalizeFilterId(subcategoryId);
 
   return items.filter((item) => {
     const matchesSearch =
@@ -28,13 +36,13 @@ export const filterCatalogItems = (
       safeLower(item.description).includes(searchTerm);
 
     let matchesCategory = true;
-    if (categoryId !== 'all') {
-      if (subcategoryId === 'all') {
-        matchesCategory = item.categoryId === categoryId;
+    if (normalizedCategoryId !== 'all') {
+      if (normalizedSubcategoryId === 'all') {
+        matchesCategory = item.categoryId === normalizedCategoryId;
       } else {
         matchesCategory =
-          item.categoryId === categoryId &&
-          item.subcategoryId === subcategoryId;
+          item.categoryId === normalizedCategoryId &&
+          item.subcategoryId === normalizedSubcategoryId;
       }
     }
 

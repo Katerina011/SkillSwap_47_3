@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react';
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { flip, offset } from '@floating-ui/dom';
+import DatePicker from 'react-datepicker';
+import { format, isValid, parse } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { LoginHeader } from '../LoginPage/LoginHeader';
 import styles from './Step2Form.module.css';
 import userInfoImage from './user info.png';
 import userCircleImage from './user-circle.png';
+import calendarIcon from '../../assets/images/calendar.svg';
 import { fetchCities } from '../../api/endpoints/citiesApi';
 import {
   fetchCategories,
@@ -14,6 +23,24 @@ import {
   readRegisterDraft,
   updateRegisterDraft,
 } from '../../features/auth/lib/registerDraft';
+
+function parseBirthDate(value: string): Date | null {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  const parsed = parse(value, 'dd.MM.yyyy', new Date());
+  return isValid(parsed) ? parsed : null;
+}
+
+function getClickCount(event: unknown): number {
+  if (!event || typeof event !== 'object') return 0;
+  const directDetail = (event as { detail?: unknown }).detail;
+  if (typeof directDetail === 'number') return directDetail;
+  const { nativeEvent } = event as { nativeEvent?: { detail?: unknown } };
+  return typeof nativeEvent?.detail === 'number' ? nativeEvent.detail : 0;
+}
+
+type DatePickerInputEvent =
+  | ReactMouseEvent<HTMLElement>
+  | ReactKeyboardEvent<HTMLElement>;
 
 function Step2Form() {
   const navigate = useNavigate();
@@ -26,6 +53,8 @@ function Step2Form() {
   const [city, setCity] = useState('');
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
+  const [isBirthDatePickerOpen, setIsBirthDatePickerOpen] = useState(false);
+  const [birthDateDraft, setBirthDateDraft] = useState<Date | null>(null);
   const [cities, setCities] = useState<string[]>([]);
   const [categories, setCategories] = useState<
     Array<{ id: string; name: string }>
@@ -115,6 +144,21 @@ function Step2Form() {
     (item) => item.categoryId === category,
   );
 
+  const handleBirthDatePickerOpen = () => {
+    setBirthDateDraft(parseBirthDate(birthDate));
+    setIsBirthDatePickerOpen(true);
+  };
+
+  const handleBirthDateCancel = () => {
+    setBirthDateDraft(parseBirthDate(birthDate));
+    setIsBirthDatePickerOpen(false);
+  };
+
+  const handleBirthDateApply = () => {
+    setBirthDate(birthDateDraft ? format(birthDateDraft, 'dd.MM.yyyy') : '');
+    setIsBirthDatePickerOpen(false);
+  };
+
   return (
     <>
       <LoginHeader />
@@ -183,13 +227,81 @@ function Step2Form() {
               <div className={styles.row}>
                 <div className={styles.field}>
                   <div className={styles.label}>Дата рождения</div>
-                  <input
-                    type="text"
-                    value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
-                    className={styles.input}
-                    placeholder="дд.мм.гггг"
-                  />
+                  <div className={styles['date-input-wrap']}>
+                    <DatePicker
+                      selected={
+                        isBirthDatePickerOpen
+                          ? birthDateDraft
+                          : parseBirthDate(birthDate)
+                      }
+                      open={isBirthDatePickerOpen}
+                      onInputClick={handleBirthDatePickerOpen}
+                      onClickOutside={() => setIsBirthDatePickerOpen(false)}
+                      onChange={(
+                        date: Date | null,
+                        event?: DatePickerInputEvent,
+                      ) => {
+                        setBirthDateDraft(date);
+                        if (getClickCount(event) === 2) {
+                          setBirthDate(date ? format(date, 'dd.MM.yyyy') : '');
+                          setIsBirthDatePickerOpen(false);
+                        }
+                      }}
+                      onChangeRaw={(event?: DatePickerInputEvent) => {
+                        const nextValue =
+                          event?.target instanceof HTMLInputElement
+                            ? event.target.value
+                            : '';
+                        setBirthDate(nextValue);
+                      }}
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="дд.мм.гггг"
+                      locale={ru}
+                      className={`${styles.input} ${styles['date-input']}`}
+                      calendarClassName="ss-datepicker-calendar"
+                      popperClassName="ss-datepicker-popper"
+                      popperPlacement="bottom-start"
+                      popperModifiers={[
+                        flip({ fallbackPlacements: [] }),
+                        offset(8),
+                      ]}
+                      shouldCloseOnSelect={false}
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      yearDropdownItemNumber={90}
+                      scrollableYearDropdown
+                      // eslint-disable-next-line react/no-unstable-nested-components
+                      calendarContainer={({ className, children }) => (
+                        <div className={`${className} ss-datepicker-shell`}>
+                          {children}
+                          <div className="ss-datepicker-actions">
+                            <button
+                              type="button"
+                              className="ss-datepicker-cancel"
+                              onClick={handleBirthDateCancel}
+                            >
+                              Отменить
+                            </button>
+                            <button
+                              type="button"
+                              className="ss-datepicker-apply"
+                              onClick={handleBirthDateApply}
+                            >
+                              Выбрать
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      showPopperArrow={false}
+                    />
+                    <img
+                      className={styles['date-icon']}
+                      src={calendarIcon}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </div>
                 </div>
                 <div className={styles.field}>
                   <div className={styles.label}>Пол</div>

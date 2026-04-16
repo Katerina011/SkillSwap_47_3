@@ -41,7 +41,6 @@ export function SkillCard({
   const skillsToLearn = user.skills?.slice(0, 3) || [];
   const remainingCount = (user.skills?.length || 0) - 3;
 
-  // Используем navigate вместо window.location
   const handleViewClick = () => {
     const skillId = user.skillCanTeach?.id;
     const userId = user.id;
