@@ -44,11 +44,6 @@ export function SkillCard({
   const handleViewClick = () => {
     const skillId = user.skillCanTeach?.id;
     const userId = user.id;
-    console.log(
-      '🔘 Переход на страницу навыка пользователя:',
-      `/skill/${skillId}/${userId}`,
-      user.name,
-    );
     if (skillId && userId) {
       navigate(`/skill/${skillId}/${userId}`);
     }
@@ -113,7 +108,7 @@ export function SkillCard({
             marginTop: '16px',
           }}
         >
-          Смотреть
+          Подробнее
         </button>
       </div>
     );
@@ -175,7 +170,7 @@ export function SkillCard({
           className={styles['skill-card-button']}
           onClick={handleViewClick}
         >
-          Смотреть
+          Подробнее
         </Button>
       )}
     </div>

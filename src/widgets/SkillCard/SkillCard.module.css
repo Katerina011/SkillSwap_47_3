@@ -58,12 +58,11 @@
 }
 
 .skill-card-section-title {
-  margin: var(--spacing-16px) 0 0 0;
   font-family: var(--font-family-heading);
   font-size: var(--font-size-h4);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-body);
-  color: var(--color-text-caption);
+  color: var(--color-text);
   text-align: left;
 }
 
@@ -86,6 +85,7 @@
 .skill-card-compact {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100%;
   padding: var(--spacing-20px);
   background-color: var(--color-surface);
