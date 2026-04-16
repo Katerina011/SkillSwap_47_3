@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
 import {
-  getUserBySkillId,
+  getAllUsers,
+  getUserById,
   getUsersBySkillId,
 } from '../../../api/endpoints/usersApi';
 
 export function useSkillPage() {
-  const { id: skillId } = useParams<{ id: string }>();
+  const { skillId, userId } = useParams<{ skillId: string; userId: string }>();
   const [user, setUser] = useState<User | null>(null);
   const [relatedUsers, setRelatedUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,24 @@ export function useSkillPage() {
     const loadData = async () => {
       try {
         setLoading(true);
-        const foundUser = await getUserBySkillId(skillId);
+
+        let foundUser: User | null = null;
+
+        // Если есть userId — ищем конкретного пользователя
+        if (userId) {
+          foundUser = await getUserById(userId);
+          // Проверяем, что у пользователя действительно есть этот навык
+          if (foundUser?.skillCanTeach?.id !== skillId) {
+            foundUser = null;
+          }
+        }
+
+        // Если userId нет или пользователь не найден — ищем по skillId (старая логика)
+        if (!foundUser) {
+          const users = await getAllUsers();
+          foundUser =
+            users.find((u) => u.skillCanTeach?.id === skillId) || null;
+        }
 
         if (!foundUser) {
           setError('Пользователь с таким навыком не найден');
@@ -37,32 +55,7 @@ export function useSkillPage() {
 
         // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
-
-        // 🔍 ЛОГИРОВАНИЕ - добавьте этот блок
-        console.log('=== useSkillPage Debug ===');
-        console.log('Current skillId:', skillId);
-        console.log('Main user:', {
-          id: foundUser.id,
-          name: foundUser.name,
-          skillId: foundUser.skillCanTeach?.id,
-          skillName: foundUser.skillCanTeach?.name,
-        });
-        console.log(
-          'Related users (before slice):',
-          related.map((u) => ({
-            id: u.id,
-            name: u.name,
-            skillId: u.skillCanTeach?.id,
-            skillName: u.skillCanTeach?.name,
-          })),
-        );
-
         setRelatedUsers(related.slice(0, 4));
-
-        console.log(
-          'Related users (after slice, max 4):',
-          related.slice(0, 4).map((u) => u.name),
-        );
       } catch {
         setError('Ошибка загрузки данных');
       } finally {
@@ -71,7 +64,7 @@ export function useSkillPage() {
     };
 
     loadData();
-  }, [skillId]);
+  }, [skillId, userId]);
 
-  return { user, relatedUsers, loading, error, skillId };
+  return { user, relatedUsers, loading, error, skillId, userId };
 }

@@ -43,14 +43,15 @@ export function SkillCard({
 
   // Используем navigate вместо window.location
   const handleViewClick = () => {
+    const skillId = user.skillCanTeach?.id;
     const userId = user.id;
     console.log(
-      '🔘 Переход на страницу пользователя:',
-      `/user/${userId}`,
+      '🔘 Переход на страницу навыка пользователя:',
+      `/skill/${skillId}/${userId}`,
       user.name,
     );
-    if (userId) {
-      navigate(`/user/${userId}`);
+    if (skillId && userId) {
+      navigate(`/skill/${skillId}/${userId}`);
     }
   };
 
@@ -181,4 +182,3 @@ export function SkillCard({
     </div>
   );
 }
-
