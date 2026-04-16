@@ -4,6 +4,7 @@ import type {
   MouseEvent as ReactMouseEvent,
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { flip, offset } from '@floating-ui/dom';
 import DatePicker from 'react-datepicker';
 import { format, isValid, parse } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -260,6 +261,10 @@ function Step2Form() {
                       calendarClassName="ss-datepicker-calendar"
                       popperClassName="ss-datepicker-popper"
                       popperPlacement="bottom-start"
+                      popperModifiers={[
+                        flip({ fallbackPlacements: [] }),
+                        offset(8),
+                      ]}
                       shouldCloseOnSelect={false}
                       showMonthDropdown
                       showYearDropdown

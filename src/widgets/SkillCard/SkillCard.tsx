@@ -42,9 +42,9 @@ export function SkillCard({
   const remainingCount = (user.skills?.length || 0) - 3;
 
   const handleViewClick = () => {
-    const userId = user.id;
-    if (userId) {
-      navigate(`/user/${userId}`);
+    const skillId = user.skillCanTeach?.id;
+    if (skillId) {
+      navigate(`/skill/${skillId}?user=${encodeURIComponent(user.id)}`);
     }
   };
 
