@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useMemo, useState } from 'react';
 import type {
   KeyboardEvent as ReactKeyboardEvent,
