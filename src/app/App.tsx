@@ -23,7 +23,9 @@ import type {
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
-const FavoritesPage = lazy(() => import('../pages/FavoritesPage/FavoritesPage'));
+const FavoritesPage = lazy(
+  () => import('../pages/FavoritesPage/FavoritesPage'),
+);
 const SkillPage = lazy(() =>
   import('../pages/SkillPage/SkillPage').then((module) => ({
     default: module.SkillPage,
