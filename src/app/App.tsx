@@ -25,7 +25,7 @@ import type {
   CatalogFacetApply,
   CatalogOutletContext,
 } from './catalogOutletContext';
-import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -159,6 +159,7 @@ export function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
           <Route path="catalog" element={<CatalogPage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:id" element={<ProfilePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
