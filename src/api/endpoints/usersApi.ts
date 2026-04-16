@@ -82,6 +82,13 @@ export const getUserBySkillId = async (
   return user || null;
 };
 
+// Создаём новую функцию для поиска по ID пользователя
+export const getUserById = async (userId: string): Promise<User | null> => {
+  const users = await getAllUsers();
+  const user = users.find((u) => u.id === userId);
+  return user || null;
+};
+
 // Получить всех пользователей с таким же навыком (исключая указанного)
 export const getUsersBySkillId = async (
   skillId: string,

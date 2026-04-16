@@ -12,6 +12,7 @@ import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
 
 export function SkillPage() {
+  const { user, relatedUsers, loading, error, skillId } = useSkillPage();
   // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
   const { user, relatedUsers, loading, error } = useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
@@ -44,6 +45,10 @@ export function SkillPage() {
     );
   }
 
+  const hasActiveRequest =
+    currentUser && skillId && user
+      ? hasActiveRequestForSkill(skillId, currentUser.id, user.id)
+      : false;
   // ✅ Вычисляем hasActiveRequest после всех хуков
   const hasActiveRequest = currentUser
     ? hasActiveRequestForSkill(
@@ -66,11 +71,7 @@ export function SkillPage() {
       return;
     }
 
-    const newRequest = createRequest(
-      currentUser.id,
-      user.id,
-      user.skillCanTeach?.id || '',
-    );
+    const newRequest = createRequest(currentUser.id, user.id, skillId || '');
 
     if (newRequest) {
       setModalType('success');
@@ -83,6 +84,9 @@ export function SkillPage() {
 
   const handleModalAction = () => {
     if (modalType === 'auth') {
+      navigate('/login', {
+        state: { from: { pathname: `/skill/${skillId}` } },
+      });
       navigate('/login', { state: { from: location } });
     }
   };
