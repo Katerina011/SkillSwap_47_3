@@ -1,28 +1,28 @@
 # SkillSwap_47_3
 
-**SkillSwap** (обмен навыками): учебный MVP на **React 19**, **TypeScript**, **Vite 8**, **React Router v6**. Репозиторий команды: [PM-YandexPracticum/SkillSwap_47_3](https://github.com/PM-YandexPracticum/SkillSwap_47_3).
+Учебный SPA-проект SkillSwap (обмен навыками) на `React + TypeScript + Vite`.
+
+Репозиторий: [PM-YandexPracticum/SkillSwap_47_3](https://github.com/PM-YandexPracticum/SkillSwap_47_3)
+
+## Стек
+
+- React 19
+- TypeScript 5
+- Vite 8
+- React Router v6
+- Jest + ts-jest
+- ESLint + Prettier + Stylelint
 
 ## Требования
 
-- **Node.js** 20+
-- **npm** 10+
+- Node.js 20+
+- npm 10+
 
 ## Установка
-
-Для совпадения с CI используйте lock-файл:
 
 ```bash
 npm ci
 ```
-
-Для локальной разработки при необходимости можно использовать `npm install`, но в PR ориентируйтесь на **`npm ci`**.
-
-## Git
-
-- **`main`** — стабильная ветка.
-- **`develop`** — основная ветка разработки; изменения через **Pull Request**.
-
-Фичевые ветки создаются от **`develop`**, PR в **`develop`**.
 
 ## Запуск
 
@@ -30,65 +30,72 @@ npm ci
 npm run dev
 ```
 
-В терминале смотрите строку **`Local:`** (по умолчанию часто `http://localhost:5173/`).
+В терминале открой URL из строки `Local:` (обычно `http://localhost:5173/`).
 
-Просмотр production-сборки:
+## Сборка и проверка
 
 ```bash
+npm run lint
+npm run format:check
+npm run lint:css
 npm run build
-npm run preview
+npm run test
 ```
 
-## Команды
+## Скрипты
 
-| Команда            | Назначение                                  |
-| ------------------ | ------------------------------------------- |
-| `npm run dev`      | dev-сервер Vite                             |
-| `npm run build`    | `tsc --noEmit` + production-сборка          |
-| `npm run preview`  | раздача собранного `dist/`                  |
-| `npm run lint`     | ESLint (`.ts`, `.tsx`, `--max-warnings=0`)  |
-| `npm run lint:css` | Stylelint для `src/**/*.{css,scss}`         |
-| `	`                 | Prettier — проверка                         |
-| `npm run format`   | Prettier — запись                           |
-| `npm run test`     | Jest (тесты добавляются по мере готовности) |
+| Команда                | Назначение                          |
+| ---------------------- | ----------------------------------- |
+| `npm run dev`          | запуск dev-сервера                  |
+| `npm run build`        | `tsc --noEmit` + production build   |
+| `npm run preview`      | просмотр production-сборки          |
+| `npm run lint`         | ESLint для `.ts/.tsx`               |
+| `npm run format:check` | проверка форматирования Prettier    |
+| `npm run format`       | автоформатирование Prettier         |
+| `npm run lint:css`     | Stylelint для `src/**/*.{css,scss}` |
+| `npm run test`         | запуск Jest-тестов                  |
 
-Перед PR имеет смысл последовательно выполнить: **`npm ci`**, **`npm run lint`**, **`npm run format:check`**, **`npm run lint:css`**, **`npm run build`**, **`npm run test`**.
+## Структура проекта
 
-## Структура `src/`
-
-| Папка                | Роль                                                                |
-| -------------------- | ------------------------------------------------------------------- |
-| `app/`               | `App.tsx`, роутинг, `main.tsx`, контекст каталога, глобальные стили |
-| `pages/`             | Страницы: каталог, карточка навыка, логин/регистрация, 404 и др.    |
-| `widgets/`           | Крупные блоки: шапка, футер, карточка каталога, карточка навыка     |
-| `features/`          | Фичи: `auth`, `catalog`, заготовки под заявки/избранное             |
-| `entities/`          | Модели домена (`user`, `skill`)                                     |
-| `api/endpoints/`     | Загрузка моков (`users`, `skills`, `cities` и т.д.)                 |
-| `shared/`            | UI-кит, общие хуки                                                  |
-| `app/styles/tokens/` | Дизайн-токены (цвета, отступы, типографика, тени)                   |
-
-Пустые каталоги в Git помечаются **`.gitkeep`**, если каталог должен сохраниться в репозитории.
+| Папка          | Назначение                                               |
+| -------------- | -------------------------------------------------------- |
+| `src/app`      | инициализация приложения, роутинг, глобальные стили      |
+| `src/api`      | endpoint-слой работы с мок-данными                       |
+| `src/entities` | доменные типы (`user`, `skill`, `request`)               |
+| `src/features` | бизнес-фичи (`auth`, `catalog`, `favorites`, `requests`) |
+| `src/widgets`  | крупные UI-блоки                                         |
+| `src/pages`    | страницы и route-level компоненты                        |
+| `src/shared`   | общий UI, хуки и утилиты                                 |
 
 ## Данные
 
-Моки лежат в **`public/db/`** (`users.json`, `skills.json`) и статике **`public/avatars/`**, **`public/photos/`**.
+Основные моки:
 
-## Состояние функционала (кратко)
+- `public/db/users.json`
+- `public/db/skills.json`
 
-Реализовано и связано с моками:
+## Роуты (актуально)
 
-- **Каталог** `/`, `/catalog`: фильтры (режим, категории/подкатегории, пол, города), поиск из шапки, догрузка списка, карточки **`CatalogCard`**.
-- **Карточка навыка** `/skill/:id`: данные, похожие предложения.
-- **Авторизация**: `AuthProvider`, мок-логин, хранение сессии в `localStorage`, редирект после входа (см. `src/app/types/routes.ts`).
-- **Регистрация**: многошаговые экраны, слой мок-регистрации в `features/auth`.
-- **404**, **lazy** для страницы каталога.
+- `/`, `/catalog` — каталог
+- `/skill/:id` — страница навыка
+- `/profile`, `/user/:id` — профиль
+- `/favorites` — избранное
+- `/login`, `/register`, `/register/step2`, `/register/step3` — auth flow
+- `/about`, `/contacts`, `/blog`, `/terms`, `/privacy` — статические страницы
+- `*` — 404
 
-В **`App.tsx`** пока **заглушки** (inline-компоненты): профиль, избранное, создание навыка, статические страницы (о проекте, контакты, блог, соглашения). Их вынос в `pages/*` и доработка по MVP — по плану команды.
+## Текущее состояние функционала (кратко)
 
-## Зависимости
+Реализовано:
 
-В проекте используются в том числе **axios** (актуальная ветка 1.15.x в `package.json` для закрытия известных уязвимостей **≤ 1.14.0**), **React Router**, **@reduxjs/toolkit** и **react-redux** (подключение стора Redux при появлении задачи на глобальное состояние).
+- каталог + фильтры + поиск;
+- карточка навыка;
+- auth/регистрация;
+- профиль и избранное;
+- базовая логика заявок;
+- lazy-loading основных маршрутов.
 
-## Полезные ссылки
+Не завершено:
 
-- Issues: `https://github.com/PM-YandexPracticum/SkillSwap_47_3/issues`
+- полный end-to-end UI флоу заявок/обменов в профиле;
+- покрытие тестами на уровне целевого KPI.
