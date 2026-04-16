@@ -163,4 +163,61 @@ describe('filterCatalogItems', () => {
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('teach-2');
   });
+
+  it("регрессия: корректно фильтрует строковые id категории/подкатегории и 'all'", () => {
+    const stringIdItems: CatalogItem[] = [
+      {
+        id: 'teach-string-id',
+        kind: 'teach',
+        categoryId: '5',
+        subcategoryId: 'skill_031',
+        title: 'Test title',
+        description: 'Test description',
+        authorName: 'Test User',
+        authorId: 'user_test_1',
+        avatar: 'avatar-test-1.jpg',
+      },
+    ];
+
+    const byCategoryOnly = filterCatalogItems(stringIdItems, {
+      search: '',
+      categoryId: '5',
+      subcategoryId: 'all',
+      mode: 'all',
+    });
+    expect(byCategoryOnly).toHaveLength(1);
+
+    const byCategoryAndSubcategory = filterCatalogItems(stringIdItems, {
+      search: '',
+      categoryId: '5',
+      subcategoryId: 'skill_031',
+      mode: 'all',
+    });
+    expect(byCategoryAndSubcategory).toHaveLength(1);
+  });
+
+  it('нормализует нестроковый categoryId на входной границе фильтра', () => {
+    const numberLikeItems: CatalogItem[] = [
+      {
+        id: 'teach-number-like',
+        kind: 'teach',
+        categoryId: '5',
+        subcategoryId: 'skill_031',
+        title: 'Test title',
+        description: 'Test description',
+        authorName: 'Test User',
+        authorId: 'user_test_2',
+        avatar: 'avatar-test-2.jpg',
+      },
+    ];
+
+    const result = filterCatalogItems(numberLikeItems, {
+      search: '',
+      categoryId: 5 as unknown as CatalogFilters['categoryId'],
+      subcategoryId: 'all',
+      mode: 'all',
+    });
+
+    expect(result).toHaveLength(1);
+  });
 });
