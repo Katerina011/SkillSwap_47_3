@@ -124,7 +124,10 @@ export function CatalogCard({ user, skills }: CatalogCardProps) {
       </div>
       <div className={styles.footer}>
         {user.skillCanTeach?.id ? (
-          <Link to={`/skill/${user.skillCanTeach.id}`} className={styles.link}>
+          <Link
+            to={`/skill/${user.skillCanTeach.id}/${user.id}`}
+            className={styles.link}
+          >
             <Button variant="primary" size="md" className={styles.button}>
               Подробнее
             </Button>

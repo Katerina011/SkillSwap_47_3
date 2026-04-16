@@ -3,15 +3,13 @@ import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
 import {
+  getAllUsers,
   getUserById,
-  getUserBySkillId,
   getUsersBySkillId,
 } from '../../../api/endpoints/usersApi';
 
 export function useSkillPage() {
-  const { id: skillId } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const selectedUserId = searchParams.get('user');
+  const { skillId, userId } = useParams<{ skillId: string; userId: string }>();
   const [user, setUser] = useState<User | null>(null);
   const [relatedUsers, setRelatedUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,15 +25,23 @@ export function useSkillPage() {
     const loadData = async () => {
       try {
         setLoading(true);
+
         let foundUser: User | null = null;
-        if (selectedUserId) {
-          const byId = await getUserById(selectedUserId);
-          if (byId && byId.skillCanTeach?.id === skillId) {
-            foundUser = byId;
+
+        // Если есть userId — ищем конкретного пользователя
+        if (userId) {
+          foundUser = await getUserById(userId);
+          // Проверяем, что у пользователя действительно есть этот навык
+          if (foundUser?.skillCanTeach?.id !== skillId) {
+            foundUser = null;
           }
         }
+
+        // Если userId нет или пользователь не найден — ищем по skillId (старая логика)
         if (!foundUser) {
-          foundUser = await getUserBySkillId(skillId);
+          const users = await getAllUsers();
+          foundUser =
+            users.find((u) => u.skillCanTeach?.id === skillId) || null;
         }
 
         if (!foundUser) {
@@ -49,7 +55,6 @@ export function useSkillPage() {
 
         // Загружаем похожие предложения (другие пользователи с таким же навыком)
         const related = await getUsersBySkillId(skillId, foundUser.id);
-
         setRelatedUsers(related.slice(0, 4));
       } catch {
         setError('Ошибка загрузки данных');
@@ -59,7 +64,7 @@ export function useSkillPage() {
     };
 
     loadData();
-  }, [skillId, selectedUserId]);
+  }, [skillId, userId]);
 
-  return { user, relatedUsers, loading, error, skillId };
+  return { user, relatedUsers, loading, error, skillId, userId };
 }

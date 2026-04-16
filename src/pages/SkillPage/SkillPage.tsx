@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSkillPage } from './hooks/useSkillPage';
 import { useAuth } from '../../shared/hooks/useAuth';
 import { useExchangeRequest } from '../../features/requests/hooks/useExchangeRequest';
@@ -12,12 +12,13 @@ import { SkillCard } from '../../widgets/SkillCard/SkillCard';
 import styles from './SkillPage.module.css';
 
 export function SkillPage() {
-  const { user, relatedUsers, loading, error, skillId } = useSkillPage();
   // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
+  const { user, relatedUsers, loading, error, skillId, userId } =
+    useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ExchangeModalType>('auth');
@@ -76,10 +77,10 @@ export function SkillPage() {
   const handleModalAction = () => {
     if (modalType === 'auth') {
       navigate('/login', {
-        state: { from: { pathname: `/skill/${skillId}` } },
+        state: { from: { pathname: `/skill/${skillId}/${userId}` } },
       });
-      navigate('/login', { state: { from: location } });
     }
+    setModalOpen(false);
   };
 
   const handleModalClose = () => {

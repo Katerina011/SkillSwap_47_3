@@ -128,7 +128,9 @@ export function App() {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:id" element={<ProfilePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="skill/:id" element={<SkillPage />} />
+          <Route path="skill/:skillId/:userId" element={<SkillPage />} />
+          <Route path="skill/:id" element={<SkillPage />} />{' '}
+          {/* для обратной совместимости (опционально) */}
           <Route path="create" element={<CreateSkillPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contacts" element={<ContactsPage />} />

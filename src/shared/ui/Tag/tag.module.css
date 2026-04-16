@@ -3,9 +3,9 @@
   inline-size: max-content;
   min-block-size: 32px;
   padding: 8px 12px;
+  margin: 8px;
   font-size: var(--font-size-caption, 12px);
   font-weight: var(--font-weight-regular, 400);
-  line-height: var(--line-height-caption, 16px);
   white-space: nowrap;
   border-radius: var(--radius-md, 20px);
 }
