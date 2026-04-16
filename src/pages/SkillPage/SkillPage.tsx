@@ -14,7 +14,6 @@ import styles from './SkillPage.module.css';
 export function SkillPage() {
   const { user, relatedUsers, loading, error, skillId } = useSkillPage();
   // ✅ ВСЕ ХУКИ В НАЧАЛЕ КОМПОНЕНТА
-  const { user, relatedUsers, loading, error } = useSkillPage();
   const { isAuth, user: currentUser } = useAuth();
   const { createRequest, hasActiveRequestForSkill } = useExchangeRequest();
   const navigate = useNavigate();
@@ -49,14 +48,6 @@ export function SkillPage() {
     currentUser && skillId && user
       ? hasActiveRequestForSkill(skillId, currentUser.id, user.id)
       : false;
-  // ✅ Вычисляем hasActiveRequest после всех хуков
-  const hasActiveRequest = currentUser
-    ? hasActiveRequestForSkill(
-        user.skillCanTeach?.id || '',
-        currentUser.id,
-        user.id,
-      )
-    : false;
 
   const handleExchangeClick = () => {
     if (!isAuth || !currentUser) {
