@@ -20,6 +20,7 @@ type AuthContextValue = {
   isAuth: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
+  updateUser: (nextUser: AuthUser) => void;
   logout: () => void;
 };
 
@@ -59,15 +60,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     clearStoredAuthUser();
   }, []);
 
+  const updateUser = useCallback((nextUser: AuthUser) => {
+    setUser(nextUser);
+    writeStoredAuthUser(nextUser);
+  }, []);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
       isAuth: Boolean(user),
       isLoading,
       login,
+      updateUser,
       logout,
     }),
-    [user, isLoading, login, logout],
+    [user, isLoading, login, updateUser, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

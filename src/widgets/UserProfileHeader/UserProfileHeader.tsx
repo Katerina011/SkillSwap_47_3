@@ -1,42 +1,26 @@
-/*
 import styles from './UserProfileHeader.module.css';
+import avatarEditIcon from '../../assets/images/edit (1).png';
 
 type UserProfileHeaderProps = {
   name: string;
-  nickname: string;
-  role: string;
-  city: string;
 };
 
-export function UserProfileHeader({
-  name,
-  nickname,
-  role,
-  city,
-}: UserProfileHeaderProps) {
-  const initials = name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-
+export function UserProfileHeader({ name }: UserProfileHeaderProps) {
   return (
-    <section className={styles.card}>
-      <div className={styles.avatar} aria-hidden="true">
-        {initials}
-      </div>
-
-      <div className={styles.info}>
-        <div className={styles.head}>
-          <h1 className={styles.name}>{name}</h1>
-          <span className={styles.nickname}>{nickname}</span>
+    <aside className={styles['profile-header']} aria-label="Фото профиля">
+      <div className={styles['avatar-wrap']}>
+        <div className={styles.avatar} aria-hidden="true">
+          {name.charAt(0).toUpperCase()}
         </div>
-
-        <p className={styles.meta}>{role}</p>
-        <p className={styles.meta}>{city}</p>
+        <button
+          type="button"
+          className={styles['avatar-edit-icon']}
+          aria-label="Изменить фото"
+          disabled
+        >
+          <img src={avatarEditIcon} alt="" aria-hidden="true" />
+        </button>
       </div>
-    </section>
+    </aside>
   );
 }
-*/

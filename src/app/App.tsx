@@ -19,13 +19,14 @@ import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { SkillPage } from '../pages/SkillPage/SkillPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import Step2Form from '../pages/RegisterPage2/Step2Form';
 import Step3Form from '../pages/RegisterPage3/Step3Form';
 import type {
   CatalogFacetApply,
   CatalogOutletContext,
 } from './catalogOutletContext';
-import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 
@@ -84,15 +85,6 @@ function Layout() {
         <Outlet context={outletContext} />
       </main>
       <Footer />
-    </div>
-  );
-}
-
-function FavoritesPage() {
-  return (
-    <div className="container">
-      <h1>Избранное</h1>
-      <p>Здесь будут сохраненные навыки</p>
     </div>
   );
 }
@@ -159,6 +151,7 @@ export function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<CatalogPage />} />
           <Route path="catalog" element={<CatalogPage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:id" element={<ProfilePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="skill/:id" element={<SkillPage />} />

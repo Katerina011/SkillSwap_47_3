@@ -132,6 +132,24 @@
   flex: 1;
 }
 
+.date-input-wrap {
+  position: relative;
+}
+
+.date-input {
+  padding-right: 40px;
+}
+
+.date-icon {
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-12px);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
 .button-group {
   display: flex;
   gap: var(--spacing-16px);

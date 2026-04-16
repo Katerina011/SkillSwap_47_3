@@ -41,16 +41,10 @@ export function SkillCard({
   const skillsToLearn = user.skills?.slice(0, 3) || [];
   const remainingCount = (user.skills?.length || 0) - 3;
 
-  // Используем navigate вместо window.location
   const handleViewClick = () => {
-    const userId = user.id;
-    console.log(
-      '🔘 Переход на страницу пользователя:',
-      `/user/${userId}`,
-      user.name,
-    );
-    if (userId) {
-      navigate(`/user/${userId}`);
+    const skillId = user.skillCanTeach?.id;
+    if (skillId) {
+      navigate(`/skill/${skillId}?user=${encodeURIComponent(user.id)}`);
     }
   };
 
@@ -181,4 +175,3 @@ export function SkillCard({
     </div>
   );
 }
-
