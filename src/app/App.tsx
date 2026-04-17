@@ -20,9 +20,9 @@ import type {
   CatalogFacetApply,
   CatalogOutletContext,
 } from './catalogOutletContext';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
 const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
-const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
 const FavoritesPage = lazy(
   () => import('../pages/FavoritesPage/FavoritesPage'),
 );
