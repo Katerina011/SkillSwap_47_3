@@ -1,6 +1,6 @@
 // src/pages/SkillPage/hooks/useSkillPage.ts
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { User } from '../../../entities/user/model/types';
 import {
   getAllUsers,

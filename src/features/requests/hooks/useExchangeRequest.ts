@@ -1,8 +1,10 @@
+// src/features/requests/hooks/useExchangeRequest.ts
 import { useState, useCallback } from 'react';
 import {
   createExchangeRequest,
   hasActiveRequest,
   getRequestBySkillAndUsers,
+  getRequestsByUser, // ← добавить импорт
 } from '../api/requestsApi';
 import { ExchangeRequest } from '../model/types';
 
@@ -17,6 +19,7 @@ interface UseExchangeRequestReturn {
     fromUserId: string,
     toUserId: string,
   ) => boolean;
+  getUserRequests: (userId: string) => ExchangeRequest[]; // ← добавить
   isLoading: boolean;
   error: string | null;
 }
@@ -68,9 +71,15 @@ export function useExchangeRequest(): UseExchangeRequestReturn {
     [],
   );
 
+  const getUserRequests = useCallback(
+    (userId: string): ExchangeRequest[] => getRequestsByUser(userId),
+    [],
+  );
+
   return {
     createRequest,
     hasActiveRequestForSkill,
+    getUserRequests,
     isLoading,
     error,
   };
