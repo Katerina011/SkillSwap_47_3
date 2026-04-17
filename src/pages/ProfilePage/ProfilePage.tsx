@@ -44,7 +44,7 @@ export default function ProfilePage() {
   const { user, isAuth, isLoading, updateUser } = useAuth();
   const [activeTab, setActiveTab] = useState<ProfileTabKey>('profile');
   const [cities, setCities] = useState<string[]>([]);
-  
+
   // Form state
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -144,7 +144,11 @@ export default function ProfilePage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Не указано"
                 />
-                <img className={styles['field-icon-edit']} src={editIcon} alt="" />
+                <img
+                  className={styles['field-icon-edit']}
+                  src={editIcon}
+                  alt=""
+                />
               </span>
             </div>
 
@@ -162,7 +166,11 @@ export default function ProfilePage() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Не указано"
                 />
-                <img className={styles['field-icon-edit']} src={editIcon} alt="" />
+                <img
+                  className={styles['field-icon-edit']}
+                  src={editIcon}
+                  alt=""
+                />
               </span>
             </div>
 
@@ -177,7 +185,11 @@ export default function ProfilePage() {
                     onChange={(e) => setBirthDate(e.target.value)}
                     placeholder="ДД.ММ.ГГГГ"
                   />
-                  <img className={styles['field-icon-calendar']} src={calendarIcon} alt="" />
+                  <img
+                    className={styles['field-icon-calendar']}
+                    src={calendarIcon}
+                    alt=""
+                  />
                 </span>
               </div>
               <div className={styles.field}>
@@ -186,7 +198,9 @@ export default function ProfilePage() {
                   <select
                     className={styles['select-control']}
                     value={gender}
-                    onChange={(e) => setGender(e.target.value as 'женский' | 'мужской')}
+                    onChange={(e) =>
+                      setGender(e.target.value as 'женский' | 'мужской')
+                    }
                   >
                     {GENDER_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>
@@ -194,7 +208,11 @@ export default function ProfilePage() {
                       </option>
                     ))}
                   </select>
-                  <img className={styles['field-arrow']} src={chevronDownIcon} alt="" />
+                  <img
+                    className={styles['field-arrow']}
+                    src={chevronDownIcon}
+                    alt=""
+                  />
                 </span>
               </div>
             </div>
@@ -214,7 +232,11 @@ export default function ProfilePage() {
                     </option>
                   ))}
                 </select>
-                <img className={styles['field-arrow']} src={chevronDownIcon} alt="" />
+                <img
+                  className={styles['field-arrow']}
+                  src={chevronDownIcon}
+                  alt=""
+                />
               </span>
             </div>
 
@@ -228,7 +250,11 @@ export default function ProfilePage() {
                   placeholder="Не указано"
                   rows={4}
                 />
-                <img className={styles['field-icon-edit']} src={editIcon} alt="" />
+                <img
+                  className={styles['field-icon-edit']}
+                  src={editIcon}
+                  alt=""
+                />
               </span>
               <div className={styles['char-counter']}>{about.length}/500</div>
             </div>
@@ -250,7 +276,9 @@ export default function ProfilePage() {
               <h2 className={styles['skills-title']}>Может научить</h2>
               <div className={styles['skills-list']}>
                 {user.skillCanTeach ? (
-                  <TagUI variant={getCategoryVariant(user.skillCanTeach.categoryId)}>
+                  <TagUI
+                    variant={getCategoryVariant(user.skillCanTeach.categoryId)}
+                  >
                     {user.skillCanTeach.name}
                   </TagUI>
                 ) : (
@@ -280,14 +308,20 @@ export default function ProfilePage() {
         return (
           <div className={styles['requests-section']}>
             {userRequests.length === 0 ? (
-              <p className={styles['requests-empty']}>У вас пока нет заявок на обмен</p>
+              <p className={styles['requests-empty']}>
+                У вас пока нет заявок на обмен
+              </p>
             ) : (
               <div className={styles['requests-list']}>
                 {userRequests.map((request) => (
                   <div key={request.id} className={styles['request-card']}>
                     <div className={styles['request-header']}>
-                      <span className={styles['request-skill']}>Навык: {request.skillId}</span>
-                      <span className={`${styles['request-status']} ${styles[`request-status-${request.status}`]}`}>
+                      <span className={styles['request-skill']}>
+                        Навык: {request.skillId}
+                      </span>
+                      <span
+                        className={`${styles['request-status']} ${styles[`request-status-${request.status}`]}`}
+                      >
                         {requestStatusMap[request.status] || request.status}
                       </span>
                     </div>
@@ -317,16 +351,18 @@ export default function ProfilePage() {
             </div>
           );
         }
-        
+
         if (favoriteUsers.length === 0) {
           return (
             <div className={styles['favorites-content']}>
               <h2 className={styles['favorites-title']}>Избранное</h2>
-              <p className={styles['favorites-empty']}>Вы еще не добавили карточки в избранное.</p>
+              <p className={styles['favorites-empty']}>
+                Вы еще не добавили карточки в избранное.
+              </p>
             </div>
           );
         }
-        
+
         return (
           <div className={styles['favorites-content']}>
             <h2 className={styles['favorites-title']}>Избранное</h2>
@@ -354,7 +390,11 @@ export default function ProfilePage() {
                   className={`${styles['sidebar-item']} ${activeTab === tab.key ? styles['sidebar-item-active'] : ''}`}
                   onClick={() => setActiveTab(tab.key)}
                 >
-                  <img className={styles['sidebar-item-icon']} src={tab.icon} alt="" />
+                  <img
+                    className={styles['sidebar-item-icon']}
+                    src={tab.icon}
+                    alt=""
+                  />
                   {tab.label}
                 </button>
               </li>
@@ -365,7 +405,7 @@ export default function ProfilePage() {
 
       <div className={styles.content}>
         {renderContent()}
-        
+
         <div>
           <Avatar src={`/avatars/${user.avatar}`} name={user.name} size="lg" />
         </div>
